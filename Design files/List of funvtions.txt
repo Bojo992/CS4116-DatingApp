@@ -1,0 +1,70 @@
+Design Func for Dating app CS4116
+
+Account related:
+	AuthUser
+	CheckAccountType
+	GetUser
+	CheckStatus
+	UpdateProfilePhoto
+	UpdateProfileBio
+	UpdateProfileInterest
+	UpdateProfileCource
+	UpdateProfileUnivercity
+	GetAccountInterest
+	ChangePassword
+	CompareWithOldPassword
+	ConfirmPassword
+	DeleteAccount
+
+System Related:
+	SendNotification
+	SendReporToAdmin
+	
+Registration:
+	CreateNewAccount
+	AddInterestToAccount
+	ParceQuize
+	AddUnivercityToAccount
+	AddCourceToAccount
+	AddNewCordentials
+
+Admin Related:
+	BanUser
+	MakeAdminUser
+	AddInterest
+	RemoveInterest
+	AddReaction
+	RemoveReaction
+	AddUnivercity
+	RemoveUnicercity
+	AddCource
+	RemoveCource
+	SearchForInterest
+	FilterInterest
+	SearchForReaction
+	FilterReaction
+	SearchForUser
+	FilterUsers
+
+ChatRelated:
+	SendMessage
+	SendRplyMessage
+	SendImageMessage
+	EditMessage
+	DeleteMessage
+	AddReactionToMessage
+	RemoveReactionFromMessage
+	ReportUser
+	SearchForChat
+	CreateNewChat
+	AddToChat (For admin report chat)
+	DeleteChat
+	GetChatsForUser
+	GetMessagesForChat
+
+Home Page Related:
+	LikeUser
+	DislikeUser
+	MatchUser
+	CheckForCompatibilyty
+	UpdateCompatibilyty
