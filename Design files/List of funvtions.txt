@@ -23,9 +23,9 @@ System Related:
 Registration:
 	CreateNewAccount
 	AddInterestToAccount
-	ParceQuize
-	AddUnivercityToAccount
-	AddCourceToAccount
+	ParseQuiz
+	AddUniversityToAccount
+	AddCourseToAccount
 	AddNewCredentials
 
 Admin Related:
