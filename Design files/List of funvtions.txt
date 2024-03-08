@@ -8,8 +8,8 @@ Account related:
 	UpdateProfilePhoto
 	UpdateProfileBio
 	UpdateProfileInterest
-	UpdateProfileCource
-	UpdateProfileUnivercity
+	UpdateProfileCourse
+	UpdateProfileUniversity
 	GetAccountInterest
 	ChangePassword
 	CompareWithOldPassword
@@ -26,7 +26,7 @@ Registration:
 	ParceQuize
 	AddUnivercityToAccount
 	AddCourceToAccount
-	AddNewCordentials
+	AddNewCredentials
 
 Admin Related:
 	BanUser
@@ -36,9 +36,9 @@ Admin Related:
 	AddReaction
 	RemoveReaction
 	AddUnivercity
-	RemoveUnicercity
-	AddCource
-	RemoveCource
+	RemoveUniversity
+	AddCourse
+	RemoveCourse
 	SearchForInterest
 	FilterInterest
 	SearchForReaction
@@ -66,5 +66,5 @@ Home Page Related:
 	LikeUser
 	DislikeUser
 	MatchUser
-	CheckForCompatibilyty
-	UpdateCompatibilyty
+	CheckForCompatibility
+	UpdateCompatibility
