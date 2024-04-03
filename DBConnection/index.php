@@ -5,17 +5,27 @@ header('Access-Control-Allow-Headers: X-Requested-With');
 header('Content-Type: application/json');
 
 include_once('routers/CourseRouter.php');
+include_once('routers/UniversityRouter.php');
 
 rout();
 
 function rout() {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
-    $course = new CourseRouter();
+
 
     switch (explode('/', $uri)[Util::URI_TABLE_OFFSET] ?? '') {
         case "course":
-            $course->courseRouter();
+            {
+                $course = new CourseRouter();
+                $course->courseRouter();
+            }
             break;
+
+        case "university":
+        {
+            $course = new UniversityRouter();
+            $course->courseRouter();
+        }
 
         default:
             break;
