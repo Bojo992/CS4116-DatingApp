@@ -43,14 +43,14 @@ class DatabaseCourse extends Config
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['name' => $name, 'universityId' => $universityId]);
             $result = [
-                "status" => false,
+                "status" => true,
                 "error" => null,
             ];
             return $result;
         } catch (PDOException $exception) {
             $error = [
                 "status" => false,
-                "error" => $exception,
+                "error" => $exception->getMessage(),
                 ];
             return $error;
         }
