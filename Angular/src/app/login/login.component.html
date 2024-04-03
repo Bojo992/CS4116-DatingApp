@@ -1,40 +1,112 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Login</title>
 </head>
+
 <body>
-<br>
-<p>CLICK ME</p>
+  <!--
 <router-outlet></router-outlet>
-<h1>CourseMates</h1>
-<button onclick="document.getElementById('loginComponent').style.display='block'" style="width:auto;">Login</button>
+  <div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="login-container text-center">
+      <div class="header">
+        <h2><strong>Welcome!</strong></h2>
+      </div>
+      <div class="button-container">
+        <button type="button" class="btn btn-primary btn-register" onclick="window.location.href='register.html';">Register</button>
+        <button type="button" class="btn btn-secondary btn-login" onclick="document.getElementById('loginComponent').style.display='block'">Login</button>
+      </div>
+    </div>
+  </div>
+
+-->
+
+<div class="container-fluid min-vh-100 d-flex align-items-center">
+  <div class="row w-100">
+    <div class="col-md-6 left-side-background">
+      <img src="assets/sample2.png" alt="Background Description" class="img-fluid w-100 h-100 position-absolute" style="object-fit:cover; opacity: 20%;">
+      <div class="intro-content">
+        <h1><strong>Uniting hearts and minds!</strong></h1>
+        <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid ducimus asperiores iusto rem sapiente reiciendis cum quibusdam iste! Repellendus possimus doloremque cumque repudiandae, impedit enim voluptas aperiam dolorem harum tempore!.</p>
+      </div>
+    </div>
+    <div class="col-md-6 d-flex justify-content-center align-items-center">
+      <div class="login-container text-center">
+        <div class="header">
+          <h2><strong>Welcome!</strong></h2>
+        </div>
+        <div class="button-container">
+          <button type="button" class="btn btn-primary btn-register" onclick="document.getElementById('registerComponent').style.display='block'">Register</button>
+          <button type="button" class="btn btn-secondary btn-login" onclick="document.getElementById('loginComponent').style.display='block'">Login</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 <div id="loginComponent" class="modal">
-
   <form class="modal-content animate" action="index.html" method="post">
     <div class="imgcontainer">
-      <span onclick="document.getElementById('loginComponent').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <span onclick="document.getElementById('loginComponent').style.display='none'" class="close" title="Go back">&times;</span>
     </div>
-
-
     <div class="container">
-      <label for=><b>Username</b></label>
-      <input type="text" placeholder="Enter Username" name="uname" required>
-
-      <label for=><b>Password</b></label>
-      <input type="password" placeholder="Enter Password" name="password" required>
-      <button class="activebutton" type="submit">Login</button>
+      <form>
+        <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="button-container">
+          <button type="submit" class="btn-login">Log-in</button>
+          <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
-    <div class="container" style="background-color:#f1f1f1">
-      <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
-        Cancel
-      </button>
-      <!--<span class="psw">Forgot <a href="#">password?</a></span>-->
+  </form>
+</div>
+
+<div id="registerComponent" class="modal">
+  <form class="modal-content animate" action="index.html" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('registerComponent').style.display='none'" class="close" title="Go back">&times;</span>
+    </div>
+    <div class="container">
+      <form>
+        <div class="form-group">
+          <label for="username">Enter a username:</label>
+          <input type="text" id="username" name="username">
+        </div>
+        <div class="form-group">
+          <label for="email">Set an email address:</label>
+          <input type="email" id="email" name="email">
+        </div>
+        <div class="form-group">
+          <label for="password">Set a password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="form-group">
+          <label for="password">Confirm password:</label>
+          <input type="password" id="password" name="password">
+        </div>
+        <div class="button-container">
+          <button type="submit" class="btn-login">Log-in</button>
+          <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
+      </form>
     </div>
   </form>
 </div>
@@ -58,6 +130,10 @@
       }
     });
   });
+  
 </script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
