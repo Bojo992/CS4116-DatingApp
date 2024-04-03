@@ -8,6 +8,7 @@ include_once('routers/CourseRouter.php');
 include_once('routers/UniversityRouter.php');
 include_once('routers/UserCourseRouter.php');
 include_once('routers/CredentialsRouter.php');
+include_once('routers/UserRouter.php');
 
 rout();
 
@@ -40,6 +41,13 @@ function rout() {
         case "credentials":
         {
             $course = new CredentialsRouter();
+            $course->courseRouter();
+        }
+        break;
+
+        case "user":
+        {
+            $course = new UserRouter();
             $course->courseRouter();
         }
         break;
