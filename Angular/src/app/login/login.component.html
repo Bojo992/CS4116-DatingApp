@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login</title>
+</head>
+<body>
+<br>
+<p>CLICK ME</p>
+<router-outlet></router-outlet>
+<h1>CourseMates</h1>
+<button onclick="document.getElementById('loginComponent').style.display='block'" style="width:auto;">Login</button>
+
+<div id="loginComponent" class="modal">
+
+  <form class="modal-content animate" action="index.html" method="post">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('loginComponent').style.display='none'" class="close" title="Close Modal">&times;</span>
+    </div>
+
+
+    <div class="container">
+      <label for=><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for=><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="password" required>
+      <button class="activebutton" type="submit">Login</button>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
+        Cancel
+      </button>
+      <!--<span class="psw">Forgot <a href="#">password?</a></span>-->
+    </div>
+  </form>
+</div>
+
+<script>
+  // Get the modal
+  var modal = document.getElementById('loginComponent');
+
+  // When the user clicks anywhere outside the modal, close it
+  // Wait for the DOM content to load
+  document.addEventListener('DOMContentLoaded', function() {
+    // Get a reference to the modal element
+    var modal = document.getElementById('loginComponent');
+
+    // Attach a click event listener to the document
+    document.addEventListener('click', function(event) {
+      // Check if the clicked element is outside the modal and not the modal itself
+      if (event.target !== modal && !modal.contains(event.target)) {
+        // If so, close the modal by hiding it
+        modal.style.display = "none";
+      }
+    });
+  });
+</script>
+</body>
+</html>
