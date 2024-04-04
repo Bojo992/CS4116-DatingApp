@@ -1,5 +1,7 @@
 <?php
-include_once('CourseController.php');
+include_once('./controllers/CourseController.php');
+include_once('./Util.php');
+
 class CourseRouter
 {
     private string $uri;
