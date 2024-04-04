@@ -112,6 +112,20 @@ input[type=text], input[type=email] {
   }
 }
 
+/* This will remove the left div from the mobile view */
+
+@media (max-width: 768px) {
+  .left-side-background {
+    display: none;
+  }
+
+  .col-md-6 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+}
+
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
