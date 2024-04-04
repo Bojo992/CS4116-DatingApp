@@ -6,6 +6,7 @@ header('Content-Type: application/json');
 
 include_once('routers/CourseRouter.php');
 include_once('routers/UniversityRouter.php');
+include_once('routers/UserCourseRouter.php');
 
 rout();
 
@@ -26,6 +27,14 @@ function rout() {
             $course = new UniversityRouter();
             $course->courseRouter();
         }
+        break;
+
+        case "userCourse":
+        {
+            $course = new userCourseRouter();
+            $course->courseRouter();
+        }
+        break;
 
         default:
             break;
