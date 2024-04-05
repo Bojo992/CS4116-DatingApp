@@ -61,12 +61,12 @@ export class RegistrationquizComponent {
   }
 
   goToPreviousPage(){
-    if ((this.currentModalPage === ModalPage.Page2 && this.selectedSubject) ||
-    (this.currentModalPage === ModalPage.Page3 && this.selectedLearningStyle ||
-      this.currentModalPage === ModalPage.Page4 && this.selectedLearningStyle ||
-      this.currentModalPage === ModalPage.Page5 && this.selectedCourseLoad ||
-      this.currentModalPage === ModalPage.Page6 && this.selectedCourseLoad ||
-      this.currentModalPage === ModalPage.Page7 && this.selectedExtraCurricular
+    if ((this.currentModalPage === ModalPage.Page2) ||
+    (this.currentModalPage === ModalPage.Page3  ||
+      this.currentModalPage === ModalPage.Page4  ||
+      this.currentModalPage === ModalPage.Page5  ||
+      this.currentModalPage === ModalPage.Page6  ||
+      this.currentModalPage === ModalPage.Page7 
     )) 
     {
       const prevPage = this.currentModalPage-1;

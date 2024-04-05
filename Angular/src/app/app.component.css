@@ -21,7 +21,6 @@
   text-shadow: 0 1px 0 #528ecc;
 }
 
-
 .topnav {
   background-color: #3498db;
   display:flex;
@@ -29,8 +28,6 @@
   align-items:center;
   font-family: Arial, sans-serif;
 }
-
-
 
 /* links inside the navigation bar */
 .topnav a {
