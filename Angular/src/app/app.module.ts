@@ -2,6 +2,8 @@ import { BrowserModule } from '@angular/platform-browser';
 import {Injector, NgModule} from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { LoginComponent } from './login/login.component';
+import {RouterModule} from "@angular/router";
+import {AppRoutingModule} from "./app-routing.module";
 
 @NgModule({
   declarations: [
@@ -9,7 +11,8 @@ import { LoginComponent } from './login/login.component';
   ],
   imports: [
     BrowserModule,
-    LoginComponent
+    LoginComponent,
+    AppRoutingModule
   ],
 })
 export class AppModule {

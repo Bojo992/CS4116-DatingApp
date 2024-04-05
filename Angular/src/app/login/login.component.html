@@ -52,7 +52,7 @@
 
 
 <div id="loginComponent" class="modal">
-  <form class="modal-content animate" action="index.html" method="post">
+  <form class="modal-content animate" [action]="goToHomepage()" method="post">
     <div class="imgcontainer">
       <span onclick="document.getElementById('loginComponent').style.display='none'" class="close" title="Go back">&times;</span>
     </div>
@@ -67,7 +67,7 @@
           <input type="password" id="password" name="password">
         </div>
         <div class="button-container">
-          <button type="submit" class="btn-login">Log-in</button>
+          <button type="submit" class="btn-login" routerLink="/home">Login</button>
           <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
             Cancel
           </button>
@@ -130,7 +130,7 @@
       }
     });
   });
-  
+
 </script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
