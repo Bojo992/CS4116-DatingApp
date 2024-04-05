@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coursemates</title>
+</head>
+
+<body>
+    <div class="modal">
+        <!-- !  PAGE 1 -->
+        <div *ngIf="currentModalPage === ModalPage.Page1">
+            <h2>Getting Started</h2>
+            <br>
+            <p>Coursemates™ uses a quiz system to tailor your experience. Click below to begin creating your profile.</p>
+            <br>
+            <button (click)="switchPage(ModalPage.Page2)" class="nextbutton">Start</button>
+        </div>
+        
+        <!-- !  PAGE 2 -->
+        <div *ngIf="currentModalPage === ModalPage.Page2">
+            <h2>Question 1.</h2>
+            <p>What subject do you prefer?</p>
+            <form>
+                <input type="radio" id="Humanities" name="subject" value="Humanities" [(ngModel)]="selectedSubject">
+                <label for="Humanities"> Humanities </label><br>
+                <input type="radio" id="Sciences" name="subject" value="Sciences" [(ngModel)]="selectedSubject">
+                <label for="Sciences"> Sciences </label><br>
+                <input type="radio" id="Technology" name="subject" value="Technology" [(ngModel)]="selectedSubject">
+                <label for="Technology"> Technology </label><br>
+                <input type="radio" id="Arts" name="subject" value="Arts" [(ngModel)]="selectedSubject">
+                <label for="Arts"> Arts </label><br>
+                <input type="radio" id="Business" name="subject" value="Business" [(ngModel)]="selectedSubject">
+                <label for="Business"> Business </label><br>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="goToNextPage()" [disabled]="!selectedSubject" class="nextbutton" 
+            matTooltip="Please select a subject to proceed" 
+            [matTooltipDisabled]="selectedSubject">Next</button>
+        </div>
+        
+        <!-- !  PAGE 3 -->
+        <div *ngIf="currentModalPage === ModalPage.Page3">
+            <h2>Question 2.</h2>
+            <p>What is your preferred learning style?</p>
+            <form>
+                <input type="radio" id = "Visual" name="subject" value="Visual" [(ngModel)]="selectedLearningStyle"> 
+                <label for="Visual"> Visual </label>
+                <br>
+                <input type="radio" id = "Auditory" name="subject" value="Auditory" [(ngModel)]="selectedLearningStyle">
+                <label for="Auditory"> Auditory </label>
+                <br>
+                <input type="radio" id = "Kinesthetic" name="subject" value="Kinesthetic" [(ngModel)]="selectedLearningStyle">
+                <label for="Kinesthetic"> Kinesthetic </label>
+                <br>
+                <input type="radio" id = "Reading/Writing" name="subject" value="Reading/Writing" [(ngModel)]="selectedLearningStyle">
+                <label for="Reading/Writing"> Reading/Writing </label>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="goToNextPage()" [disabled]="!selectedLearningStyle" class="nextbutton" 
+            matTooltip="Please select a learning style to proceed" 
+            [matTooltipDisabled]="selectedLearningStyle">Next</button>   
+            
+        </div>
+        
+        <!-- !  PAGE 4 -->
+        <div *ngIf="currentModalPage === ModalPage.Page4">
+            <h2>Question 3.</h2>
+            <p>Which one of the following best describes our career aspirations?</p>
+            <form>
+                <input type="radio" id = "STEM" name="subject" value="STEM" [(ngModel)]="selectedAspiration">
+                <label for="STEM"> STEM </label>
+                <br>
+                <input type="radio" id = "Healthcare" name="subject" value="Healthcare" [(ngModel)]="selectedAspiration">
+                <label for="Healthcare"> Healthcare </label>
+                <br>
+                <input type="radio" id = "Business" name="subject" value="Business" [(ngModel)]="selectedAspiration">
+                <label for="Business"> Business </label>
+                <br>
+                <input type="radio" id = "Arts" name="subject" value="Arts" [(ngModel)]="selectedAspiration">
+                <label for="Arts"> Arts </label>
+                <br>
+                <input type="radio" id = "Education" name="subject" value="Education" [(ngModel)]="selectedAspiration">
+                <label for="Education"> Education </label>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="goToNextPage()" [disabled]="!selectedAspiration" class="nextbutton" 
+            matTooltip="Please select an aspiration to proceed" 
+            [matTooltipDisabled]="selectedAspiration">Next</button>
+        </div>
+        
+        
+        <!-- !  PAGE 5 -->
+        <div *ngIf="currentModalPage === ModalPage.Page5">
+            <h2>Question 4.</h2>
+            <p>How do you prefer to distribute your course load?</p>
+            <form>
+                <input type="radio" id = "Balanced" name="subject" value="Balanced" [(ngModel)]="selectedCourseLoad">
+                <label for="Balanced"> Balanced across various subjects </label>
+                <br>
+                <input type="radio" id = "Concentrated" name="subject" value="Concentrated" [(ngModel)]="selectedCourseLoad">
+                <label for="Concentrated">  Concentrated in one or two main subjects </label>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="goToNextPage()" [disabled]="!selectedCourseLoad" class="nextbutton" 
+            matTooltip="Please select a courseload preference to proceed" 
+            [matTooltipDisabled]="selectedCourseLoad">Next</button>
+        </div>
+        
+        <!-- !  PAGE 6 -->
+        <div *ngIf="currentModalPage === ModalPage.Page6">
+            <h2>Question 5.</h2>
+            <p>What is your preferred class size?</p>
+            <form>
+                <input type="radio" id = "Small" name="Class size" value="Small" [(ngModel)]="selectedCourseSize">
+                <label for="Small"> Small </label>
+                <br>
+                <input type="radio" id = "Medium" name="Class size" value="Medium" [(ngModel)]="selectedCourseSize">
+                <label for="Medium"> Medium </label>
+                <br>
+                <input type="radio" id = "Large" name="Class size" value="Large" [(ngModel)]="selectedCourseSize">
+                <label for="Large"> Large </label>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="goToNextPage()" [disabled]="!selectedCourseSize" class="nextbutton" 
+            matTooltip="Please select a course size preference to proceed" 
+            [matTooltipDisabled]="selectedCourseSize">Next</button>
+        </div>
+        
+        <!-- !  PAGE 7 -->
+        <div *ngIf="currentModalPage === ModalPage.Page7">
+            <h2>Question 6.</h2>
+            <p>Extracurricular interests</p>
+            <form action="">
+                <input type="radio" id = "Sports" name="Sport interest" value="Sports" [(ngModel)]="selectedExtraCurricular">
+                <label for="Sports"> Sports </label>
+                <br>
+                <input type="radio" id = "Clubs/Organizations" name="Clubs/Organizations" value="Clubs/Organizations" [(ngModel)]="selectedExtraCurricular">
+                <label for="Clubs/Organizations"> Clubs/Organizations </label>
+                <br>
+                <input type="radio" id = "Volunteer" name="Volunteer" value="Volunteer" [(ngModel)]="selectedExtraCurricular">
+                <label for="Volunteer"> Volunteer work </label>
+                <br>
+                <input type="radio" id = "Research" name="Research" value="Research" [(ngModel)]="selectedExtraCurricular">
+                <label for="research"> Research opportunities </label>
+            </form>
+            <button (click)="goToPreviousPage()" class="backbutton">Back</button>
+            <button (click)="finishQuiz()" class="nextbutton" 
+            [disabled]="!selectedExtraCurricular"
+            matTooltip="Please select an extracurricular preference to proceed"
+            [matTooltipDisabled]="selectedExtraCurricular">Finish</button>
+        </div>
+        
+    </div>
+    
+</body>
