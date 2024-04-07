@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2024 at 12:45 PM
+-- Generation Time: Apr 07, 2024 at 06:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,14 +47,50 @@ CREATE TABLE `chats` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cource`
+-- Table structure for table `course`
 --
 
-CREATE TABLE `cource` (
+CREATE TABLE `course` (
   `id` int(11) NOT NULL,
-  `name` varchar(50) NOT NULL,
-  `univercityId` int(11) DEFAULT NULL
+  `name` varchar(500) NOT NULL,
+  `universityId` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `course`
+--
+
+INSERT INTO `course` (`id`, `name`, `universityId`) VALUES
+(1, 'test', 1),
+(2, 'LM051', 1),
+(22, 'it&#039;s works', 1),
+(23, 'it&#039;s works', 1),
+(24, 'test new uni', 2),
+(25, 'test new uni', 2),
+(31, 'test new uni', 1),
+(32, 'test new uni', 1),
+(33, 'test new uni', 1),
+(35, 'test new uni', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `credentials`
+--
+
+CREATE TABLE `credentials` (
+  `mail` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `userId` int(11) NOT NULL,
+  `username` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `credentials`
+--
+
+INSERT INTO `credentials` (`mail`, `password`, `userId`, `username`) VALUES
+('test@test.test', 'test', 1, 'test');
 
 -- --------------------------------------------------------
 
@@ -137,6 +173,13 @@ CREATE TABLE `personalinfo` (
   `drinking` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `personalinfo`
+--
+
+INSERT INTO `personalinfo` (`id`, `bio`, `smoking`, `age`, `vegan`, `loction`, `Gender`, `drinking`) VALUES
+(1, 'test', b'1', 21, b'0', 'asfd', 1, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -170,6 +213,20 @@ CREATE TABLE `university` (
   `name` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `university`
+--
+
+INSERT INTO `university` (`id`, `name`) VALUES
+(1, 'UL test'),
+(2, 'TUS'),
+(3, 'test new uni'),
+(8, 'asdf'),
+(9, 'test'),
+(10, 'asdfghh'),
+(11, 'sfdgy'),
+(24, 'marty');
+
 -- --------------------------------------------------------
 
 --
@@ -184,6 +241,13 @@ CREATE TABLE `user` (
   `isAdmin` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`userId`, `personalInfo`, `cource`, `dateCreated`, `isAdmin`) VALUES
+(1, 1, 1, '2024-04-03 18:38:31', b'0');
+
 -- --------------------------------------------------------
 
 --
@@ -195,6 +259,13 @@ CREATE TABLE `user_course` (
   `universityId` int(11) NOT NULL,
   `couceId` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_course`
+--
+
+INSERT INTO `user_course` (`id`, `universityId`, `couceId`) VALUES
+(1, 1, 1);
 
 --
 -- Indexes for dumped tables
@@ -215,11 +286,19 @@ ALTER TABLE `chats`
   ADD KEY `table_name_user_userId_fk` (`userId`);
 
 --
--- Indexes for table `cource`
+-- Indexes for table `course`
 --
-ALTER TABLE `cource`
+ALTER TABLE `course`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `cource___fk` (`univercityId`);
+  ADD KEY `cource___fk` (`universityId`);
+
+--
+-- Indexes for table `credentials`
+--
+ALTER TABLE `credentials`
+  ADD PRIMARY KEY (`mail`),
+  ADD UNIQUE KEY `credentials_pk` (`userId`),
+  ADD UNIQUE KEY `credentials_pk_2` (`username`);
 
 --
 -- Indexes for table `dislikes`
@@ -315,10 +394,10 @@ ALTER TABLE `chats`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `cource`
+-- AUTO_INCREMENT for table `course`
 --
-ALTER TABLE `cource`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `course`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `interest`
@@ -342,25 +421,25 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `personalinfo`
 --
 ALTER TABLE `personalinfo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user_course`
 --
 ALTER TABLE `user_course`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
@@ -379,10 +458,16 @@ ALTER TABLE `chats`
   ADD CONSTRAINT `table_name_user_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`) ON UPDATE CASCADE;
 
 --
--- Constraints for table `cource`
+-- Constraints for table `course`
 --
-ALTER TABLE `cource`
-  ADD CONSTRAINT `cource___fk` FOREIGN KEY (`univercityId`) REFERENCES `university` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `course`
+  ADD CONSTRAINT `cource___fk` FOREIGN KEY (`universityId`) REFERENCES `university` (`id`);
+
+--
+-- Constraints for table `credentials`
+--
+ALTER TABLE `credentials`
+  ADD CONSTRAINT `credentials_user_userId_fk` FOREIGN KEY (`userId`) REFERENCES `user` (`userId`);
 
 --
 -- Constraints for table `dislikes`
@@ -424,13 +509,13 @@ ALTER TABLE `personal_interest`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_table_name_id_fk` FOREIGN KEY (`personalInfo`) REFERENCES `personalinfo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_usercourse_id_fk` FOREIGN KEY (`cource`) REFERENCES `user_course` (`id`);
+  ADD CONSTRAINT `user_usercourse_id_fk` FOREIGN KEY (`cource`) REFERENCES `user_course` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_course`
 --
 ALTER TABLE `user_course`
-  ADD CONSTRAINT `userCourse_cource_id_fk` FOREIGN KEY (`couceId`) REFERENCES `cource` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `userCourse_cource_id_fk` FOREIGN KEY (`couceId`) REFERENCES `course` (`id`),
   ADD CONSTRAINT `userCourse_university_id_fk` FOREIGN KEY (`universityId`) REFERENCES `university` (`id`);
 COMMIT;
 

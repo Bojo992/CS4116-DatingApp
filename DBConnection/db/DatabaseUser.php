@@ -25,10 +25,30 @@ class DatabaseUser extends Config
 
     public function insert($isAdmin) {
         try {
-            $sql = 'INSERT INTO user (personalInfo, cource, isAdmin) VALUES (1, 1, :isAdmin)';
+            $sql = '
+                    INSERT INTO user (
+                                          personalInfo,
+                                          cource,
+                                          isAdmin
+                                      ) 
+                    VALUES (
+                                1,
+                                1,
+                                :isAdmin
+                            );
+            ';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['isAdmin' => $isAdmin]);
+
+            $sql = 'SELECT LAST_INSERT_ID() as userId';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            $data = $stmt->fetchAll();
             $result = [
+                "data" => $data,
+                "message" => "User added successfully",
                 "status" => true,
                 "error" => null,
             ];
