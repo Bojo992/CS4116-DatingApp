@@ -32,7 +32,7 @@
       <img src="assets/sample2.png" alt="Background Description" class="img-fluid w-100 h-100 position-absolute" style="object-fit:cover; opacity: 20%;">
       <div class="intro-content">
         <h1><strong>Uniting hearts and minds!</strong></h1>
-        <p class="lead">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid ducimus asperiores iusto rem sapiente reiciendis cum quibusdam iste! Repellendus possimus doloremque cumque repudiandae, impedit enim voluptas aperiam dolorem harum tempore!.</p>
+        <p class="lead">工程容易接口顯示也就綜合怎麼辦特色同學剛才存儲你是可用，當中差不多如下大多數高達訂單是他委員會挑戰購物很多人，將會一句，最新增強拿出再次下載沒什麼不是很人氣明確許多色彩頭銜一時，對外代表結婚變化培養影視年齡小學危險，一定不肯公園賓館最初本頁，其中商標這麼。 女朋友，全面條款解放都不較高對手該公司貸款著名人體房東同時呵呵，釣魚障礙數字觀念檔案戰爭據說付出稱為姑娘姓名問道高考字幕，利用中港路對他殺手轉貼開發考生律師成長三年他就，依法國語早就對外商品國產它是部門一批以上，是一種答應結合受傷網域名稱，我就種子傳播會。.</p>
       </div>
     </div>
     <div class="col-md-6 d-flex justify-content-center align-items-center">
@@ -52,27 +52,23 @@
 
 
 <div id="loginComponent" class="modal">
-  <form class="modal-content animate" action="" method="post">
+  <form class="modal-content animate" (ngSubmit)="login()">
     <div class="imgcontainer">
       <span onclick="document.getElementById('loginComponent').style.display='none'" class="close" title="Go back">&times;</span>
     </div>
     <div class="container">
-      <form>
-        <div class="form-group">
-          <label for="username">Username:</label>
-          <input type="text" id="username" name="username">
-        </div>
-        <div class="form-group">
-          <label for="password">Password:</label>
-          <input type="password" id="password" name="password">
-        </div>
-        <div class="button-container">
-          <button type="submit" class="btn-login" routerLink="/home">Login</button>
-          <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">
-            Cancel
-          </button>
-        </div>
-      </form>
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" [(ngModel)]="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" [(ngModel)]="password" required>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="btn-login">Login</button>
+        <button type="button" onclick="document.getElementById('loginComponent').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
     </div>
   </form>
 </div>
@@ -102,8 +98,6 @@
         </div>
         <div class="button-container">
           <button type="submit" class="btn-register" routerLink="/register"> Register</button> 
-          <!-- ! THIS NEEDS A WAY TO SEE IF THE DETAILS ABOVE ARE VALID, TODO -->
-          <!-- <button type="submit" class="btn-login" routerLink="/home">Login</button> -->
           <button type="button" onclick="document.getElementById('registerComponent').style.display='none'" class="cancelbtn">
             Cancel
           </button>
