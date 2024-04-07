@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {LoginComponent} from "./login.component";
 import {CredentialsService} from "../DBConnection/credentials.service";
+import { UserService } from '../DBConnection/user.service';
 
 
 
@@ -12,7 +13,7 @@ import {CredentialsService} from "../DBConnection/credentials.service";
     LoginComponent
   ],
   providers: [
-    CredentialsService
+    CredentialsService, UserService
   ],
   exports: [
     LoginComponent

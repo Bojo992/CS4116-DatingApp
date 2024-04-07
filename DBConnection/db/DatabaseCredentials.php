@@ -39,7 +39,15 @@ class DatabaseCredentials extends Config
         $sql = '
             SELECT userId
                 FROM credentials
-                WHERE EXISTS(SELECT 1
+                WHERE (
+                        (
+                             mail = :mail
+                                 OR
+                             username = :userName
+                         )
+                         AND password = :password
+                         ) 
+                            AND EXISTS(SELECT userId
                            FROM credentials
                            WHERE (
                                     (
@@ -49,7 +57,7 @@ class DatabaseCredentials extends Config
                                      )
                                      AND password = :password
                                  )
-)
+                        )
         ';
 
         $stmt = $this->conn->prepare($sql);

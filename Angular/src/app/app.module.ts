@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
 import { CookieService } from 'ngx-cookie-service';
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+
 
 @NgModule({
   declarations: [
@@ -13,7 +15,7 @@ import { CookieService } from 'ngx-cookie-service';
   imports: [
     BrowserModule,
     LoginComponent,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [CookieService]
 })
