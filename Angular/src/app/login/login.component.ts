@@ -52,6 +52,10 @@ export class LoginComponent {
         if (credentialsResponse.data.length > 0) {
           this.goToHomepage();
           console.log('Login successful', this.username, this.password);
+          this.snackBar.open('Success! Logging in as: ', this.username, {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          })
         } else {
           console.error('Login failed: No data returned', this.username, this.password);
           this.snackBar.open('Incorrect username or password', 'Close', {
