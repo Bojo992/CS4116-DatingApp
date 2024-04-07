@@ -36,11 +36,11 @@ export class RegistrationquizComponent {
 
   constructor(private router: Router) {}
 
-  
+
   switchPage(page:ModalPage){
     this.currentModalPage = page;
   }
-  
+
   goToNextPage() {
     // ! Check for the current page and decide if it's ok to proceed to the next page
     if ((this.currentModalPage === ModalPage.Page2 && this.selectedSubject) ||
@@ -66,8 +66,8 @@ export class RegistrationquizComponent {
       this.currentModalPage === ModalPage.Page4  ||
       this.currentModalPage === ModalPage.Page5  ||
       this.currentModalPage === ModalPage.Page6  ||
-      this.currentModalPage === ModalPage.Page7 
-    )) 
+      this.currentModalPage === ModalPage.Page7
+    ))
     {
       const prevPage = this.currentModalPage-1;
       const isPrevPageExist = prevPage in ModalPage;
@@ -83,8 +83,8 @@ export class RegistrationquizComponent {
       this.router.navigate(['/home']);
     }
   }
-  
-  
+
+
   ModalPage = ModalPage;
-  
-} 
+
+}

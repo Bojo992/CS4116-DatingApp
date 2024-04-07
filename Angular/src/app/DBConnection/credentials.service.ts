@@ -5,14 +5,10 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class CredentialsService {
-  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/university/';
+  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/credentials/';
   private url = 'http://localhost/CourseMates/DBConnection/credentials/';
 
   constructor(private httpClient: HttpClient) { }
-
-  public getAll() {
-    return this.httpClient.get(this.url + "getAll");
-  }
 
   public checkCredentials(usermane: string, password: string) {
     let headers = new HttpHeaders()
@@ -23,18 +19,23 @@ export class CredentialsService {
     return this.httpClient.get(this.url + "checkCredentials", {'headers': headers});
   }
 
-  public getById(id: any){
+  public getByUserId(id : any) {
     let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "getById", {'headers': headers});
+    return this.httpClient.get(this.url + "getByUserId", {'headers': headers});
   }
 
-  public addCredentials(name: string) {
-    let headers = new HttpHeaders().set("name", name).set('Access-Control-Allow-Origin', '*');
+  public getByEmail(email : any) {
+    let headers = new HttpHeaders().set("email", email.toString()).set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.get(this.url + "getByEmail", {'headers': headers});
+  }
+
+  public insertCredentials(mail : any, password : any, userId : any) {
+    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*').set("mail" , mail.toString()).set("password" , password.toString()).set("userId" , userId.toString());
     return this.httpClient.get(this.url + "insertCredentials", {'headers': headers});
   }
 
-  public deleteCredentials(id: any) {
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
+  public deleteCredentials(userId : any) {
+    let headers = new HttpHeaders().set("userId", userId.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "deleteCredentials", {'headers': headers});
   }
 }
