@@ -26,10 +26,10 @@ class UserController
     public function insertUser()
     {
         $isAdmin = $_SERVER["HTTP_ISADMIN"];
-        $result = $this->user->insert(date('Y-m-d', $isAdmin));
+        $result = $this->user->insert($isAdmin);
 
         if ($result["status"]) {
-            return $this->user->message('User added successfully!',false);
+            return json_encode($result);
         } else {
             return $this->user->message($result["error"], 404);
         }
