@@ -1,9 +1,4 @@
 <?php
-header(__DIR__ . '/../Access-Control-Allow-Origin: *');
-header(__DIR__ . '/../Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header(__DIR__ . '/../Access-Control-Allow-Headers: X-Requested-With');
-header(__DIR__ . '/../Content-Type: application/json');
-
 include(__DIR__ . "/../db/DatabaseUserCourse.php");
 
 class UserCourseController
