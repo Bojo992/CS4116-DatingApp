@@ -4,6 +4,7 @@ import { createCustomElement } from '@angular/elements';
 import { LoginComponent } from './login/login.component';
 import {RouterModule} from "@angular/router";
 import {AppRoutingModule} from "./app-routing.module";
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import {AppRoutingModule} from "./app-routing.module";
     LoginComponent,
     AppRoutingModule
   ],
+  providers: [CookieService]
 })
 export class AppModule {
   constructor(private injector: Injector) {

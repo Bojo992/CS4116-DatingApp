@@ -6,6 +6,7 @@ import { CredentialsService } from "../DBConnection/credentials.service"
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CookieOptions, CookieService } from 'ngx-cookie-service';
 
 interface User {
   userId: number;
@@ -37,6 +38,7 @@ export class LoginComponent {
   password: string = '';
 
   constructor(
+    private cookieService: CookieService,
     private injector: Injector,
     private router: Router,
     private credentialsService: CredentialsService,
@@ -50,11 +52,15 @@ export class LoginComponent {
       (response: any) => {
         const credentialsResponse = response as CredentialsResponse; 
         if (credentialsResponse.data.length > 0) {
+          const userUid = credentialsResponse.data[0].userId;
+          this.cookieService.set('UID', userUid.toString(), 1); // cookies expire in 1 day
           this.goToHomepage();
           console.log('Login successful', this.username, this.password);
           this.snackBar.open('Success! Logging in as: ', this.username, {
             duration: 2000,
             verticalPosition: 'bottom'
+          
+          // need call to user service to see if user is admin, or banned
           })
         } else {
           console.error('Login failed: No data returned', this.username, this.password);
