@@ -1,10 +1,6 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: X-Requested-With');
-header('Content-Type: application/json');
 
-include("./db/DatabaseCredentials.php");
+include(__DIR__ . "/../db/DatabaseCredentials.php");
 
 class CredentialsController
 {
@@ -17,45 +13,45 @@ class CredentialsController
 
     public function getByUserId()
     {
-        $id = intval(getallheaders()['id'] ?? '');
+        $id = intval($_SERVER["HTTP_ID"] ?? '');
         $data = $this->credentials->fetchByUserId($id);
-        echo json_encode($data);
+        return json_encode($data);
     }
 
     public function getByEmail()
     {
-        $email = $this->credentials->test_input(getallheaders()['email'] ?? '');
+        $email = $this->credentials->test_input($_SERVER["HTTP_EMAIL"] ?? '');
         $data = $this->credentials->fetchByEmail($email);
-        echo json_encode($data);
+        return json_encode($data);
     }
 
     public function insertCredentials()
     {
-        $mail = $this->credentials->test_input(getallheaders()["mail"]);
-        $password = $this->credentials->test_input(getallheaders()["password"]);
-        $userId = $this->credentials->test_input(getallheaders()["userId"]);
+        $mail = $this->credentials->test_input($_SERVER["HTTP_MAIL"]);
+        $password = $this->credentials->test_input($_SERVER["HTTP_PASSWORD"]);
+        $userId = $this->credentials->test_input($_SERVER["HTTP_USERID"]);
 
         $result = $this->credentials->insert($mail, $password, $userId);
 
         if ($result["status"]) {
-            echo $this->credentials->message('Credentials added successfully!',false);
+            return $this->credentials->message('Credentials added successfully!',false);
         } else {
-            echo $this->credentials->message($result["error"], 404);
+            return $this->credentials->message($result["error"], 404);
         }
     }
 
     public function deleteCredentials()
     {
-        $id = intval(getallheaders()['userId']);
+        $id = intval($_SERVER["HTTP_USERID"]);
 
         if ($this->credentials->delete($id)) {
-            echo $this->credentials->message('Credentials deleted successfully!',false);
+            return $this->credentials->message('Credentials deleted successfully!',false);
         } else {
-            echo $this->credentials->message('Failed to delete an Credentials!',true);
+            return $this->credentials->message('Failed to delete an Credentials!',true);
         }
     }
 
     public function response404(){
-        echo $this->credentials->message("API was not found", 404);
+        return $this->credentials->message("API was not found", 404);
     }
 }

@@ -1,17 +1,18 @@
 <?php
-
-include_once('Util.php');
-
+include_once(__DIR__ . "/Util.php");
 class Config
 {
-    private $dsn = 'mysql:host=' . \Util::DBHOST . ';dbname=' . \Util::DBNAME . '';
+    private $dsn;
+
     // conn variable
     protected $conn = null;
 
     // Constructor Function
     public function __construct() {
         try {
-            $this->conn = new PDO($this->dsn, \Util::DBUSER, \Util::DBPASS);
+            $this->dsn = "mysql:host=" . DBHOST . "; dbname=" . DBNAME;
+
+            $this->conn = new PDO($this->dsn, DBUSER, DBPASS);
             $this->conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
             die('Connectionn Failed : ' . $e->getMessage());
