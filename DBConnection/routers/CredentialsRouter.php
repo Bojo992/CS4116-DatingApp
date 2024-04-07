@@ -1,6 +1,6 @@
 <?php
-include_once('./controllers/CredentialsController.php');
-include_once('./Util.php');
+include_once(__DIR__ . '/../controllers/CredentialsController.php');
+include_once(__DIR__ . '/../Util.php');
 
 class CredentialsRouter
 {
@@ -15,27 +15,27 @@ class CredentialsRouter
     function courseRouter() {
         $explodedURI = explode("/", $this->uri);
 
-        if (Util::URI_API_OFFSET < sizeof($explodedURI)) {
-            $apiName = $explodedURI[Util::URI_API_OFFSET];
+        if (URI_API_OFFSET < sizeof($explodedURI)) {
+            $apiName = $explodedURI[URI_API_OFFSET];
         } else {
             $apiName = '';
         }
 
         switch ($apiName) {
             case "getByEmail" :
-                $this->controller->getByEmail();
+                return $this->controller->getByEmail();
                 break;
             case "getByUserId" :
-                $this->controller->getByUserId();
+                return $this->controller->getByUserId();
                 break;
             case 'insertCredentials' :
-                $this->controller->insertCredentials();
+                return $this->controller->insertCredentials();
                 break;
             case 'deleteCredentials' :
-                $this->controller->deleteCredentials();
+                return $this->controller->deleteCredentials();
                 break;
             default :
-                $this->controller->response404();
+                return $this->controller->response404();
                 break;
         }
     }

@@ -1,58 +1,54 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: X-Requested-With');
-header('Content-Type: application/json');
 
-include("./db/DatabaseUniversity.php");
+include_once(__DIR__ . "/../db/DatabaseUniversity.php");
 
 class UniversityController
 {
-    private $university;
+    private $database;
 
     public function __construct()
     {
-        $this->university = new DatabaseUniversity();
+        $this->database = new DatabaseUniversity();
     }
 
 
     public function getAll()
     {
-        $data = $this->university->fetch();
-        echo json_encode($data);
+        $data = $this->database->fetch();
+        return json_encode($data);
     }
 
     public function getById()
     {
-        $id = intval(getallheaders()['id'] ?? '');
-        $data = $this->university->fetch($id);
-        echo json_encode($data);
+        $id = intval($_SERVER["HTTP_ID"] ?? '');
+        $data = $this->database->fetch($id);
+        return json_encode($data);
     }
 
     public function insertUniversity()
     {
-        $name = $this->university->test_input(getallheaders()["name"]);
-        $result = $this->university->insert($name);
+        $name = $this->database->test_input($_SERVER["HTTP_NAME"]);
+        $result = $this->database->insert($name);
 
         if ($result["status"]) {
-            echo $this->university->message('University added successfully!',false);
+            return $this->database->message('University added successfully!',false);
         } else {
-            echo $this->university->message($result["error"], 404);
+            return $this->database->message($result["error"], 404);
         }
     }
 
     public function deleteUniversity()
     {
-        $idTest = intval(getallheaders()['id']);
+        $idTest = intval($_SERVER['HTTP_ID']);
 
-        if ($this->university->delete($idTest)) {
-            echo $this->university->message('University deleted successfully!',false);
+        if ($this->database->delete($idTest)) {
+            return $this->database->message('University deleted successfully!',false);
         } else {
-            echo $this->university->message('Failed to delete an University!',true);
+            return $this->database->message('Failed to delete an University!',true);
         }
     }
 
     public function response404(){
-        echo $this->university->message("API was not found", 404);
+        return $this->database->message("API was not found", 404);
     }
 }

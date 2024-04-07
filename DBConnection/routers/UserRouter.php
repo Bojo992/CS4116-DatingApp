@@ -1,6 +1,6 @@
 <?php
-include_once('./controllers/UserController.php');
-include_once('./Util.php');
+include_once(__DIR__ . '/../controllers/UserController.php');
+include_once(__DIR__ . '/../Util.php');
 class UserRouter
 {
     private string $uri;
@@ -14,27 +14,27 @@ class UserRouter
     function courseRouter() {
         $explodedURI = explode("/", $this->uri);
 
-        if (Util::URI_API_OFFSET < sizeof($explodedURI)) {
-            $apiName = $explodedURI[Util::URI_API_OFFSET];
+        if (URI_API_OFFSET < sizeof($explodedURI)) {
+            $apiName = $explodedURI[URI_API_OFFSET];
         } else {
             $apiName = '';
         }
 
         switch ($apiName) {
             case "getAll" :
-                $this->controller->getAll();
+                return $this->controller->getAll();
                 break;
             case 'getById' :
-                $this->controller->getById();
+                return $this->controller->getById();
                 break;
             case 'insertUser' :
-                $this->controller->insertUser();
+                return $this->controller->insertUser();
                 break;
             case 'deleteUser' :
-                $this->controller->deleteUser();
+                return $this->controller->deleteUser();
                 break;
             default :
-                $this->controller->response404();
+                return $this->controller->response404();
                 break;
         }
     }

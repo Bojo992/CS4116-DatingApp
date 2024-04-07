@@ -1,10 +1,6 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: X-Requested-With');
-header('Content-Type: application/json');
 
-include("./db/DatabaseCourse.php");
+include_once(__DIR__ . "/../db/DatabaseCourse.php");
 
 class CourseController {
     private $course;
@@ -17,45 +13,45 @@ class CourseController {
     public function getAll()
     {
         $data = $this->course->fetch();
-        echo json_encode($data);
+        return json_encode($data);
     }
 
     public function getById()
     {
-        $id = intval(getallheaders()['id'] ?? '');
-        $data = $this->course->fetch($id);
-        echo json_encode($data);
+         $id = intval($_SERVER["HTTP_ID"] ?? '');
+         $data = $this->course->fetch($id);
+         return json_encode($data);
     }
 
     public function getByUniversityId() {
-        $universityId = intval(getallheaders()['universityId'] ?? '');
+        $universityId = intval($_SERVER["HTTP_ID"] ?? '');
         $data = $this->course->fetchByUniversity($universityId);
-        echo json_encode($data);
+        return json_encode($data);
     }
 
     function insertCourse() {
-        $name = $this->course->test_input(getallheaders()["name"]);
-        $universityId = $this->course->test_input(getallheaders()["universityId"]);
+        $name = $this->course->test_input($_SERVER["HTTP_NAME"]);
+        $universityId = $this->course->test_input($_SERVER["HTTP_UNIVERSITYID"]);
         $result = $this->course->insert($name, $universityId);
 
         if ($result["status"]) {
-            echo $this->course->message('Course added successfully!',false);
+            return $this->course->message('Course added successfully!',false);
         } else {
-            echo $this->course->message($result["error"], 404);
+            return $this->course->message($result["error"], 404);
         }
     }
 
     function deleteCourse() {
-        $idTest = intval(getallheaders()['id']);
+        $idTest = intval($_SERVER["HTTP_ID"]);
 
         if ($this->course->delete($idTest)) {
-            echo $this->course->message('Course deleted successfully!',false);
+            return $this->course->message('Course deleted successfully!',false);
         } else {
-            echo $this->course->message('Failed to delete an Course!',true);
+            return $this->course->message('Failed to delete an Course!',true);
         }
     }
 
     public function response404(){
-        echo $this->course->message("API was not found", 404);
+        return $this->course->message("API was not found", 404);
     }
 }

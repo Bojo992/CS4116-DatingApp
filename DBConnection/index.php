@@ -1,58 +1,59 @@
 <?php
+include_once(__DIR__ . '/routers/CourseRouter.php');
+include_once(__DIR__ . '/routers/UniversityRouter.php');
+include_once(__DIR__ . '/routers/UserCourseRouter.php');
+include_once(__DIR__ . '/routers/CredentialsRouter.php');
+include_once(__DIR__ . '/routers/UserRouter.php');
+include_once(__DIR__ . '/Util.php');
+
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE');
-header('Access-Control-Allow-Headers: X-Requested-With');
+header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: *');
 header('Content-Type: application/json');
 
-include_once('routers/CourseRouter.php');
-include_once('routers/UniversityRouter.php');
-include_once('routers/UserCourseRouter.php');
-include_once('routers/CredentialsRouter.php');
-include_once('routers/UserRouter.php');
-
-rout();
-
-function rout() {
+if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
-
-    switch (explode('/', $uri)[Util::URI_TABLE_OFFSET] ?? '') {
+    switch (explode('/', $uri)[URI_TABLE_OFFSET] ?? '') {
         case "course":
             {
                 $course = new CourseRouter();
-                $course->courseRouter();
+                echo $course->courseRouter();
             }
             break;
 
         case "university":
-        {
-            $course = new UniversityRouter();
-            $course->courseRouter();
-        }
-        break;
+            {
+                $course = new UniversityRouter();
+                echo $course->courseRouter();
+            }
+            break;
 
         case "userCourse":
-        {
-            $course = new userCourseRouter();
-            $course->courseRouter();
-        }
-        break;
+            {
+                $course = new userCourseRouter();
+                echo $course->courseRouter();
+            }
+            break;
 
         case "credentials":
-        {
-            $course = new CredentialsRouter();
-            $course->courseRouter();
-        }
-        break;
+            {
+                $course = new CredentialsRouter();
+                echo $course->courseRouter();
+            }
+            break;
 
         case "user":
-        {
-            $course = new UserRouter();
-            $course->courseRouter();
-        }
-        break;
+            {
+                $course = new UserRouter();
+                echo $course->courseRouter();
+            }
+            break;
 
         default:
+            echo "failed";
             break;
     }
+} else {
+    echo "";
 }

@@ -1,4 +1,5 @@
 <?php
+include_once(__DIR__ . "/../Config.php");
 
 class DatabaseUniversity extends Config
 {

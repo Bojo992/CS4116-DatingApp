@@ -1,5 +1,7 @@
 <?php
 
+include_once(__DIR__ . "/../Config.php");
+
 class DatabaseUserCourse extends Config
 { public function __construct()
 {
