@@ -25,6 +25,20 @@ class CredentialsController
         return json_encode($data);
     }
 
+    public function checkCredentials()
+    {
+        $mail = $this->credentials->test_input(
+            isset($_SERVER['HTTP_MAIL']) ? $_SERVER["HTTP_MAIL"] : '');
+        $userName = $this->credentials->test_input(
+            isset($_SERVER['HTTP_USERNAME']) ? $_SERVER["HTTP_USERNAME"] : '');
+        $password = $this->credentials->test_input(
+            isset($_SERVER['HTTP_PASSWORD']) ? $_SERVER["HTTP_PASSWORD"] : '');
+
+        $response = $this->credentials->checkCredentials($mail, $userName, $password);
+
+        return json_encode($response);
+    }
+
     public function insertCredentials()
     {
         $mail = $this->credentials->test_input($_SERVER["HTTP_MAIL"]);

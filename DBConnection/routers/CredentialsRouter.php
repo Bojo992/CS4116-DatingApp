@@ -28,6 +28,9 @@ class CredentialsRouter
             case "getByUserId" :
                 return $this->controller->getByUserId();
                 break;
+            case "checkCredentials":
+                return $this->controller->checkCredentials();
+                break;
             case 'insertCredentials' :
                 return $this->controller->insertCredentials();
                 break;

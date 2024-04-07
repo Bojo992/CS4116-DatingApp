@@ -34,6 +34,35 @@ class DatabaseCredentials extends Config
         return $rows;
     }
 
+    public function checkCredentials($mail = 0, $userName = 0, $password)
+    {
+        $sql = '
+            SELECT userId
+                FROM credentials
+                WHERE EXISTS(SELECT 1
+                           FROM credentials
+                           WHERE (
+                                    (
+                                         mail = :mail
+                                             OR
+                                         username = :userName
+                                     )
+                                     AND password = :password
+                                 )
+)
+        ';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['mail' => $mail, 'userName' => $userName, 'password' => $password]);
+
+        $data = $stmt->fetchAll();
+        return [
+            'data' => $data,
+            'message' => 'Result of check',
+            'error' => null,
+        ];
+    }
+
     public function insert($email, $password, $userId) {
         try {
             $sql = 'INSERT INTO credentials (mail, password, userId) VALUES (:mail, :password, :userId)';
