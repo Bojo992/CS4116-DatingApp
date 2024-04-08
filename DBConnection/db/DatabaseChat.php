@@ -8,9 +8,9 @@ class DatabaseChat extends Config
     }
 
     public function fetch($id = 0) {
-        $sql = 'SELECT * FROM chats WHERE id = :id';
+        $sql = 'SELECT * FROM chats';
         if ($id != 0) {
-            $sql = 'SELECT * FROM chats WHERE id = :id';
+            $sql = 'SELECT * FROM chats WHERE userId = :id';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['id' => $id]);
         } else {
@@ -22,7 +22,7 @@ class DatabaseChat extends Config
         return $rows;
     }
 
-    public function fetchByChat($id) { // do I make $chatId or use $id ?
+    public function fetchByChat($id) {
         $sql = 'SELECT * FROM chats WHERE id = :id';
 
         $stmt = $this->conn->prepare($sql);
@@ -66,29 +66,4 @@ class DatabaseChat extends Config
 
 ?>
 
-<?php
-
-$curl = curl_init();
-
-curl_setopt_array($curl, array(
-    CURLOPT_URL => 'https://coursemates.infinityfreeapp.com/DBConnection/course/insertChat',
-    CURLOPT_RETURNTRANSFER => true,
-    CURLOPT_ENCODING => '',
-    CURLOPT_MAXREDIRS => 10,
-    CURLOPT_TIMEOUT => 0,
-    CURLOPT_FOLLOWLOCATION => true,
-    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    CURLOPT_CUSTOMREQUEST => 'POST',
-    CURLOPT_HTTPHEADER => array(
-        'name: test new uni',
-        'universityId: 1'
-    ),
-));
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-echo $response;
-
-?>
 

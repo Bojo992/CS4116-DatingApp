@@ -10,7 +10,7 @@ class ChatController
         $this->chat = new DatabaseChat();
     }
 
-    public function getALl()
+    public function getAll()
     {
         $data = $this->chat->fetch();
         return json_encode($data);
@@ -30,11 +30,20 @@ class ChatController
         $result = $this->chat->insertChat($id);
 
         if ($result["status"]) {
-            return $this->chat->message("chat was created");
+            return $this->chat->message("chat was created", 200);
         } else {
             return $this->chat->message($result["error"], 404);
         }
 
+    }
+
+    public function deleteChat() {
+        $chatId = intval($_SERVER ["HTTP_CHATID"] ?? '');
+        if ($this->chat->deleteChat($chatId)) {
+            return $this->chat->message("chat was deleted", 200);
+        } else {
+            return $this->chat->message("failed to delete chat", 404);
+        }
     }
 
     public function response404() {

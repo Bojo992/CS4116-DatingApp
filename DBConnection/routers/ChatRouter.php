@@ -30,7 +30,7 @@ class ChatRouter
             case 'getByUserId' :
                 return $this->controller->getByUserId();
                 break;
-            case 'insertChat' : //not sure insertChat is right here???
+            case 'insertChat' :
                 return  $this->controller->insertChat();
                 break;
             case 'deleteChat' :
