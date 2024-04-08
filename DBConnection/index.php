@@ -50,6 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
             }
             break;
 
+        case "chat" :
+        {
+            $chat = new ChatRouter();
+            echo $chat->chatRouter();
+        }
+
         default:
             echo "failed";
             break;
