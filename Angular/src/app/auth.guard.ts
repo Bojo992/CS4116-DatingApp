@@ -16,4 +16,8 @@ export class AuthGuard implements CanActivate {
     }
     return true;
   }
+
+
+  // add check here for admin cookie
 }
+
