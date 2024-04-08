@@ -109,6 +109,8 @@ export class LoginComponent {
 
         if(userDetails.isAdmin === 1){
           console.log('IM AN ADMIN' , userDetails.isAdmin);
+          this.goToAdminPage();
+          // need to add cookies here for admin, need function to restrict access to admin page
 
         }else{
 
@@ -122,6 +124,10 @@ export class LoginComponent {
 
   goToHomepage(): void {
     this.router.navigate(['home']);
+  }
+
+  goToAdminPage():void{
+    this.router.navigate(['admin']);
   }
 
   ngDoBootstrap() {

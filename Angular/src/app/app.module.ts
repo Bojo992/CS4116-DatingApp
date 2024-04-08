@@ -1,31 +1,35 @@
 import { BrowserModule } from '@angular/platform-browser';
-import {Injector, NgModule} from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NgModule, Injector } from '@angular/core';
 import { createCustomElement } from '@angular/elements';
 import { LoginComponent } from './login/login.component';
-import {RouterModule} from "@angular/router";
-import {AppRoutingModule} from "./app-routing.module";
+import { AdminModule } from './adminpage/admin.module';
+import { AppRoutingModule } from "./app-routing.module";
 import { CookieService } from 'ngx-cookie-service';
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-
+import { HttpClientModule } from '@angular/common/http'; // Use HttpClientModule
 
 @NgModule({
   declarations: [
-    // Add LoginComponent to declarations
+    LoginComponent, 
   ],
   imports: [
     BrowserModule,
-    LoginComponent,
     AppRoutingModule,
+    CommonModule,
+    AdminModule, // Import AdminModule here
+    HttpClientModule, // Ensure you import HttpClientModule for HttpClient to work
   ],
   providers: [CookieService]
+
 })
 export class AppModule {
   constructor(private injector: Injector) {
-    this.ngDoBootstrap()
+    this.ngDoBootstrap();
   }
+
   ngDoBootstrap() {
     // Convert LoginComponent to a custom element and register it with the browser
     const loginElement = createCustomElement(LoginComponent, { injector: this.injector });
-    customElements.define('app-login', loginElement); // Define the custom element name
+    customElements.define('app-login', loginElement);
   }
 }
