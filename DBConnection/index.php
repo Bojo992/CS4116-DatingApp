@@ -4,6 +4,7 @@ include_once(__DIR__ . '/routers/UniversityRouter.php');
 include_once(__DIR__ . '/routers/UserCourseRouter.php');
 include_once(__DIR__ . '/routers/CredentialsRouter.php');
 include_once(__DIR__ . '/routers/UserRouter.php');
+include_once(__DIR__ . '/routers/ChatRouter.php');
 include_once(__DIR__ . '/Util.php');
 
 header('Access-Control-Allow-Origin: *');
@@ -47,6 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
             {
                 $course = new UserRouter();
                 echo $course->courseRouter();
+            }
+            break;
+
+        case "chat" :
+            {
+                $chat = new ChatRouter();
+                echo $chat->chatRouter();
             }
             break;
 
