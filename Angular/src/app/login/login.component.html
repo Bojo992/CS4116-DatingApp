@@ -74,35 +74,27 @@
 </div>
 
 <div id="registerComponent" class="modal">
-  <form class="modal-content animate" action="index.html" method="post">
-    <div class="imgcontainer">
-      <span onclick="document.getElementById('registerComponent').style.display='none'" class="close" title="Go back">&times;</span>
+  <form class="form" [formGroup]="registerForm" (ngSubmit)="registerUser()">
+    <div class="filed">
+      <label for="regUserName">Username</label>
+      <input type="text" id="regUserName" formControlName="userName"/>
     </div>
-    <div class="container">
-      <form>
-        <div class="form-group">
-          <label for="username">Enter a username:</label>
-          <input type="text" id="username" name="username">
-        </div>
-        <div class="form-group">
-          <label for="email">Set an email address:</label>
-          <input type="email" id="email" name="email">
-        </div>
-        <div class="form-group">
-          <label for="password">Set a password:</label>
-          <input type="password" id="password" name="password">
-        </div>
-        <div class="form-group">
-          <label for="password">Confirm password:</label>
-          <input type="password" id="password" name="password">
-        </div>
-        <div class="button-container">
-          <button type="submit" class="btn-register" routerLink="/register"> Register</button> 
-          <button type="button" onclick="document.getElementById('registerComponent').style.display='none'" class="cancelbtn">
-            Cancel
-          </button>
-        </div>
-      </form>
+    <div class="filed">
+      <label for="regEmail">Email</label>
+      <input type="text" id="regEmail" formControlName="email"/>
+    </div>
+    <div class="filed">
+      <label for="regPassword">Password</label>
+      <input type="text" id="regPassword" formControlName="password"/>
+    </div>
+    <div class="filed">
+      <label for="regPasswordConfirm">Confirm Password</label>
+      <input type="text" id="regPasswordConfirm" formControlName="passwordConfirm"/>
+    </div>
+
+    <div>
+      <button type="submit">Register</button>
+      <button onclick="document.getElementById('registerComponent').style.display='none'">Cancel</button>
     </div>
   </form>
 </div>

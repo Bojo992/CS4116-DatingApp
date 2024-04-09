@@ -44,8 +44,9 @@ class CredentialsController
         $mail = $this->credentials->test_input($_SERVER["HTTP_MAIL"]);
         $password = $this->credentials->test_input($_SERVER["HTTP_PASSWORD"]);
         $userId = $this->credentials->test_input($_SERVER["HTTP_USERID"]);
+        $userName = $this->credentials->test_input($_SERVER["HTTP_USERNAME"]);
 
-        $result = $this->credentials->insert($mail, $password, $userId);
+        $result = $this->credentials->insert($mail, $password, $userId, $userName);
 
         if ($result["status"]) {
             return $this->credentials->message('Credentials added successfully!',false);
