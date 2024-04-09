@@ -4,6 +4,7 @@ import {LoginComponent} from "./login/login.component";
 import {createCustomElement} from "@angular/elements";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginModule} from "./login/login.module";
+import {HomepageModule} from "./homepage/homepage.module";
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ import {LoginModule} from "./login/login.module";
   imports: [
     RouterOutlet,
     LoginModule,
+    HomepageModule,
     RouterLink,
     RouterLinkActive,
     HttpClientModule

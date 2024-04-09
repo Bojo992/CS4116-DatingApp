@@ -6,7 +6,7 @@ import {
   MatAutocompleteTrigger,
   MatOption
 } from "@angular/material/autocomplete";
-import {AsyncPipe, NgForOf} from "@angular/common";
+import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {map, Observable, startWith} from "rxjs";
 import {UniversityService} from "../DBConnection/university.service";
 
@@ -28,7 +28,8 @@ export interface User {
     FormsModule,
     MatAutocompleteModule,
     AsyncPipe,
-    NgForOf
+    NgForOf,
+    NgIf
   ],
   templateUrl: './homepage.component.html',
   styleUrl: './homepage.component.css'
@@ -45,9 +46,13 @@ export class HomepageComponent implements OnInit{
     // Fetch universities from the database
     this.universityService.getAll().subscribe((universities: any) => {
       this.users = [
-        { name: 'John Doe', age: '25', university: universities[0]?.name , course: 'Computer Science' },
-        { name: 'Alice Smith', age: '30', university: universities[1]?.name , course: 'Physics' },
+        // { name: 'John Doe', age: '25', university: universities[0]?.name , course: 'Computer Science' },
+        // { name: 'Alice Smith', age: '30', university: universities[1]?.name , course: 'Physics' },
       ];
+
+      for (let i of universities) {
+        this.users.push(i);
+      }
     });
   }
 
