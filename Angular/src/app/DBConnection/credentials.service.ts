@@ -20,22 +20,33 @@ export class CredentialsService {
   }
 
   public getByUserId(id : any) {
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("id", id.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getByUserId", {'headers': headers});
   }
 
   public getByEmail(email : any) {
-    let headers = new HttpHeaders().set("email", email.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("email", email.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getByEmail", {'headers': headers});
   }
 
-  public insertCredentials(mail : any, password : any, userId : any) {
-    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*').set("mail" , mail.toString()).set("password" , password.toString()).set("userId" , userId.toString());
+  public insertCredentials(mail : any, password : any, userId : any, username: any) {
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*')
+      .set("mail" , mail.toString())
+      .set("password" , password.toString())
+      .set("userId" , userId.toString())
+      .set("userName", username.toString());
     return this.httpClient.get(this.url + "insertCredentials", {'headers': headers});
   }
 
   public deleteCredentials(userId : any) {
-    let headers = new HttpHeaders().set("userId", userId.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("userId", userId.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "deleteCredentials", {'headers': headers});
   }
 }

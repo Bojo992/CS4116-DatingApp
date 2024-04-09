@@ -2,7 +2,7 @@ import {Component, Injector} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/router";
 import {createCustomElement} from "@angular/elements";
 import {HomepageComponent} from "../homepage/homepage.component";
-import { FormsModule } from '@angular/forms';
+import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
@@ -39,7 +39,8 @@ interface UserDetails {
     RouterLinkActive,
     FormsModule,
     MatSnackBarModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -50,6 +51,12 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   id: any = '';
+  registerForm = this.formBuilder.group({
+    userName: '',
+    email: '',
+    password: '',
+    passwordConfirm: ''
+  });
 
   constructor(
     private cookieService: CookieService,
@@ -57,7 +64,8 @@ export class LoginComponent {
     private router: Router,
     private credentialsService: CredentialsService,
     private snackBar: MatSnackBar,
-    private userService: UserService
+    private userService: UserService,
+    private formBuilder: FormBuilder
   ) {
   }
 
@@ -69,7 +77,7 @@ export class LoginComponent {
         if (credentialsResponse.data.length > 0) {
           const userUid = credentialsResponse.data[0].userId;
           this.cookieService.set('UID', userUid.toString(), 1); // cookies expire in 1 day
-          this.checkifAdmin(userUid); 
+          this.checkifAdmin(userUid);
           this.goToHomepage();
 
           console.log('Login successful', this.username, this.password);
@@ -84,7 +92,7 @@ export class LoginComponent {
           this.snackBar.open('Incorrect username or password', 'Close', {
             duration: 3000,
             verticalPosition: 'top'
-            
+
           });
         }
       },
@@ -96,6 +104,48 @@ export class LoginComponent {
         });
       }
     );
+  }
+
+  registerUser(): void {
+    console.log("attempt to reg");
+    if(this.registerForm.value.password == this.registerForm.value.passwordConfirm
+          && this.registerForm.value.passwordConfirm != ''
+          && this.registerForm.value.password != ''
+          && this.registerForm.value.email != ''
+          && this.registerForm.value.userName != ''
+    ) {
+      this.userService.insertUser(0).subscribe(
+        (resp: any) => {
+          console.log(resp);
+          console.log(resp.data[0].userId);
+          this.credentialsService.insertCredentials(
+            this.registerForm.value.email,
+            this.registerForm.value.password,
+            resp.data[0].userId,
+            this.registerForm.value.userName).subscribe(
+            () => {},
+            (error) => {
+              console.log("failed to insert credentials")
+            }
+          );
+          this.cookieService.set('UID', resp.data[0].userId.toString(), 1); // cookies expire in 1 day
+          console.log("inserted credentials");
+          this.router.navigate(["register"]);
+        },
+      (error) => {
+          console.error('Filed to insert user request failed', error);
+          this.snackBar.open('An error occurred during register', 'Close', {
+            duration: 3000,
+            verticalPosition: 'top'
+          });
+        }
+      )
+    } else {
+      this.snackBar.open('You entered incorrect data', 'Close', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
+    }
   }
 
 
@@ -132,4 +182,5 @@ export class LoginComponent {
   }
 
   protected readonly HomepageComponent = HomepageComponent;
+  protected readonly console = console;
 }

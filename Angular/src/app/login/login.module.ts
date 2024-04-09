@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {LoginComponent} from "./login.component";
 import {CredentialsService} from "../DBConnection/credentials.service";
 import { UserService } from '../DBConnection/user.service';
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 
@@ -10,7 +11,8 @@ import { UserService } from '../DBConnection/user.service';
 
   declarations: [],
   imports: [
-    LoginComponent
+    LoginComponent,
+    ReactiveFormsModule
   ],
   providers: [
     CredentialsService, UserService
