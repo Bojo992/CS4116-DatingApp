@@ -3,7 +3,7 @@ import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/route
 import {HttpClientModule} from "@angular/common/http";
 import {LoginModule} from "./login/login.module";
 import {NavbarComponent} from "./navbar/navbar.component";
-import {SidenavComponent} from "./sidenav/sidenav.component";
+//import {SidenavComponent} from "./sidenav/sidenav.component";
 import { AdminModule } from './adminpage/admin.module';
 
 @Component({
@@ -17,7 +17,7 @@ import { AdminModule } from './adminpage/admin.module';
     RouterLinkActive,
     HttpClientModule,
     NavbarComponent,
-    SidenavComponent,
+//    SidenavComponent,
     HttpClientModule,
 
   ],

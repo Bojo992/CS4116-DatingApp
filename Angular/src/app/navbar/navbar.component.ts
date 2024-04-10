@@ -10,8 +10,8 @@ import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {map, Observable, startWith} from "rxjs";
 import {UniversityService} from "../DBConnection/university.service";
 import {AppComponent} from "../app.component";
-import {MatSidenav, MatSidenavContainer} from "@angular/material/sidenav";
-import {SidenavComponent} from "../sidenav/sidenav.component";
+// import {MatSidenav, MatSidenavContainer} from "@angular/material/sidenav";
+// import {SidenavComponent} from "../sidenav/sidenav.component";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 
@@ -33,7 +33,9 @@ export interface User {
     MatAutocompleteModule,
     AsyncPipe,
     NgForOf,
-    NgIf, MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent],
+    NgIf, 
+  //  MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent
+  ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
 })
