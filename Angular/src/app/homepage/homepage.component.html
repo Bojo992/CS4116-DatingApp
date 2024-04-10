@@ -7,21 +7,5 @@
 
 </head>
 <body>
-<form class="form" *ngIf="false">
-  <input type="search"
-         placeholder="Search for a User"
-         [formControl]="searchControl"
-         [matAutocomplete]="auto"
-         class="input">
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option *ngFor="let user of users" [value]="UserToString(user)">
-<!--      <span>{{ user.name }}</span>-->
-<!--      <span>{{ user.age }}</span>-->
-<!--      <span>{{ user.university }}</span>-->
-<!--      <span>{{ user.course }}</span>-->
-      <span>{{user.name}}</span>
-    </mat-option>
-  </mat-autocomplete>
-</form>
 </body>
 </html>

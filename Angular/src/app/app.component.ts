@@ -1,9 +1,9 @@
 import {Component, Injector} from '@angular/core';
 import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {LoginComponent} from "./login/login.component";
-import {createCustomElement} from "@angular/elements";
 import {HttpClientModule} from "@angular/common/http";
 import {LoginModule} from "./login/login.module";
+import {NavbarComponent} from "./navbar/navbar.component";
+import {SidenavComponent} from "./sidenav/sidenav.component";
 import { AdminModule } from './adminpage/admin.module';
 
 @Component({
@@ -15,7 +15,10 @@ import { AdminModule } from './adminpage/admin.module';
     AdminModule,
     RouterLink,
     RouterLinkActive,
-    HttpClientModule
+    HttpClientModule,
+    NavbarComponent,
+    SidenavComponent,
+    HttpClientModule,
 
   ],
   templateUrl: './app.component.html',

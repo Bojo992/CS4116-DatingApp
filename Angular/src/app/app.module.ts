@@ -6,18 +6,21 @@ import { LoginComponent } from './login/login.component';
 import { AdminModule } from './adminpage/admin.module';
 import { AppRoutingModule } from "./app-routing.module";
 import { CookieService } from 'ngx-cookie-service';
-import { HttpClientModule } from '@angular/common/http'; // Use HttpClientModule
+import { HttpClientModule } from '@angular/common/http';
+import {NavbarModule} from "./navbar/navbar.module"; // Use HttpClientModule
 
 @NgModule({
   declarations: [
-    LoginComponent, 
+
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     CommonModule,
     AdminModule, // Import AdminModule here
-    HttpClientModule, // Ensure you import HttpClientModule for HttpClient to work
+    HttpClientModule, // Ensure you import HttpClientModule for HttpClient to work,
+    NavbarModule,
+    LoginComponent
   ],
   providers: [CookieService]
 

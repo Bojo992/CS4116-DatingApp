@@ -1,0 +1,172 @@
+.button {
+  box-shadow: inset 0 1px 0 0 #ffffff;
+  background: #ffffff linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  border-radius: 20px;
+  border: 1px solid #dcdcdc;
+  display: inline-block;
+  cursor: pointer;
+  color: #666666;
+  font-family: Arial, sans-serif;
+  font-size: 15px;
+  font-weight: bold;
+  padding: 6px 24px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #ffffff;
+  outline: 0;
+}
+.activebutton {
+  box-shadow: inset 0 1px 0 0 #dcecfb;
+  background: #bddbfa linear-gradient(to bottom, #bddbfa 5%, #80b5ea 100%);
+  color: #ffffff;
+  text-shadow: 0 1px 0 #528ecc;
+}
+
+.topnav {
+  background-color: #3498db;
+  display:flex;
+  height: 50px;
+  align-items:center;
+  font-family: Arial, sans-serif;
+}
+
+/* links inside the navigation bar */
+.topnav a {
+  display: center;
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+  background-color: #00477a;
+  color: white;
+  font-weight: bold;
+}
+
+img{
+  height:40px;
+  display: block;
+}
+
+
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Optional: This centers vertically as well */
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.input {
+  max-width: 100%;
+  width: 300px;
+}
+
+:root {
+  --rad: .7rem;
+  --dur: .3s;
+  --color-dark: #2f2f2f;
+  --color-light: #fff;
+  --color-brand: #57bd84;
+  --font-fam: 'Lato', sans-serif;
+  --height: 5rem;
+  --btn-width: 6rem;
+  --bez: cubic-bezier(0, 0, 0.43, 1.49);
+}
+
+
+body {
+  background: var(--color-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh
+}
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+  font-size: 10px;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+form {
+  position: relative;
+  width: 30rem;
+  background: var(--color-brand);
+  border-radius: var(--rad);
+}
+
+input, button {
+  height: var(--height);
+  font-family: var(--font-fam);
+  border: 0;
+  color: var(--color-dark);
+  font-size: 1.8rem;
+}
+
+input[type="search"] {
+  outline: 0;
+  width: 100%;
+  background: var(--color-light);
+  padding: 0 1.6rem;
+  border-radius: var(--rad);
+  appearance: none;
+  transition-property: width, border-radius;
+  z-index: 1;
+  position: relative;
+}
+
+button {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--btn-width);
+  font-weight: bold;
+  background: var(--color-brand);
+  border-radius: 0 var(--rad) var(--rad) 0;
+}
+
+input:not(:placeholder-shown) {
+  border-radius: var(--rad) 0 0 var(--rad);
+  width: calc(100% - var(--btn-width));
+
+  + button {
+    display: block;
+  }
+}
+
+label {
+  position: absolute;
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0;
+  border: 0;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.full-height {
+  height: 100vh;
+}
+
+.mat-drawer {
+  width: 300px;
+}
