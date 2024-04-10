@@ -7,16 +7,20 @@
 
 </head>
 <body>
-<form class="form">
+<form class="form" *ngIf="false">
   <input type="search"
          placeholder="Search for a User"
-         [formControl]="control"
+         [formControl]="searchControl"
          [matAutocomplete]="auto"
          class="input">
   <mat-autocomplete #auto="matAutocomplete">
-    @for (user of filteredUsers | async; track user) {
-      <mat-option [value]="user">{{ user }}</mat-option>
-    }
+    <mat-option *ngFor="let user of users" [value]="UserToString(user)">
+<!--      <span>{{ user.name }}</span>-->
+<!--      <span>{{ user.age }}</span>-->
+<!--      <span>{{ user.university }}</span>-->
+<!--      <span>{{ user.course }}</span>-->
+      <span>{{user.name}}</span>
+    </mat-option>
   </mat-autocomplete>
 </form>
 </body>
