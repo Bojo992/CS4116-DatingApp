@@ -39,7 +39,15 @@ class DatabaseCredentials extends Config
         $sql = '
             SELECT userId
                 FROM credentials
-                WHERE EXISTS(SELECT 1
+                WHERE (
+                        (
+                             mail = :mail
+                                 OR
+                             username = :userName
+                         )
+                         AND password = :password
+                         ) 
+                            AND EXISTS(SELECT userId
                            FROM credentials
                            WHERE (
                                     (
@@ -49,7 +57,7 @@ class DatabaseCredentials extends Config
                                      )
                                      AND password = :password
                                  )
-)
+                        )
         ';
 
         $stmt = $this->conn->prepare($sql);
@@ -63,11 +71,11 @@ class DatabaseCredentials extends Config
         ];
     }
 
-    public function insert($email, $password, $userId) {
+    public function insert($email, $password, $userId, $username) {
         try {
-            $sql = 'INSERT INTO credentials (mail, password, userId) VALUES (:mail, :password, :userId)';
+            $sql = 'INSERT INTO credentials (mail, password, userId, username) VALUES (:mail, :password, :userId, :username)';
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['mail' => $email, 'password' => $password, 'userId' => $userId]);
+            $stmt->execute(['mail' => $email, 'password' => $password, 'userId' => $userId, 'username' => $username]);
             $result = [
                 "status" => true,
                 "error" => null,

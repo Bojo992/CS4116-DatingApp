@@ -1,24 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {LoginComponent} from "./login.component";
+import { AdminpageComponent } from './adminpage.component';
 import {CredentialsService} from "../DBConnection/credentials.service";
 import { UserService } from '../DBConnection/user.service';
-import {ReactiveFormsModule} from "@angular/forms";
 
 
 
 @NgModule({
 
-  declarations: [],
+  declarations: [AdminpageComponent],
   imports: [
-    LoginComponent,
-    ReactiveFormsModule
+    CommonModule
   ],
   providers: [
-    CredentialsService, UserService
+    UserService
   ],
   exports: [
-    LoginComponent
+    AdminpageComponent
   ]
 })
-export class LoginModule { }
+export class AdminModule { }

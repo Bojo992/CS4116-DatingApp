@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Admin</title>
+</head>
+<body>
+    
+  <div class="form-outline mb-4">
+    <input type="text" class="form-control" id="datatable-search-input" placeholder="Search.." />
+  </div>
+
+  
+
+  <table class="table table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>User ID</th>
+        <th>Personal Info</th>
+        <th>Course</th>
+        <th>Date Created</th>
+        <th>Admin Status</th>
+        <th>Action</th>
+        <th>Admin Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of this.data; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.userId }}</td>
+        <td>{{ item.personalInfo }}</td>
+        <td>{{ item.course }}</td>
+        <td>{{ item.dateCreated }}</td>
+        <td>{{ item.isAdmin ? 'Yes' : 'No' }}</td>
+        <td>
+            <button class="btn_ban" (click)="banUser(item.userId)">Ban</button>
+            <button class="btn_unban" (click)="unBanUser(item.userId)">Unban</button>
+        </td>
+        <td>
+            <button *ngIf="!item.isAdmin" class="btn btn-success" (click)="promoteUser(item.userId)">Promote</button>
+            <button *ngIf="item.isAdmin" class="btn btn-warning" (click)="demoteUser(item.userId)">Demote</button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>
