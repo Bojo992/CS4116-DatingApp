@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class UserCourseService {
-  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/UserCourse/';
-  private url = 'http://localhost/CourseMates/CS4116-DatingApp/DBConnection/userCourse/';
+  private url = 'http://coursemates.infinityfreeapp.com/DBConnection/UserCourse/';
+  // private url = 'http://localhost/CourseMates/DBConnection/userCourse/';
 
   constructor(private httpClient: HttpClient) { }
 

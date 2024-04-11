@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class UserService {
-  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
-  private url = 'http://localhost/CourseMates/CS4116-DatingApp/DBConnection/user/';
+  private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
+  // private url = 'http://localhost/CourseMates/DBConnection/user/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -19,8 +19,12 @@ export class UserService {
     return this.httpClient.get(this.url + "getById", {'headers': headers});
   }
 
-  public insertUser(isAdmin: any){
-    let headers = new HttpHeaders().set("isAdmin", isAdmin.toString()).set('Access-Control-Allow-Origin', '*');
+  public insertUser(isAdmin: number, userName: any, userEmail: any){
+    let headers = new HttpHeaders()
+      .set("isAdmin", isAdmin.toString())
+      .set("userName", userName.toString())
+      .set("userEmail", userEmail.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "insertUser", {'headers': headers});
   }
 

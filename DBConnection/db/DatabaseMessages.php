@@ -1,16 +1,17 @@
 <?php
 include_once (__DIR__ . "/../Config.php");
-class DatabaseChat extends Config
+class DatabaseMessages extends Config
 {
-    public function __construct()
-    {
+
+    public function __construct() {
         parent::__construct();
     }
 
-    public function fetch($id = 0) {
-        $sql = 'SELECT * FROM chats';
+    public function fetch($id = 0)
+    {
+        $sql = "SELECT * FROM messages";
         if ($id != 0) {
-            $sql = 'SELECT * FROM chats WHERE userId = :id';
+            $sql .= 'SELECT * FROM messages WHERE id = :id';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['id' => $id]);
         } else {
@@ -22,8 +23,8 @@ class DatabaseChat extends Config
         return $rows;
     }
 
-    public function fetchByChat($id) {
-        $sql = 'SELECT * FROM chats WHERE id = :id';
+    public function fetchByMessage($id) {
+        $sql = "SELECT * FROM messages WHERE id = :id";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
@@ -32,18 +33,18 @@ class DatabaseChat extends Config
 
         return $rows;
     }
-
-    public function insertChat($id) {
+    public function insertMessage($chatId, $message, $senderId, $receiverId) {
         try {
-            $sql = 'INSERT INTO chats (userId) VALUES (:id)';
+            $sql = "INSERT INTO messages (message, chatId, `from`, `to`)
+                        VALUES (:message, :chatId, :senderId, :receiverId)";
+
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $id]);
+            $stmt->execute(['message' => $message, 'chatId' => $chatId, 'senderId' => $senderId, 'receiverId' => $receiverId]);
 
             $result = [
                 "status" => true,
                 "error" => null,
-
             ];
             return $result;
         } catch (PDOException $exception) {
@@ -51,19 +52,16 @@ class DatabaseChat extends Config
                 "status" => false,
                 "error" => $exception->getMessage(),
             ];
+
             return $error;
         }
     }
 
-    public function deleteChat($id) {
-
-        $sql = 'DELETE FROM chats WHERE id = :id';
+    public function deleteMessage($id) {
+        $sql = "DELETE FROM messages WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
         return true;
     }
+
 }
-
-
-
-
