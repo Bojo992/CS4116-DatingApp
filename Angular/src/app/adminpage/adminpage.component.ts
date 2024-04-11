@@ -10,6 +10,8 @@ interface UserDetails {
   course: number;
   dateCreated: string;
   isAdmin: number;
+  userName: string;
+  userEmail: string;
 }
 
 @Component({
@@ -24,8 +26,8 @@ export class AdminpageComponent implements OnInit {
   
   ngOnInit(): void {
     this.userService.getAll().subscribe ({
-      next: (response: any) => {  
-        this.data = response;
+      next: (response: Object) => {  
+        this.data = response as UserDetails[];
         console.log(this.data);
       },
       error: (error) => {
@@ -36,6 +38,9 @@ export class AdminpageComponent implements OnInit {
       }
     });
   }
+
+
+
 
   banUser(userId: number) {
     // PLACEHOLDER
