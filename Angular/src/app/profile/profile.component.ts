@@ -6,7 +6,7 @@ import { switchMap } from 'rxjs'; // This is used to switch the route when a new
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { User } from '../homepage/homepage.component';
 import { CommonModule, NgIf } from '@angular/common';
-import MatProgressSpinner from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 interface UserDetails {
@@ -23,7 +23,7 @@ interface UserDetails {
   selector: 'app-profile',
   standalone: true,
   imports: [ 
-    CommonModule
+    CommonModule, MatProgressSpinnerModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'
