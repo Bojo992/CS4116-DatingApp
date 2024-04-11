@@ -1,25 +1,33 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Profile</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Profile</title>
 </head>
 
 <body>
-
-    <div class="container">
+    <div *ngIf="isLoading" class="container">
         <div class="row">
             <div class="col-md-6">
-                <h1>Profile</h1>
-                <p>Username: {{userId}}</p>
-                <p>Email: {{userId}}</p>
-                <p>Age: {{userId}}</p>
-                <p>University: {{userId}}</p>
-                <p>Course: {{userId}}</p>
+                <h1>Loading...</h1>
             </div>
         </div>
-
+    </div> <!-- Make sure this closing tag is present -->
+    
+    <div *ngIf="!isLoading" class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <strong><p>Profile of userid: {{userId}}</p></strong>
+                <p>Username: {{username}}</p>
+                <p>Age: WIP</p>
+                <p>Date created: {{dateCreated}}</p>
+                <p>University: </p>
+                <p>Course: </p>
+            </div>
+        </div>
+    </div>
+        
