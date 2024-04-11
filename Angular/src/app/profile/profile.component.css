@@ -1,0 +1,13 @@
+.container {
+    background-color: #fff; 
+    padding: 40px; 
+    border-radius: 5px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    box-sizing: border-box;
+    height: 80%;
+  }
+
+.container h1{
+    margin-bottom: 20px;
+}
