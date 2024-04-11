@@ -16,6 +16,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {UserService} from "../DBConnection/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import { CookieService } from 'ngx-cookie-service';
+import { Router, RouterModule } from '@angular/router';
 
 export interface User {
   userId: number,
@@ -38,6 +40,7 @@ export interface User {
     AsyncPipe,
     NgForOf,
     NgIf,
+    RouterModule
   //  MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent
   ],
   templateUrl: './navbar.component.html',
@@ -49,7 +52,7 @@ export class NavbarComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar) {
+  constructor(private userService: UserService, private snackBar: MatSnackBar, private cookieService: CookieService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -79,11 +82,19 @@ export class NavbarComponent implements OnInit {
     });
   }
 
-  whoWasClicked(user: User): void {
-    this.snackBar.open('You tried to access profile page of ' + user.userName + '(work in progress and will be added in nearest future)', 'Close', {
-      duration: 3000,
-      verticalPosition: 'top'
-    });
+  // whoWasClicked(user: User): void {
+  //   this.snackBar.open('You tried to access profile page of ' + user.userName + '(work in progress and will be added in nearest future)', 'Close', {
+  //     duration: 3000,
+  //     verticalPosition: 'top'
+  //   });
+  // }
+
+  whoWasClicked(user: any): void {
+    this.router.navigate(['/profile', user.userId]);
+  }
+
+  isLoggedIn(): boolean {
+    return this.cookieService.check('UID');
   }
 
   private filterUsers(value: string): User[]{
@@ -110,6 +121,10 @@ export class NavbarComponent implements OnInit {
 
   UserToString(user: User): string {
     return `${user.userId}, ${user.userName}, ${user.userEmail}`;
+  }
+
+  getUserIdFromCookie(): string {
+    return this.cookieService.get('UID');
   }
 
   /*  private filter(value: string): string[] {

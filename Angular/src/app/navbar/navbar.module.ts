@@ -4,13 +4,14 @@ import {NavbarComponent} from "./navbar.component";
 import {HttpClient} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {UserService} from "../DBConnection/user.service";
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [],
   imports: [
-    NavbarComponent,
+    NavbarComponent, RouterModule
   ],
   providers: [
     HttpClient,
