@@ -44,8 +44,8 @@
              [matAutocomplete]="auto"
              class="input">
       <mat-autocomplete #auto="matAutocomplete">
-        <mat-option *ngFor="let user of filteredUsers | async" [value]="user.name">
-          <span>{{ user.name }}</span>
+        <mat-option *ngFor="let user of filteredUsers | async" [value]="user.userName" (click)="whoWasClicked(user)">
+          <span>{{ user.userName }}</span>
           <!--      <span>{{ user.name }}</span>-->
           <!--      <span>{{ user.age }}</span>-->
           <!--      <span>{{ user.university }}</span>-->

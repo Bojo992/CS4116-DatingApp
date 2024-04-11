@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 07, 2024 at 06:09 PM
+-- Generation Time: Apr 11, 2024 at 01:40 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -61,16 +61,7 @@ CREATE TABLE `course` (
 --
 
 INSERT INTO `course` (`id`, `name`, `universityId`) VALUES
-(1, 'test', 1),
-(2, 'LM051', 1),
-(22, 'it&#039;s works', 1),
-(23, 'it&#039;s works', 1),
-(24, 'test new uni', 2),
-(25, 'test new uni', 2),
-(31, 'test new uni', 1),
-(32, 'test new uni', 1),
-(33, 'test new uni', 1),
-(35, 'test new uni', 1);
+(1, 'LM051', 1);
 
 -- --------------------------------------------------------
 
@@ -90,7 +81,8 @@ CREATE TABLE `credentials` (
 --
 
 INSERT INTO `credentials` (`mail`, `password`, `userId`, `username`) VALUES
-('test@test.test', 'test', 1, 'test');
+('User1@email.com', 'PASSWORD12', 1, 'User1'),
+('ADMIN1@email.com', 'PASSWORD12', 2, 'ADMIN1');
 
 -- --------------------------------------------------------
 
@@ -218,14 +210,7 @@ CREATE TABLE `university` (
 --
 
 INSERT INTO `university` (`id`, `name`) VALUES
-(1, 'UL test'),
-(2, 'TUS'),
-(3, 'test new uni'),
-(8, 'asdf'),
-(9, 'test'),
-(10, 'asdfghh'),
-(11, 'sfdgy'),
-(24, 'marty');
+(1, 'UL test');
 
 -- --------------------------------------------------------
 
@@ -238,15 +223,18 @@ CREATE TABLE `user` (
   `personalInfo` int(11) NOT NULL,
   `cource` int(11) NOT NULL,
   `dateCreated` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `isAdmin` bit(1) NOT NULL
+  `isAdmin` bit(1) DEFAULT NULL,
+  `userName` varchar(15) NOT NULL,
+  `userEmail` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userId`, `personalInfo`, `cource`, `dateCreated`, `isAdmin`) VALUES
-(1, 1, 1, '2024-04-03 18:38:31', b'0');
+INSERT INTO `user` (`userId`, `personalInfo`, `cource`, `dateCreated`, `isAdmin`, `userName`, `userEmail`) VALUES
+(1, 1, 1, '2024-04-10 20:20:00', b'0', 'User1', 'User1@email.com'),
+(2, 1, 1, '2024-04-10 20:20:00', b'1', 'ADMIN1', 'User1@email.com');
 
 -- --------------------------------------------------------
 
@@ -427,13 +415,13 @@ ALTER TABLE `personalinfo`
 -- AUTO_INCREMENT for table `university`
 --
 ALTER TABLE `university`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- AUTO_INCREMENT for table `user_course`

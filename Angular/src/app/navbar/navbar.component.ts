@@ -14,12 +14,16 @@ import {AppComponent} from "../app.component";
 // import {SidenavComponent} from "../sidenav/sidenav.component";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
+import {UserService} from "../DBConnection/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface User {
-  name: string;
-  age: string;
-  university: string;
-  course: string;
+  userId: number,
+  personalinfo: number,
+  course: number,
+  isAdmin: boolean,
+  userName: string,
+  userEmail: string,
 }
 
 @Component({
@@ -33,7 +37,7 @@ export interface User {
     MatAutocompleteModule,
     AsyncPipe,
     NgForOf,
-    NgIf, 
+    NgIf,
   //  MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent
   ],
   templateUrl: './navbar.component.html',
@@ -45,12 +49,12 @@ export class NavbarComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private universityService: UniversityService) {
+  constructor(private userService: UserService, private snackBar: MatSnackBar) {
   }
 
   ngOnInit(): void {
     // Fetch universities from the database
-    this.universityService.getAll().subscribe((universities: any) => {
+    this.userService.getAll().subscribe((universities: any) => {
       this.users = [
         // { name: 'John Doe', age: '25', university: universities[0]?.name , course: 'Computer Science' },
         // { name: 'Alice Smith', age: '30', university: universities[1]?.name , course: 'Physics' },
@@ -64,7 +68,7 @@ export class NavbarComponent implements OnInit {
         map(user => (user ? this.filterUsers(user) : this.users.slice()))
       )
 
-      this.universityService.getAll().subscribe((universities: any) => {
+      this.userService.getAll().subscribe((universities: any) => {
         this.users = universities; // Assuming universities is already an array of User objects
         this.filteredUsers = this.searchControl.valueChanges.pipe(
           startWith(''),
@@ -75,12 +79,19 @@ export class NavbarComponent implements OnInit {
     });
   }
 
+  whoWasClicked(user: User): void {
+    this.snackBar.open('You tried to access profile page of ' + user.userName + '(work in progress and will be added in nearest future)', 'Close', {
+      duration: 3000,
+      verticalPosition: 'top'
+    });
+  }
+
   private filterUsers(value: string): User[]{
 
     const filterValues = this.normalizeValue(value).split(' ');
     return this.users.filter(user => {
       for (const filterValue of filterValues) {
-        if (!this.normalizeValue(user.name).includes(filterValue)) {
+        if (!this.normalizeValue(user.userName).includes(filterValue)) {
           return false;
         }
       }
@@ -98,7 +109,7 @@ export class NavbarComponent implements OnInit {
   }
 
   UserToString(user: User): string {
-    return `${user.name}, ${user.age}, ${user.university}, ${user.course}`;
+    return `${user.userId}, ${user.userName}, ${user.userEmail}`;
   }
 
   /*  private filter(value: string): string[] {
