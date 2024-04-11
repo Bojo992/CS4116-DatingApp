@@ -114,7 +114,7 @@ export class LoginComponent {
           && this.registerForm.value.email != ''
           && this.registerForm.value.userName != ''
     ) {
-      this.userService.insertUser(0).subscribe(
+      this.userService.insertUser(0, this.registerForm.value.userName, this.registerForm.value.email).subscribe(
         (resp: any) => {
           console.log(resp);
           console.log(resp.data[0].userId);

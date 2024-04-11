@@ -23,22 +23,26 @@ class DatabaseUser extends Config
         return $rows;
     }
 
-    public function insert($isAdmin) {
+    public function insert($isAdmin, $userName, $userEmail) {
         try {
             $sql = '
                     INSERT INTO user (
                                           personalInfo,
                                           cource,
-                                          isAdmin
+                                          isAdmin,
+                                          userName,
+                                          userEmail
                                       ) 
                     VALUES (
                                 1,
                                 1,
-                                :isAdmin
+                                :isAdmin,
+                                :userName,
+                                :userEmail
                             );
             ';
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['isAdmin' => $isAdmin]);
+            $stmt->execute(['isAdmin' => $isAdmin, 'userName' => $userName, 'userEmail' => $userEmail]);
 
             $sql = 'SELECT LAST_INSERT_ID() as userId';
 

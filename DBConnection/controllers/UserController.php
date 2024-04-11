@@ -25,8 +25,10 @@ class UserController
 
     public function insertUser()
     {
-        $isAdmin = $_SERVER["HTTP_ISADMIN"];
-        $result = $this->user->insert($isAdmin);
+        $isAdmin = boolval($_SERVER["HTTP_ISADMIN"]);
+        $userName = $_SERVER["HTTP_USERNAME"];
+        $userEmail = $_SERVER["HTTP_USEREMAIL"];
+        $result = $this->user->insert($isAdmin, $userName, $userEmail);
 
         if ($result["status"]) {
             return json_encode($result);
