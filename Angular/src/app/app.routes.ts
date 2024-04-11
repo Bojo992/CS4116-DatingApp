@@ -16,4 +16,5 @@ export const routes: Routes = [
   { path: 'register', component: RegistrationquizComponent},
   { path: 'admin', component: AdminpageComponent },
   { path: 'register', component: RegistrationquizComponent},
+  { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]}
 ];
