@@ -160,8 +160,8 @@ export class LoginComponent {
         if(userDetails.isAdmin === 1){
           console.log('IM AN ADMIN' , userDetails.isAdmin);
           this.goToAdminPage();
-          // need to add cookies here for admin, need function to restrict access to admin page
-
+          this.cookieService.set('isAdmin', userDetails.isAdmin.toString(), 1);
+          
         }else{
 
           console.log('im not an admin', userDetails.isAdmin);
