@@ -31,6 +31,7 @@ mat-progress-spinner::ng-deep circle {
     max-width: 900px;
     width: 100%;
     position:relative;
+    transition: transform .2s, box-shadow .2s;
 }
 
 .user-details {
@@ -39,9 +40,103 @@ mat-progress-spinner::ng-deep circle {
     padding: 20px;
     padding-left: 40px;
     position: relative;
-
 }
 
 .more-details {
     padding: 20px;
+}
+
+
+.img-profile{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 3px solid transparent;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    object-fit: cover;
+    background-color: #fff;
+    margin: 0 auto 20px auto;
+    left: 50%;
+    transition: border .2s, transform .2s;
+}
+
+.profile-name-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.profile-name {
+    display: inline-block;
+    max-width: 100%; 
+    font-size: 24px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+    color: #3498db;
+    text-align: center;
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    background-color: #fff;
+    padding: 0 10px; 
+    border-radius: 20px;
+}
+
+.profile-age{
+    padding: 0 10px; 
+    background-color: #fff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color:#3498db;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+.profile-gender{
+    padding: 0 10px; 
+    background-color: #ffffff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    color:#3498db;
+    font-size: 24px;
+    font-weight: 700;
+    border-radius: 20px;
+    margin-left: 10px;
+}
+
+.lead{
+    margin-top: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.img-profile:hover {
+    transform: scale(1.1);
+    border-color: #3498db;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+}
+
+.profile-name:hover {
+    transform: scale(1.1);
+    border-color: #3498db;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+}
+.profile-age:hover {
+    transform: scale(1.1);
+    border-color: #3498db;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+}
+.profile-gender:hover {
+    transform: scale(1.1);
+    border-color: #3498db;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+
+}
+
+.profile-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
