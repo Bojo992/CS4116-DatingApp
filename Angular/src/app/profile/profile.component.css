@@ -43,8 +43,16 @@ mat-progress-spinner::ng-deep circle {
 }
 
 .more-details {
-    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding:20px;
 }
+
+.joined-date{
+    margin-top:auto;
+}
+
 
 
 .img-profile{
@@ -109,6 +117,9 @@ mat-progress-spinner::ng-deep circle {
     font-size: 18px;
     font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
 
 .img-profile:hover {
     transform: scale(1.1);
