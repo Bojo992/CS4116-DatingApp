@@ -170,3 +170,24 @@ label {
 .mat-drawer {
   width: 300px;
 }
+
+.profile-picture-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-profile {
+  width: 100px; 
+  height: 100px;
+  border-radius: 50%;
+  border: 5px solid #3498db; 
+  box-sizing: border-box; 
+  object-fit: cover; 
+  background-color: #fff; 
+}

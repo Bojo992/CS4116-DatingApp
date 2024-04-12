@@ -18,6 +18,10 @@ interface UserDetails {
   userName: string;
 }
 
+interface UniversityResponse{
+
+
+}
 
 @Component({
   selector: 'app-profile',
@@ -46,7 +50,8 @@ export class ProfileComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    // Subscribe to the route parameters
+    // the route parameters
+
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('id') || this.cookieService.get('UID');
       this.isLoading = true;
@@ -68,7 +73,7 @@ export class ProfileComponent implements OnInit {
         
       }
 
-      // this is such a stupid way of doing i will fix it
+      // Getting user service by id
       this.userService.getById(this.userId).subscribe({
         next: (response: Object) => {
           this.data = response as UserDetails[];
@@ -83,7 +88,7 @@ export class ProfileComponent implements OnInit {
           console.error('There was an error!', error);
         }
       });
-
+      
   
     });
     

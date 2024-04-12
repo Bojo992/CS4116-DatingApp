@@ -36,6 +36,10 @@
     <img id="textbanner" src="assets\banner.png">
   </div>
 
+  <div *ngIf="isLoggedIn()" class="profile-picture-wrapper d-none d-sm-block">
+    <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">  <!-- Will need a check here to see if the user has a profile picture, hides on smaller screens-->
+</div>
+
   <div class="search-container">
     <form class="form">
       <input type="search"

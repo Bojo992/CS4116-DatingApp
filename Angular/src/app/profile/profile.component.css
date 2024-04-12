@@ -12,3 +12,36 @@
     margin-bottom: 20px;
 }
 
+
+mat-progress-spinner::ng-deep circle {
+    stroke: #3498db !important;
+  }
+
+.profile-container{
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+.profile-box {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    max-width: 900px;
+    width: 100%;
+    position:relative;
+}
+
+.user-details {
+    background-color: #3498db;
+    color: white;
+    padding: 20px;
+    padding-left: 40px;
+    position: relative;
+
+}
+
+.more-details {
+    padding: 20px;
+}
