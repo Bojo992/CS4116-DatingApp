@@ -23,7 +23,12 @@
         <div class="profile-box">
             <div class="row h-100">
                 <div class="col-md-6 user-details">
-                    <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
+                    <div class="img-profile-wrapper">
+                        <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
+                        <div *ngIf="myprofile" class="img-overlay">
+                            <img src = "assets\edit.png" alt="Edit">
+                        </div>
+                    </div>                    
                     <div class="profile-name-wrapper">
                         <div class="profile-name">{{username}}</div>
                         <div class="profile-age">Age</div>
@@ -32,7 +37,7 @@
                     <p class="lead"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum commodi quos molestias distinctio adipisci atque, saepe aliquam, id velit nam temporibus voluptate modi unde dolor? Laboriosam iste aspernatur iusto dignissimos. </p>
                 </div>
                 <div class="col-md-6 more-details">
-                    <h2><strong>Profile Details</strong></h2>
+                    <h2><strong>About {{username}} :</strong></h2>
                     <p><strong>UID of user:</strong> {{userId}}</p>
                     <p><strong>Username:</strong> {{username}}</p>
                     <p><strong>Age:</strong> WIP</p>

@@ -18,10 +18,6 @@ interface UserDetails {
   userName: string;
 }
 
-interface UniversityResponse{
-
-
-}
 
 @Component({
   selector: 'app-profile',
@@ -40,6 +36,7 @@ export class ProfileComponent implements OnInit {
   data: UserDetails[] = [];
   dateCreated: string = '';
   isLoading: boolean = false;
+  myprofile: boolean = false;
   
   
   
@@ -48,6 +45,8 @@ export class ProfileComponent implements OnInit {
     this.userId = '';
     this.username = '';
   }
+
+
   
   ngOnInit(): void {
     // the route parameters
@@ -58,6 +57,7 @@ export class ProfileComponent implements OnInit {
       
       if(this.userId === this.cookieService.get('UID')){
         console.log("Viewing YOUR profile");
+        this.myprofile = true;
         this.snackBar.open('Viewing your profile', 'Close',{
           duration: 2000,
           verticalPosition: 'bottom'
@@ -65,6 +65,7 @@ export class ProfileComponent implements OnInit {
         
       } else {
         console.log("Viewing someone else's profile with id: " + this.userId);
+        this.myprofile = false;
         this.snackBar.open('Viewing profile with userid: ', this.userId,{
           duration: 2000,
           verticalPosition: 'bottom'
