@@ -25,12 +25,12 @@ export class CourseService {
   }
 
   public insertCourse(name : any , universityId : any) {
-    let headers : HttpHeaders = new HttpHeaders().set("name" , name.toString()).set("universityId" , universityId.toString());
+    let headers : HttpHeaders = new HttpHeaders().set("name" , name.toString()).set("universityId" , universityId.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "insertCourse", {'headers' : headers} )
   }
 
   public deleteCourse(id : any ) {
-    let headers : HttpHeaders = new HttpHeaders().set("id" , id.toString());
+    let headers : HttpHeaders = new HttpHeaders().set("id" , id.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "deleteCourse", {'headers' : headers} )
   }
 

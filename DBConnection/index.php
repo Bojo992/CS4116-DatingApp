@@ -66,6 +66,13 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
             }
             break;
 
+        case "personal_info" :
+            {
+                $personal_info = new Personal_InfoRouter();
+                echo $personal_info->personal_InfoRouter();
+            }
+            break;
+
         default:
             echo "failed";
             break;
