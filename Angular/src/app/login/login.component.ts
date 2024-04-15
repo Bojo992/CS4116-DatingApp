@@ -3,14 +3,14 @@ import {Router, RouterLink, RouterLinkActive, RouterOutlet} from "@angular/route
 import {createCustomElement} from "@angular/elements";
 import {HomepageComponent} from "../homepage/homepage.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 
 
 import { CredentialsService } from "../DBConnection/credentials.service"
 import { UserService } from '../DBConnection/user.service';
+import {RegistrationComponent} from "../registration/registration.component";
+import {MatSnackBar, MatSnackBarModule} from "@angular/material/snack-bar";
 
 interface User {
   userId: number;
@@ -40,7 +40,8 @@ interface UserDetails {
     FormsModule,
     MatSnackBarModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RegistrationComponent
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
@@ -105,50 +106,6 @@ export class LoginComponent {
       }
     );
   }
-
-  registerUser(): void {
-    console.log("attempt to reg");
-    if(this.registerForm.value.password == this.registerForm.value.passwordConfirm
-          && this.registerForm.value.passwordConfirm != ''
-          && this.registerForm.value.password != ''
-          && this.registerForm.value.email != ''
-          && this.registerForm.value.userName != ''
-    ) {
-      this.userService.insertUser(0, this.registerForm.value.userName, this.registerForm.value.email).subscribe(
-        (resp: any) => {
-          console.log(resp);
-          console.log(resp.data[0].userId);
-          this.credentialsService.insertCredentials(
-            this.registerForm.value.email,
-            this.registerForm.value.password,
-            resp.data[0].userId,
-            this.registerForm.value.userName).subscribe(
-            () => {},
-            (error) => {
-              console.log("failed to insert credentials")
-            }
-          );
-          this.cookieService.set('UID', resp.data[0].userId.toString(), 1); // cookies expire in 1 day
-          console.log("inserted credentials");
-          this.router.navigate(["register"]);
-        },
-      (error) => {
-          console.error('Filed to insert user request failed', error);
-          this.snackBar.open('An error occurred during register', 'Close', {
-            duration: 3000,
-            verticalPosition: 'top'
-          });
-        }
-      )
-    } else {
-      this.snackBar.open('You entered incorrect data', 'Close', {
-        duration: 3000,
-        verticalPosition: 'top'
-      });
-    }
-  }
-
-
   // this is currently returning all users... We need to fix this, api does not account for unique
 
   checkifAdmin(userId: any) {
@@ -161,7 +118,7 @@ export class LoginComponent {
           console.log('IM AN ADMIN' , userDetails.isAdmin);
           this.goToAdminPage();
           this.cookieService.set('isAdmin', userDetails.isAdmin.toString(), 1);
-          
+
         }else{
 
           console.log('im not an admin', userDetails.isAdmin);
@@ -189,4 +146,5 @@ export class LoginComponent {
 
   protected readonly HomepageComponent = HomepageComponent;
   protected readonly console = console;
+  protected readonly RegistrationComponent = RegistrationComponent;
 }

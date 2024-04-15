@@ -1,0 +1,50 @@
+ <form class="modal-content animate" [formGroup]="registerForm" (ngSubmit)="registerUser()">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('registerComponent').style.display='none'" class="close" title="Go back">&times;</span>
+    </div>
+    <div class="container">
+      <div class="form-group">
+        <label for="regUserName">Username</label>
+        <input type="text" id="regUserName" formControlName="username"/>
+      </div>
+      <div class="form-group">
+        <label for="regEmail">Email</label>
+        <input type="text" id="regEmail" formControlName="email"/>
+      </div>
+      <div class="form-group">
+        <label for="regPassword">Password</label>
+        <input type="text" id="regPassword" formControlName="password"/>
+      </div>
+      <div class="form-group">
+        <label for="regPasswordConfirm">Confirm Password</label>
+        <input type="text" id="regPasswordConfirm" formControlName="passwordConfirm"/>
+      </div>
+      <div class="button-container">
+        <button type="submit" class="btn-register">Register</button>
+        <button type="button" onclick="document.getElementById('registerComponent').style.display='none'" class="cancelbtn">Cancel</button>
+      </div>
+    </div>
+  </form>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  // Get the registration modal
+  var registerModal = document.getElementById('registerComponent');
+
+  // When the user clicks anywhere outside the registration modal, close it
+  document.addEventListener('click', function(event) {
+    // Check if the clicked element is outside the modal and not the modal itself
+    if (event.target !== registerModal && !registerModal.contains(event.target)) {
+      // If so, close the modal by hiding it
+      registerModal.style.display = "none";
+    }
+  });
+
+  // Function to open the registration modal
+  function openRegisterModal() {
+    registerModal.style.display = "block";
+  }
+
+</script>

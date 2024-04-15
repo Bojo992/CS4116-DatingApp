@@ -74,29 +74,7 @@
 </div>
 
 <div id="registerComponent" class="modal">
-  <form class="form" [formGroup]="registerForm" (ngSubmit)="registerUser()">
-    <div class="filed">
-      <label for="regUserName">Username</label>
-      <input type="text" id="regUserName" formControlName="userName"/>
-    </div>
-    <div class="filed">
-      <label for="regEmail">Email</label>
-      <input type="text" id="regEmail" formControlName="email"/>
-    </div>
-    <div class="filed">
-      <label for="regPassword">Password</label>
-      <input type="text" id="regPassword" formControlName="password"/>
-    </div>
-    <div class="filed">
-      <label for="regPasswordConfirm">Confirm Password</label>
-      <input type="text" id="regPasswordConfirm" formControlName="passwordConfirm"/>
-    </div>
-
-    <div>
-      <button type="submit">Register</button>
-      <button onclick="document.getElementById('registerComponent').style.display='none'">Cancel</button>
-    </div>
-  </form>
+  <app-registration></app-registration>
 </div>
 
 <script>
