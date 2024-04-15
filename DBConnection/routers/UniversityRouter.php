@@ -1,6 +1,6 @@
 <?php
 include_once(__DIR__ . "/../controllers/UniversityController.php");
-include_once(__DIR__ . "/../Util.php");
+include_once(__DIR__ . "/../Util/UtilConfig.php");
 
 
 

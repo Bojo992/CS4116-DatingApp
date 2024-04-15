@@ -15,28 +15,47 @@ export class UserCourseService {
   }
 
   public getById(id: any){
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("id", id.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getById", {'headers': headers});
   }
 
   public getByCourseId(courseId: any){
-    let headers = new HttpHeaders().set("courseId", courseId.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("courseId", courseId.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getByCourseId", {'headers': headers});
   }
 
   public getByUniversityId(universityId: any){
-    let headers = new HttpHeaders().set("universityId", universityId.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("universityId", universityId.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getByUniversityId", {'headers': headers});
   }
 
-  public insertUserCourse(universityId: any , courseId : any){
-    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*').set("universityId" , universityId.toString()).set("courseId" , courseId.toString());
-    return this.httpClient.get(this.url + "insertUserCourse", {'headers': headers});
+  public insertUserCourse(universityId: number , courseId: number){
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "insertUserCourse",
+      {
+        'headers': headers,
+        'body': {
+          'universityId': universityId,
+          'courseId': courseId
+        }
+      });
   }
 
   public deleteUserCourse(id: any){
-    let headers = new HttpHeaders().set('Access-Control-Allow-Origin', '*').set("id" , id.toString());
-    return this.httpClient.get(this.url + "deleteUserCourse", {'headers': headers});
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "deleteUserCourse",
+      {
+        'headers': headers,
+        'body': {'id': id}
+      });
   }
 
 }

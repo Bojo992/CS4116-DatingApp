@@ -12,11 +12,12 @@ export class CredentialsService {
 
   public checkCredentials(usermane: string, password: string) {
     let headers = new HttpHeaders()
-      .set("mail", usermane)
-      .set("username", usermane)
-      .set("password", password)
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "checkCredentials", {'headers': headers});
+    return this.httpClient.post(this.url + "checkCredentials",
+      {
+        'headers': headers,
+        'body': {'username': usermane, 'password': password}
+      });
   }
 
   public getByUserId(id : any) {
@@ -35,18 +36,28 @@ export class CredentialsService {
 
   public insertCredentials(mail : any, password : any, userId : any, username: any) {
     let headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*')
-      .set("mail" , mail.toString())
-      .set("password" , password.toString())
-      .set("userId" , userId.toString())
-      .set("userName", username.toString());
-    return this.httpClient.get(this.url + "insertCredentials", {'headers': headers});
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "insertCredentials",
+      {
+        'headers': headers,
+        'body': {
+          'email': mail,
+          'password': password,
+          'userId': userId,
+          'username': username
+        }
+      });
   }
 
   public deleteCredentials(userId : any) {
     let headers = new HttpHeaders()
-      .set("userId", userId.toString())
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "deleteCredentials", {'headers': headers});
+    return this.httpClient.post(this.url + "deleteCredentials",
+      {
+        'headers': headers,
+        'body': {
+          'userId': userId
+        }
+      });
   }
 }
