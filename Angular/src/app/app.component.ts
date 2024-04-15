@@ -5,6 +5,7 @@ import {LoginModule} from "./login/login.module";
 import {NavbarComponent} from "./navbar/navbar.component";
 //import {SidenavComponent} from "./sidenav/sidenav.component";
 import { AdminModule } from './adminpage/admin.module';
+import {AboutComponent} from "./about/about.component";
 
 @Component({
   selector: 'app-root',
@@ -19,6 +20,7 @@ import { AdminModule } from './adminpage/admin.module';
     NavbarComponent,
 //    SidenavComponent,
     HttpClientModule,
+    AboutComponent,
 
   ],
   templateUrl: './app.component.html',
