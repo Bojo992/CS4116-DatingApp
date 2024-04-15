@@ -8,7 +8,7 @@ include_once(__DIR__ . '/routers/ChatRouter.php');
 include_once(__DIR__ . '/routers/MessagesRouter.php');
 include_once(__DIR__ . '/routers/Personal_InfoRouter.php');
 include_once(__DIR__ . '/routers/ProfileRouter.php');
-include_once(__DIR__ . '/Util.php');
+include_once(__DIR__ . '/Util/UtilConfig.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -21,36 +21,36 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
     switch (explode('/', $uri)[URI_TABLE_OFFSET] ?? '') {
         case "course":
             {
-                $course = new CourseRouter();
-                echo $course->courseRouter();
+                $router = new CourseRouter();
+                echo $router->courseRouter();
             }
             break;
 
         case "university":
             {
-                $course = new UniversityRouter();
-                echo $course->courseRouter();
+                $router = new UniversityRouter();
+                echo $router->courseRouter();
             }
             break;
 
         case "userCourse":
             {
-                $course = new userCourseRouter();
-                echo $course->courseRouter();
+                $router = new userCourseRouter();
+                echo $router->courseRouter();
             }
             break;
 
         case "credentials":
             {
-                $course = new CredentialsRouter();
-                echo $course->courseRouter();
+                $router = new CredentialsRouter();
+                echo $router->courseRouter();
             }
             break;
 
         case "user":
             {
-                $course = new UserRouter();
-                echo $course->courseRouter();
+                $router = new UserRouter();
+                echo $router->courseRouter();
             }
             break;
 
