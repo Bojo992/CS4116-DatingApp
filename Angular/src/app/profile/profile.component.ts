@@ -2,99 +2,139 @@ import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../DBConnection/user.service';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs'; // This is used to switch the route when a new parameter is passed
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { User } from '../homepage/homepage.component';
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ProfileService } from '../DBConnection/profile.service';
+import { User } from '../navbar/navbar.component';
 
 
-interface UserDetails {
-  userId: number;
-  personalInfo: number;
-  course: number;
-  dateCreated: string;
-  isAdmin: number;
-  userName: string;
+
+interface PersonalInfo {
+  id: number;
+  bio: string;
+  smoking: number;
+  age: number;
+  vegan: number;
+  loction: string;
+  Gender: number;
+  drinking: number;
 }
 
+interface University {
+  id: number;
+  name: string;
+}
+
+interface Course {
+  id: number;
+  name: string;
+  universityId: number;
+}
+
+interface UserCourse {
+  id: number;
+  universityId: number;
+  courseId: number;
+}
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [ 
-    CommonModule, MatProgressSpinnerModule
-  ],
+  imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+  styleUrls: ['./profile.component.css']  
 })
-
-
 export class ProfileComponent implements OnInit {
   userId: string;
   username: string;
-  data: UserDetails[] = [];
   dateCreated: string = '';
   isLoading: boolean = false;
   myprofile: boolean = false;
-  
-  
-  
-  
-  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar) {
+
+  userProfile: User | null = null;
+  personalInfo: PersonalInfo | null = null;
+  university: University | null = null;
+  course: Course | null = null;
+  userCourse: UserCourse | null = null;
+  Gender : string = '';
+
+  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar, private profileService: ProfileService) {
     this.userId = '';
     this.username = '';
   }
 
-
-  
   ngOnInit(): void {
-    // the route parameters
-
     this.route.paramMap.subscribe(params => {
       this.userId = params.get('id') || this.cookieService.get('UID');
       this.isLoading = true;
-      
-      if(this.userId === this.cookieService.get('UID')){
+
+      if (this.userId === this.cookieService.get('UID')) {
         console.log("Viewing YOUR profile");
         this.myprofile = true;
-        this.snackBar.open('Viewing your profile', 'Close',{
+        this.snackBar.open('Viewing your profile', 'Close', {
           duration: 2000,
           verticalPosition: 'bottom'
-        })
-        
+        });
       } else {
         console.log("Viewing someone else's profile with id: " + this.userId);
         this.myprofile = false;
-        this.snackBar.open('Viewing profile with userid: ', this.userId,{
+        this.snackBar.open('Viewing profile with userid: ', this.userId, {
           duration: 2000,
           verticalPosition: 'bottom'
-        })
-
-        
+        });
       }
 
-      // Getting user service by id
-      this.userService.getById(this.userId).subscribe({
-        next: (response: Object) => {
-          this.data = response as UserDetails[];
-          this.username = this.data[0].userName;
-          this.dateCreated = this.data[0].dateCreated;
-          this.isLoading = false;
-          },
-        error: (error) => {
-          this.snackBar.open('Failed to load data', 'Close', {
-            duration: 3000,
-          });
-          console.error('There was an error!', error);
-        }
-      });
-      
-  
+      this.loadProfileData(this.userId); 
+      console.log('loading data for userid ' + this.userId)
     });
+  }
+
+  loadProfileData(userId: string): void {
+    console.log('loading data for userid ' + this.userId)
+    this.profileService.getProfileInfo(userId).subscribe({
+      next: (response: any) => {
+        if (response.user && response.user.length) {
+          this.userProfile = response.user[0];
+          console.log('loading data for userid ' + this.userId)
+          this.personalInfo = response.personalInfo[0];
+          console.log(this.personalInfo);
+          this.university = response.university[0];
+          this.course = response.course[0];
+          this.userCourse = response.userCourse[0];
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        this.snackBar.open('Failed to load data', 'Close', {
+          duration: 3000,
+        });
+        console.error('There was an error!', error);
+      }
+    });
+  }
+  editBio() {
+
+    this.snackBar.open('Edit Bio Placeholder', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+
+  }
+
+  getLifestyleIcons(): string {
+    let icons = '';
     
+    if (this.personalInfo?.smoking === 1) {
+      icons += '<i class="fas fa-smoking"></i> ';
+    }
+    if (this.personalInfo?.drinking === 1) {
+      icons += '<i class="fas fa-beer"></i> ';
+    }
+    if (this.personalInfo?.vegan === 1) {
+      icons += '<i class="fa-solid fa-leaf"></i> ';
+    }
+    return icons;
+  }
 
-  }  
 }
-
-  

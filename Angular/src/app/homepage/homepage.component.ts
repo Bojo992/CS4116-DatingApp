@@ -8,11 +8,14 @@ import {
 } from "@angular/material/autocomplete";
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 
-export interface User {
-  name: string;
-  age: string;
-  university: string;
-  course: string;
+interface User {
+  userId: number;
+  personalInfo: number;
+  course: number;
+  dateCreated: string;
+  isAdmin: number;
+  userName: string; 
+  userEmail: string;
 }
 
 @Component({
