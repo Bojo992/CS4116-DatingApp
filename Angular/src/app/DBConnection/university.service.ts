@@ -20,7 +20,7 @@ export class UniversityService {
   }
 
   public addUniversity(name: string) {
-    let headers = new HttpHeaders().set("name", name).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders().set("name", name.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "insertUniversity", {'headers': headers});
   }
 

@@ -23,7 +23,8 @@ class MessagesController
         return json_encode($data);
     }
 
-    public function insertMessage() {
+    public function insertMessage()
+    {
 
         $chatId = intval($_SERVER["HTTP_CHATID"] ?? '');
         $message = $this->messages->test_input($_SERVER["HTTP_MESSAGE"] ?? '');
@@ -32,13 +33,14 @@ class MessagesController
         $result = $this->messages->insertMessage($chatId, $message, $senderId, $receiverId);
 
         if ($result["status"]) {
-            return $this->messages->message("message was inserted successfully" , 200);
+            return $this->messages->message("message was inserted successfully", 200);
         } else {
-            return $this->messages->message("message was not inserted" , 404);
+            return $this->messages->message("message was not inserted", 404);
         }
     }
 
-    public function deleteMessage() {
+    public function deleteMessage()
+    {
         $messageId = intval($_SERVER["HTTP_MESSAGEID"] ?? '');
         if ($this->messages->deleteMessage($messageId)) {
             return $this->messages->message("message was deleted", 200);

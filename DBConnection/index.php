@@ -6,6 +6,8 @@ include_once(__DIR__ . '/routers/CredentialsRouter.php');
 include_once(__DIR__ . '/routers/UserRouter.php');
 include_once(__DIR__ . '/routers/ChatRouter.php');
 include_once(__DIR__ . '/routers/MessagesRouter.php');
+include_once(__DIR__ . '/routers/Personal_InfoRouter.php');
+include_once(__DIR__ . '/routers/ProfileRouter.php');
 include_once(__DIR__ . '/Util.php');
 
 header('Access-Control-Allow-Origin: *');
@@ -63,6 +65,20 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
             {
                 $messages = new MessagesRouter();
                 echo $messages->messageRouter();
+            }
+            break;
+
+        case "personal_info" :
+            {
+                $personal_info = new Personal_InfoRouter();
+                echo $personal_info->personal_InfoRouter();
+            }
+            break;
+
+        case "profile" :
+            {
+                $personal_info = new ProfileRouter();
+                echo $personal_info->profileRouter();
             }
             break;
 
