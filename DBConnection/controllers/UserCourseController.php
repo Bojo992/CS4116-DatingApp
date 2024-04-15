@@ -1,5 +1,6 @@
 <?php
-include(__DIR__ . "/../db/DatabaseUserCourse.php");
+include_once(__DIR__ . "/../db/DatabaseUserCourse.php");
+include_once(__DIR__ . "/../Util/UtilInclude.php");
 
 class UserCourseController
 {
@@ -40,30 +41,30 @@ class UserCourseController
 
     public function insertUserCourse()
     {
-        $courseId = $this->userCourse->test_input($_SERVER["HTTP_COURSEID"]);
-        $universityId = $this->userCourse->test_input($_SERVER["HTTP_UNIVERSITYID"]);
+        $courseId = cleanInput(getRequestBody()["courseId"]);
+        $universityId = cleanInput(getRequestBody()["universityId"]);
         $result = $this->userCourse->insert($courseId, $universityId);
 
         if ($result["status"]) {
-            return $this->userCourse->message('University added successfully!',false);
+            return message('University added successfully!',false);
         } else {
-            return $this->userCourse->message($result["error"], 404);
+            return message($result["error"], 404);
         }
     }
 
     public function deleteUserCourse()
     {
-        $idTest = intval($_SERVER["HTTP_ID"]);
+        $id = intval(getRequestBody()["id"]);
 
-        if ($this->userCourse->delete($idTest)) {
-            return $this->userCourse->message('University deleted successfully!',false);
+        if ($this->userCourse->delete($id)) {
+            return message('University deleted successfully!',false);
         } else {
-            return $this->userCourse->message('Failed to delete an University!',true);
+            return message('Failed to delete an University!',true);
         }
     }
 
     public function response404(){
-        return $this->userCourse->message("API was not found", 404);
+        return message("API was not found", 404);
     }
 
 }

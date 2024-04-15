@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class CourseService {
-  private url = 'http://coursemates.infinityfreeapp.com/DBConnection/course/';
-  // private url = 'http://localhost/CourseMates/DBConnection/course/';
+  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/course/';
+  private url = 'http://localhost/CourseMates/DBConnection/course/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -20,18 +20,25 @@ export class CourseService {
   }
 
   public getByUniversityId(universityId: any){
-    let headers = new HttpHeaders().set("universityId", universityId.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("universityId", universityId.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getByUniversityId", {'headers': headers});
   }
 
   public insertCourse(name : any , universityId : any) {
-    let headers : HttpHeaders = new HttpHeaders().set("name" , name.toString()).set("universityId" , universityId.toString());
-    return this.httpClient.get(this.url + "insertCourse", {'headers' : headers} )
+    let headers : HttpHeaders = new HttpHeaders();
+    return this.httpClient.post(this.url + "insertCourse",
+      {'headers' : headers, 'body' : {'name': name, 'universityId': universityId}} )
   }
 
   public deleteCourse(id : any ) {
     let headers : HttpHeaders = new HttpHeaders().set("id" , id.toString());
-    return this.httpClient.get(this.url + "deleteCourse", {'headers' : headers} )
+    return this.httpClient.post(this.url + "deleteCourse",
+{
+        'headers' : headers,
+        'body' : {'id': id}
+      });
   }
 
 }

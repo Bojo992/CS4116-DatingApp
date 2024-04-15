@@ -1,6 +1,9 @@
 <?php
 
 include_once(__DIR__ . "/../db/DatabaseUniversity.php");
+include_once(__DIR__ . "/../Util/UtilInclude.php");
+
+error_reporting(E_ERROR | E_PARSE);
 
 class UniversityController
 {
@@ -27,7 +30,8 @@ class UniversityController
 
     public function insertUniversity()
     {
-        $name = $this->database->test_input($_SERVER["HTTP_NAME"]);
+        $name = cleanInput(getRequestBody()["name"]);
+
         $result = $this->database->insert($name);
 
         if ($result["status"]) {
@@ -39,16 +43,16 @@ class UniversityController
 
     public function deleteUniversity()
     {
-        $idTest = intval($_SERVER['HTTP_ID']);
+        $id = intval(getRequestBody()["id"]);
 
-        if ($this->database->delete($idTest)) {
-            return $this->database->message('University deleted successfully!',false);
+        if ($this->database->delete($id)) {
+            return message('University deleted successfully!',false);
         } else {
-            return $this->database->message('Failed to delete an University!',true);
+            return message('Failed to delete an University!',true);
         }
     }
 
     public function response404(){
-        return $this->database->message("API was not found", 404);
+        return message("API was not found", 404);
     }
 }

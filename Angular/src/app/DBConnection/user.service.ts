@@ -15,21 +15,35 @@ export class UserService {
   }
 
   public getById(id: any){
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("id", id.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getById", {'headers': headers});
   }
 
   public insertUser(isAdmin: number, userName: any, userEmail: any){
     let headers = new HttpHeaders()
-      .set("isAdmin", isAdmin.toString())
-      .set("userName", userName.toString())
-      .set("userEmail", userEmail.toString())
       .set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "insertUser", {'headers': headers});
+    return this.httpClient.post(this.url + "insertUser",
+      {
+        'headers': headers,
+        'body': {
+          'isAdmin': isAdmin,
+          'username': userName.toString(),
+          'userEmail': userEmail
+        }
+      });
   }
 
-  public deleteUser(id: any) {
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "deleteUser", {'headers': headers});
+  public deleteUser(id: number) {
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "deleteUser",
+      {
+        'headers': headers,
+        'body': {
+          'id': id
+        }
+      });
   }
 }

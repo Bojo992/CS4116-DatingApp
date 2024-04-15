@@ -1,5 +1,6 @@
 <?php
 include(__DIR__ . "/../db/DatabaseUser.php");
+include_once(__DIR__ . "/../Util/UtilInclude.php");
 
 class UserController
 {
@@ -25,32 +26,32 @@ class UserController
 
     public function insertUser()
     {
-        $isAdmin = boolval($_SERVER["HTTP_ISADMIN"]);
-        $userName = $_SERVER["HTTP_USERNAME"];
-        $userEmail = $_SERVER["HTTP_USEREMAIL"];
+        $isAdmin = boolval(getRequestBody()["isAdmin"]);
+        $userName = cleanInput(getRequestBody()["username"]);
+        $userEmail = cleanInput(getRequestBody()["userEmail"]);
         $result = $this->user->insert($isAdmin, $userName, $userEmail);
 
         if ($result["status"]) {
             return json_encode($result);
         } else {
-            return $this->user->message($result["error"], 404);
+            return message($result["error"], 404);
         }
     }
 
     public function deleteUser()
     {
-        $userId = intval($_SERVER["HTTP_ID"]);
+        $userId = intval(getRequestBody()["id"]);
 
         $isUserDeleted = $this->user->delete($userId);
 
         if ($isUserDeleted) {
-            return $this->user->message('University deleted successfully!',false);
+            return message('University deleted successfully!',false);
         } else {
-            return $this->user->message('Failed to delete an University!',true);
+            return message('Failed to delete an University!',true);
         }
     }
 
     public function response404(){
-        return $this->user->message("API was not found", 404);
+        return message("API was not found", 404);
     }
 }

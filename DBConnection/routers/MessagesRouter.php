@@ -1,5 +1,5 @@
 <?php
-include_once (__DIR__ . "/../Util.php");
+include_once (__DIR__ . "/../Util/UtilConfig.php");
 include_once (__DIR__ . "/../controllers/MessagesController.php");
 
 class MessagesRouter

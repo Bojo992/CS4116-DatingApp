@@ -1,5 +1,5 @@
 <?php
-include_once(__DIR__ . "/Util.php");
+include_once(__DIR__ . "/Util/UtilConfig.php");
 class Config
 {
     private $dsn;
@@ -30,6 +30,7 @@ class Config
     }
 
     // JSON Format Converter Function
+    //This need to be removed and Util/SendMessage.php need to be used
     public function message($content, $status) {
         return json_encode(['message' => $content, 'error' => $status]);
     }

@@ -1,6 +1,7 @@
 <?php
 
 include(__DIR__ . "/../db/DatabaseCredentials.php");
+include_once(__DIR__ . "/../Util/UtilInclude.php");
 
 class CredentialsController
 {
@@ -27,12 +28,12 @@ class CredentialsController
 
     public function checkCredentials()
     {
-        $mail = $this->credentials->test_input(
-            isset($_SERVER['HTTP_MAIL']) ? $_SERVER["HTTP_MAIL"] : '');
-        $userName = $this->credentials->test_input(
-            isset($_SERVER['HTTP_USERNAME']) ? $_SERVER["HTTP_USERNAME"] : '');
-        $password = $this->credentials->test_input(
-            isset($_SERVER['HTTP_PASSWORD']) ? $_SERVER["HTTP_PASSWORD"] : '');
+        $mail = cleanInput(
+            isset(getRequestBody()['email']) ? getRequestBody()["email"] : '');
+        $userName = cleanInput(
+            isset(getRequestBody()['username']) ? getRequestBody()["username"] : '');
+        $password = cleanInput(
+            isset(getRequestBody()['password']) ? getRequestBody()["password"] : '');
 
         $response = $this->credentials->checkCredentials($mail, $userName, $password);
 
@@ -41,32 +42,32 @@ class CredentialsController
 
     public function insertCredentials()
     {
-        $mail = $this->credentials->test_input($_SERVER["HTTP_MAIL"]);
-        $password = $this->credentials->test_input($_SERVER["HTTP_PASSWORD"]);
-        $userId = $this->credentials->test_input($_SERVER["HTTP_USERID"]);
-        $userName = $this->credentials->test_input($_SERVER["HTTP_USERNAME"]);
+        $mail = cleanInput(getRequestBody()["email"]);
+        $password = cleanInput(getRequestBody()["password"]);
+        $userId = cleanInput(getRequestBody()["userId"]);
+        $userName = cleanInput(getRequestBody()["username"]);
 
         $result = $this->credentials->insert($mail, $password, $userId, $userName);
 
         if ($result["status"]) {
-            return $this->credentials->message('Credentials added successfully!',false);
+            return message('Credentials added successfully!',false);
         } else {
-            return $this->credentials->message($result["error"], 404);
+            return message($result["error"], 404);
         }
     }
 
     public function deleteCredentials()
     {
-        $id = intval($_SERVER["HTTP_USERID"]);
+        $id = intval(getRequestBody()["userId"]);
 
         if ($this->credentials->delete($id)) {
-            return $this->credentials->message('Credentials deleted successfully!',false);
+            return message('Credentials deleted successfully!',false);
         } else {
-            return $this->credentials->message('Failed to delete an Credentials!',true);
+            return message('Failed to delete an Credentials!',true);
         }
     }
 
     public function response404(){
-        return $this->credentials->message("API was not found", 404);
+        return message("API was not found", 404);
     }
 }

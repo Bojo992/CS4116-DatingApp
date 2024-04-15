@@ -15,17 +15,29 @@ export class UniversityService {
   }
 
   public getById(id: any){
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
+    let headers = new HttpHeaders()
+      .set("id", id.toString())
+      .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getById", {'headers': headers});
   }
 
   public addUniversity(name: string) {
-    let headers = new HttpHeaders().set("name", name).set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "insertUniversity", {'headers': headers});
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "insertUniversity",
+      {
+        'headers': headers,
+        'body': {'name': name}
+      });
   }
 
   public deleteUniversity(id: any) {
-    let headers = new HttpHeaders().set("id", id.toString()).set('Access-Control-Allow-Origin', '*');
-    return this.httpClient.get(this.url + "deleteUniversity", {'headers': headers});
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "deleteUniversity",
+      {
+        'headers': headers,
+        'body': {'id': id}
+      });
   }
 }
