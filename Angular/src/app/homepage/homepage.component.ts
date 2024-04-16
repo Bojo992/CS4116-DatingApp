@@ -72,31 +72,34 @@ export class HomepageComponent implements OnInit {
   }
 
   clickLike(): void {
-    this.shuffleUsers();
     if (this.users.length === 0){
       console.log('No profile found');
       this.snackBar.open('No more profiles to load','Close',{
         duration: 2000,
         verticalPosition: 'bottom'
       })
-    }
-    // Move to the next profile
-    if (this.index < this.users.length - 1) {
-      this.index++;
-      const nextUserId = this.users[this.index].userId;
-      // Call the loadProfileData method of ProfileComponent
-      const profileComponent = document.querySelector('app-profile') as any;
-      if (profileComponent) {
-        profileComponent.loadProfileData(nextUserId);
+    }else {
+      // Move to the next profile
+      if (this.index < this.users.length - 1) {
+        this.index++;
+        const nextUserId = this.users[this.index].userId;
+        // Call the loadProfileData method of ProfileComponent
+        const profileComponent = document.querySelector('app-profile') as any;
+        if (profileComponent) {
+          profileComponent.loadProfileData(nextUserId);
+        }
+      } else {
+        this.snackBar.open('No more profiles to load','Close',{
+          duration: 2000,
+          verticalPosition: 'bottom'
+        })
+        console.log('No more profiles to load');
       }
-    } else {
-      this.snackBar.open('No more profiles to load','Close',{
-        duration: 2000,
-        verticalPosition: 'bottom'
-      })
-      console.log('No more profiles to load');
     }
+    //this.shuffleUsers();
   }
+
+
 
   protected readonly ProfileComponent = ProfileComponent;
 
