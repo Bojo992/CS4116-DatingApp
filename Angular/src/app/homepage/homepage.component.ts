@@ -45,9 +45,9 @@ interface User {
 export class HomepageComponent implements OnInit {
   index = 0;
   users: User[] = [];
+  duplicatedUsers: User[] = [];
   @Input()
   test!: User | null;
-  userSubscription: Subscription | undefined;
 
   constructor(private userService: UserService, private snackBar: MatSnackBar, private cookieService: CookieService, private router: Router) {
   }
@@ -61,7 +61,25 @@ export class HomepageComponent implements OnInit {
     });
   }
 
+  shuffleUsers(): void{
+    let counter = this.users.length;
+
+    while (counter > 0) {
+      counter--;
+      let index = Math.floor(Math.random() * counter);
+      [this.users[counter], this.users[index]] = [this.users[index], this.users[counter]];
+    }
+  }
+
   clickLike(): void {
+    this.shuffleUsers();
+    if (this.users.length === 0){
+      console.log('No profile found');
+      this.snackBar.open('No more profiles to load','Close',{
+        duration: 2000,
+        verticalPosition: 'bottom'
+      })
+    }
     // Move to the next profile
     if (this.index < this.users.length - 1) {
       this.index++;
@@ -81,5 +99,8 @@ export class HomepageComponent implements OnInit {
   }
 
   protected readonly ProfileComponent = ProfileComponent;
+
+
+
 }
 
