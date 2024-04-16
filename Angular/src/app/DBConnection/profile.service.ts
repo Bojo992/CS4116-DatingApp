@@ -14,4 +14,8 @@ export class ProfileService {
     let headers : HttpHeaders = new HttpHeaders().set("userId" , userId.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "getProfileInfo" , {'headers' : headers});
   }
+
+  public getAllUserProfileInfo() {
+    return this.httpClient.get(this.url + "getAllUserProfileInfo");
+  }
 }
