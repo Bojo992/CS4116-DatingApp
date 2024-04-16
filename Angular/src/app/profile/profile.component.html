@@ -1,55 +1,39 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Profile</title>
-</head>
+<div *ngIf="isLoading" class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only"></span>
+  </div>
+</div>
 
-<body>
-    
-    <div *ngIf="isLoading" class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" role="status">
-            <span class="sr-only"></span>
+<div *ngIf="!isLoading" class="container w-75 d-flex align-items-center justify-content-center">
+  <div class="profile-box">
+    <div class="row h-100">
+      <div class="col-md-6 user-details" [ngClass]="{'userdetails-female': personalInfo?.Gender !== 1}">
+        <div class="img-profile-wrapper">
+          <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
+          <div *ngIf="myprofile" class="img-overlay">
+            <img src="assets\edit.png" alt="Edit">
+          </div>
         </div>
+        <div class="profile-name-wrapper">
+          <div class="profile-name">{{ userProfile?.userName }}</div>
+          <div class="profile-age">{{ personalInfo?.age }}</div>
+          <div class="profile-gender"> {{ personalInfo?.Gender === 1 ? 'Male' : 'Female' }}</div>
+        </div>
+        <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
+                                                    (click)="editBio()"></i></p>
+      </div>
+      <div class="col-md-6 more-details">
+        <h2><strong>About {{ userProfile?.userName }} :</strong></h2>
+        <p><strong>UID of user:</strong> {{ userId }}</p>
+        <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
+        <p><strong>Location:</strong> {{ personalInfo?.loction }}</p>
+        <p><strong>Age:</strong> {{ personalInfo?.age }}</p>
+        <p><strong>University:</strong> {{ university?.name }}</p>
+        <p><strong>Course:</strong> {{ course?.name }} </p>
+        <p style="font-size: 30px" [innerHTML]="getLifestyleIcons()"></p>
+        <br>
+        <p class="joined-date"><small> Joined Coursemates: {{ userProfile?.dateCreated | date:'mediumDate' }} </small>
+        </p></div>
     </div>
-    
-    <div *ngIf="!isLoading" class="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
-        <div class="profile-box">
-            <div class="row h-100">
-                <div class="col-md-6 user-details" [ngClass]="{'userdetails-female': personalInfo?.Gender !== 1}">
-                    <div class="img-profile-wrapper">
-                        <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
-                        <div *ngIf="myprofile" class="img-overlay">
-                            <img src = "assets\edit.png" alt="Edit">
-                        </div>
-                    </div>                    
-                    <div class="profile-name-wrapper">
-                        <div class="profile-name">{{ userProfile?.userName }}</div>
-                        <div class="profile-age">{{personalInfo?.age}}</div>
-                        <div class="profile-gender"> {{personalInfo?.Gender === 1 ? 'Male' : 'Female'}}</div>                    
-                    </div>
-                    <p class="lead"> {{personalInfo?.bio}} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square" (click)="editBio()"></i></p>
-                    </div>
-                    <div class="col-md-6 more-details">
-                        <h2><strong>About {{userProfile?.userName}} :</strong></h2>
-                        <p><strong>UID of user:</strong> {{userId}}</p>
-                        <p><strong>Username:</strong> {{userProfile?.userName}}</p>
-                        <p><strong>Location:</strong> {{personalInfo?.loction}}</p>
-                        <p><strong>Age:</strong> {{personalInfo?.age}}</p>
-                        <p><strong>University:</strong> {{university?.name}}</p>
-                        <p><strong>Course:</strong> {{course?.name}} </p>
-                        <p style="font-size: 30px" [innerHTML]="getLifestyleIcons()"></p>
-                        <br>
-                        <p class="joined-date"> <small> Joined Coursemates: {{userProfile?.dateCreated | date:'mediumDate'}} </small></p>                    </div>
-                </div>
-            </div>
-        </div>  
-        
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        
-    </body>
-    </html>
+  </div>
+</div>

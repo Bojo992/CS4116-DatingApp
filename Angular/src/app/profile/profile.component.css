@@ -1,8 +1,8 @@
 .container {
-    background-color: #fff; 
-    padding: 40px; 
+    background-color: #fff;
+    padding: 40px;
     border-radius: 5px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);*/
     width: 500px;
     box-sizing: border-box;
     height: 80%;
@@ -26,7 +26,7 @@ mat-progress-spinner::ng-deep circle {
 .profile-box {
     background-color: white;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
     overflow: hidden;
     max-width: 900px;
     width: 100%;
@@ -102,16 +102,16 @@ mat-progress-spinner::ng-deep circle {
 
 .profile-personal-details {
     display: inline-block;
-    max-width: 100%; 
+    max-width: 100%;
     font-size: 16px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    /*box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);*/
     font-weight: 700;
     color: #fff;
     text-align: center;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     background-color: #3498db;
-    padding: 0 10px; 
+    padding: 0 10px;
     border-radius: 20px;
     margin-left: 10px;
 }
@@ -119,21 +119,21 @@ mat-progress-spinner::ng-deep circle {
 
 .profile-name {
     display: inline-block;
-    max-width: 100%; 
+    max-width: 100%;
     font-size: 24px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     font-weight: 700;
     color: #3498db;
     text-align: center;
-    overflow: hidden; 
-    text-overflow: ellipsis; 
+    overflow: hidden;
+    text-overflow: ellipsis;
     background-color: #fff;
-    padding: 0 10px; 
+    padding: 0 10px;
     border-radius: 20px;
 }
 
 .profile-age{
-    padding: 0 10px; 
+    padding: 0 10px;
     background-color: #fff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     color:#3498db;
@@ -144,7 +144,7 @@ mat-progress-spinner::ng-deep circle {
 }
 
 .profile-gender{
-    padding: 0 10px; 
+    padding: 0 10px;
     background-color: #ffffff;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
     color:#3498db;
