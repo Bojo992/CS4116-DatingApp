@@ -80,4 +80,8 @@ class Personal_InfoController
         return json_encode($data);
     }
 
+    public function response404(){
+        return message("API was not found", 404);
+    }
+
 }

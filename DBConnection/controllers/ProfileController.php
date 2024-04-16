@@ -4,6 +4,7 @@ include_once(__DIR__ . "/../db/DatabaseUserCourse.php");
 include_once(__DIR__ . "/../db/DatabaseUniversity.php");
 include_once(__DIR__ . "/../db/DatabaseCourse.php");
 include_once(__DIR__ . "/../db/DatabaseUser.php");
+include_once(__DIR__ . "/../db/DatabaseProfile.php");
 
 class ProfileController
 {
@@ -20,7 +21,7 @@ class ProfileController
         $id = intval($_SERVER["HTTP_USERID"] ?? '');
         $userDB = new DatabaseUser();
         $user = $userDB->fetch($id);
-//Getting the keys of the user to call them.
+        //Getting the keys of the user to call them.
         $findKey = array_keys($user[0]);
 
         $piDB = new DatabasePersonal_Info();
@@ -48,5 +49,14 @@ class ProfileController
         ];
         return json_encode($result);
     }
+
+    public function getAllUserProfileInfo() {
+        $profileDb = new DatabaseProfile();
+        return json_encode($profileDb -> getAllUserProfileInfo());
+    }
+    public function response404(){
+        return message("API was not found", 404);
+    }
+
 
 }
