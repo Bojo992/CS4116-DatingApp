@@ -9,6 +9,7 @@ import { RegistrationquizComponent } from './registrationquiz/registrationquiz.c
 import { AdminpageComponent } from './adminpage/adminpage.component';
 import { ProfileComponent } from './profile/profile.component';
 import {Error404Component} from "./error404/error404.component";
+import {SearchPageComponent} from "./search-page/search-page.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   { path: 'admin', component: AdminpageComponent },
   { path: 'register', component: RegistrationquizComponent},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
+  { path: 'search-page', component: SearchPageComponent, canActivate: [AuthGuard]},
   {path : '**', component: Error404Component}
 ];
