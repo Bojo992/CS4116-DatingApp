@@ -1,90 +1,151 @@
 import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { Router } from '@angular/router'; 
-
-
-  // ! Enum is used to cycle pages
-enum ModalPage{
-  Page1,
-  Page2,
-  Page3,
-  Page4,
-  Page5,
-  Page6,
-  Page7
-}
+import {FormBuilder, Validators, FormsModule, ReactiveFormsModule, FormGroup} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatButtonModule} from '@angular/material/button';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { CredentialsService } from '../DBConnection/credentials.service';
+import { UserService } from '../DBConnection/user.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
+import {MatSelect, MatOption} from '@angular/material/select';
+import {UserCourseService} from "../DBConnection/user-course.service";
+import {PersonalInfoService} from "../DBConnection/personal-info.service";
 
 @Component({
-  selector: 'app-registrationquiz',
+  selector: 'app-register-stepper',
   standalone: true,
-  imports: [NgIf, FormsModule, MatTooltipModule], // ! FORMS MODULE IS USED HERE TO TRACK THE USERS FORM RESPONSES
+  imports: [
+    MatButtonModule,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSnackBarModule,
+    MatSelect, MatOption
+  ],
   templateUrl: './registrationquiz.component.html',
   styleUrl: './registrationquiz.component.css'
 })
-
-
 export class RegistrationquizComponent {
-  currentModalPage: ModalPage = ModalPage.Page1;
-  selectedSubject: string | null = null;
-  selectedLearningStyle: string | null = null;
-  selectedAspiration: string | null = null;
-  selectedCourseLoad : string | null = null;
-  selectedCourseSize : string | null = null;
-  selectedExtraCurricular : string | null = null;
 
-  constructor(private router: Router) {}
+  bioFormGroup: FormGroup;
+  smokingFormGroup: FormGroup;
+  ageFormGroup: FormGroup;
+  veganFormGroup: FormGroup;
+  locationFormGroup: FormGroup;
+  genderFormGroup: FormGroup;
+  drinkingFormGroup: FormGroup;
+  universityFormGroup: FormGroup;
+  courseFormGroup: FormGroup;
 
+  isLinear = false;
+  isSmoking: boolean = false;
+  isVegan: boolean = false;
 
-  switchPage(page:ModalPage){
-    this.currentModalPage = page;
-  }
-
-  goToNextPage() {
-    // ! Check for the current page and decide if it's ok to proceed to the next page
-    if ((this.currentModalPage === ModalPage.Page2 && this.selectedSubject) ||
-    (this.currentModalPage === ModalPage.Page3 && this.selectedLearningStyle ||
-      this.currentModalPage === ModalPage.Page4 && this.selectedLearningStyle ||
-      this.currentModalPage === ModalPage.Page5 && this.selectedCourseLoad ||
-      this.currentModalPage === ModalPage.Page6 && this.selectedCourseLoad ||
-      this.currentModalPage === ModalPage.Page7 && this.selectedExtraCurricular
-    ))
+  constructor(private _formBuilder: FormBuilder,
+    private snackbar: MatSnackBar,
+    private credentialsService: CredentialsService,
+    private userService: UserService,
+    private userCourseService: UserCourseService,
+    private personalInfoService: PersonalInfoService,
+    private cookieService: CookieService,
+    private router: Router)
     {
-      // ! Logic to move to the next page
-      const nextPage = this.currentModalPage + 1;
-      const isNextPageExist = nextPage in ModalPage;
-      if (isNextPageExist) {
-        this.switchPage(nextPage);
-      }
+
+      this.bioFormGroup = this._formBuilder.group({
+        firstCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(70)]]
+      });
+
+      this.smokingFormGroup = this._formBuilder.group({
+        secondCtrl: [false, [Validators.required]]
+      });
+
+      this.ageFormGroup = this._formBuilder.group({
+        thirdCtrl: ['', [Validators.required]]
+      }),
+
+      this.veganFormGroup = this._formBuilder.group({
+        fourthCtrl: [false, Validators.required]
+      });
+
+      this.locationFormGroup = this._formBuilder.group({
+        fifthCtrl: ['', Validators.required]
+      });
+
+      this.genderFormGroup = this._formBuilder.group({
+        sixthCtrl: ['', Validators.required]
+      });
+
+      this.drinkingFormGroup = this._formBuilder.group({
+        seventhCtrl: ['', Validators.required]
+      });
+
+      this.universityFormGroup = this._formBuilder.group({
+        eighthCtrl: ['', Validators.required]
+      });
+
+      this.courseFormGroup = this._formBuilder.group({
+        ninthCtrl: ['', Validators.required]
+      });
+
+
     }
-  }
 
-  goToPreviousPage(){
-    if ((this.currentModalPage === ModalPage.Page2) ||
-    (this.currentModalPage === ModalPage.Page3  ||
-      this.currentModalPage === ModalPage.Page4  ||
-      this.currentModalPage === ModalPage.Page5  ||
-      this.currentModalPage === ModalPage.Page6  ||
-      this.currentModalPage === ModalPage.Page7
-    ))
-    {
-      const prevPage = this.currentModalPage-1;
-      const isPrevPageExist = prevPage in ModalPage;
-
-      if(isPrevPageExist){
-        this.switchPage(prevPage);
-      }
+    fieldMatcher(formGroup: FormGroup, controlName: string, confirmControlName: string, errorMessage: string) {
+      return (group: FormGroup): { [key: string]: any } | null => {
+        const controlValue = formGroup.get(controlName)?.value;
+        const confirmControlValue = group.get(confirmControlName)?.value;
+        if (controlValue !== confirmControlValue) {
+          this.snackbar.open(errorMessage, 'Close', {
+            duration: 3000,
+          });
+          return { 'mismatch': true };
+        }
+        return null;
+      };
     }
-  }
 
-  finishQuiz() {
-    if (this.selectedExtraCurricular) {
-      this.router.navigate(['/home']);
+    onFormSubmit() {
+      // const email = this.emailFormGroup.get('secondCtrl')?.value;
+      let university = this.universityFormGroup.get('eighthCtrl')?.value;
+      let course = this.courseFormGroup.get('ninthCtrl')?.value;
+
+      let dinking = this.drinkingFormGroup.get("seventhCtrl")?.value;
+      let gender = this.genderFormGroup.get("sixthCtrl")?.value;
+      let location = this.locationFormGroup.get("fifthCtrl")?.value;
+      let vegan = this.veganFormGroup.get("fourthCtrl")?.value;
+      let age = this.ageFormGroup.get("thirdCtrl")?.value;
+      let smoking = this.smokingFormGroup.get("secondCtrl")?.value;
+      let boi = this.bioFormGroup.get("firstCtrl")?.value;
+
+      let userId = this.cookieService.get("UID");
+
+
+      this.userCourseService.insertUserCourse(university, course).subscribe(
+        (response: any) => {
+          this.userService.updateCourse(userId, response["data"][0].userCourseId);
+        }
+      );
+
+      this.personalInfoService.insert(
+        boi,
+        smoking,
+        age,
+        vegan,
+        location,
+        gender,
+        dinking
+      ).subscribe(
+        (response: any) => {
+          this.userService.updatePersonalInfo(userId, response["data"][0].personalInfoId);
+        }
+      );
     }
+
+
+
   }
-
-
-  ModalPage = ModalPage;
-
-}

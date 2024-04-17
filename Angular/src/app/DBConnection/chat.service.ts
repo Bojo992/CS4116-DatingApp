@@ -7,7 +7,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class ChatService {
 // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/chat/';
-  private url = 'http://localhost/CourseMates/CS4116-DatingApp/DBConnection/chat/';
+  private url = 'http://localhost/CS4116-DatingApp/DBConnection/chat/';
 
   constructor(private httpClient: HttpClient) { }
 
