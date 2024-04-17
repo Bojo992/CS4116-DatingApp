@@ -28,7 +28,7 @@ class DatabaseUser extends Config
             $sql = '
                     INSERT INTO user (
                                           personalInfo,
-                                          cource,
+                                          course,
                                           isAdmin,
                                           userName,
                                           userEmail

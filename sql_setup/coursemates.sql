@@ -232,7 +232,7 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`userId`, `personalInfo`, `cource`, `dateCreated`, `isAdmin`, `userName`, `userEmail`) VALUES
+INSERT INTO `user` (`userId`, `personalInfo`, course, `dateCreated`, `isAdmin`, `userName`, `userEmail`) VALUES
 (1, 1, 1, '2024-04-10 20:20:00', b'0', 'User1', 'User1@email.com'),
 (2, 1, 1, '2024-04-10 20:20:00', b'1', 'ADMIN1', 'User1@email.com');
 
@@ -354,7 +354,7 @@ ALTER TABLE `university`
 --
 ALTER TABLE `user`
   ADD PRIMARY KEY (`userId`),
-  ADD KEY `user_usercourse_id_fk` (`cource`),
+  ADD KEY `user_usercourse_id_fk` (course),
   ADD KEY `user_table_name_id_fk` (`personalInfo`);
 
 --
@@ -497,7 +497,7 @@ ALTER TABLE `personal_interest`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_table_name_id_fk` FOREIGN KEY (`personalInfo`) REFERENCES `personalinfo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `user_usercourse_id_fk` FOREIGN KEY (`cource`) REFERENCES `user_course` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `user_usercourse_id_fk` FOREIGN KEY (course) REFERENCES `user_course` (`id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `user_course`

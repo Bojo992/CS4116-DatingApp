@@ -5,6 +5,8 @@ import {LoginModule} from "./login/login.module";
 import {NavbarComponent} from "./navbar/navbar.component";
 //import {SidenavComponent} from "./sidenav/sidenav.component";
 import { AdminModule } from './adminpage/admin.module';
+import {SearchPageModule} from "./search-page/search-page.module";
+import {SearchPageComponent} from "./search-page/search-page.component";
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,8 @@ import { AdminModule } from './adminpage/admin.module';
     NavbarComponent,
 //    SidenavComponent,
     HttpClientModule,
+    SearchPageModule,
+    SearchPageComponent,
 
   ],
   templateUrl: './app.component.html',
