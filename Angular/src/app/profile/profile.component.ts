@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../DBConnection/user.service';
 import { ActivatedRoute } from '@angular/router';
@@ -43,7 +43,7 @@ interface UserCourse {
   standalone: true,
   imports: [CommonModule, MatProgressSpinnerModule],
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']  
+  styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
   userId: string;
@@ -52,7 +52,7 @@ export class ProfileComponent implements OnInit {
   isLoading: boolean = false;
   myprofile: boolean = false;
 
-  userProfile: User | null = null;
+  @Input() userProfile: User | null = null;
   personalInfo: PersonalInfo | null = null;
   university: University | null = null;
   course: Course | null = null;
@@ -85,7 +85,7 @@ export class ProfileComponent implements OnInit {
         });
       }
 
-      this.loadProfileData(this.userId); 
+      this.loadProfileData(this.userId);
       console.log('loading data for userid ' + this.userId)
     });
   }
@@ -124,7 +124,7 @@ export class ProfileComponent implements OnInit {
 
   getLifestyleIcons(): string {
     let icons = '';
-    
+
     if (this.personalInfo?.smoking === 1) {
       icons += '<i class="fas fa-smoking"></i> ';
     }
