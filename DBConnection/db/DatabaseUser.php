@@ -23,6 +23,34 @@ class DatabaseUser extends Config
         return $rows;
     }
 
+    public function updateCourse($id, $courseId)
+    {
+        $sql = '
+        UPDATE user
+        SET cource = :courseId
+            WHERE userId = :id;
+        ';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id, 'courseId' => $courseId]);
+
+        return true;
+    }
+
+    public function updatePersonalInfo($id, $personalInterestId)
+    {
+        $sql = '
+        UPDATE user
+        SET personalInfo = :courseId
+            WHERE userId = :id;
+        ';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id, 'courseId' => $personalInterestId]);
+
+        return true;
+    }
+
     public function insert($isAdmin, $userName, $userEmail) {
         try {
             $sql = '

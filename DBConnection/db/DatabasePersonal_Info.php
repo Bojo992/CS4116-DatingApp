@@ -88,5 +88,65 @@ class DatabasePersonal_Info extends Config
         return $rows;
     }
 
+    public function insertPersonalInfo($bio,
+                           $smoking,
+                           $age,
+                           $vegan,
+                           $location,
+                           $gender,
+                           $drinking) {
+        try {
+            $sql = '
+                    INSERT INTO personalinof (
+                                          bio,
+                                          smoking,
+                                          age,
+                                          vegan,
+                                          location,
+                                          Gender,
+                                          drinking
+                                      ) 
+                    VALUES (
+                                :bio,
+                                :smoking,
+                                :age,
+                                :vegan,
+                                :location,
+                                :gender,
+                                :drinking
+                            );
+            ';
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute([
+                "bio" => $bio,
+                "smoking" => $smoking,
+                "age" => $age,
+                "vegan" => $vegan,
+                "location" => $location,
+                "gender" => $gender,
+                "drinking" => $drinking
+            ]);
+
+            $sql = 'SELECT LAST_INSERT_ID() as personalInfoId';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            $data = $stmt->fetchAll();
+            $result = [
+                "data" => $data,
+                "message" => "User added successfully",
+                "status" => true,
+                "error" => null,
+            ];
+            return $result;
+        } catch (PDOException $exception) {
+            $error = [
+                "status" => false,
+                "error" => $exception->getMessage(),
+            ];
+            return $error;
+        }
+    }
 
 }

@@ -1,17 +1,5 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Coursemates</title>
-</head>
-
-<body>
+    <!-- <body>
     <div class="modal">
-        <!-- !  PAGE 1 -->
         <div *ngIf="currentModalPage === ModalPage.Page1">
             <h2>Getting Started</h2>
             <br>
@@ -20,7 +8,6 @@
             <button (click)="switchPage(ModalPage.Page2)" class="nextbutton">Start</button>
         </div>
         
-        <!-- !  PAGE 2 -->
         <div *ngIf="currentModalPage === ModalPage.Page2">
             <h2>Question 1.</h2>
             <p>What subject do you prefer?</p>
@@ -42,7 +29,6 @@
             [matTooltipDisabled]="selectedSubject">Next</button>
         </div>
         
-        <!-- !  PAGE 3 -->
         <div *ngIf="currentModalPage === ModalPage.Page3">
             <h2>Question 2.</h2>
             <p>What is your preferred learning style?</p>
@@ -66,7 +52,6 @@
             
         </div>
         
-        <!-- !  PAGE 4 -->
         <div *ngIf="currentModalPage === ModalPage.Page4">
             <h2>Question 3.</h2>
             <p>Which one of the following best describes our career aspirations?</p>
@@ -93,7 +78,6 @@
         </div>
         
         
-        <!-- !  PAGE 5 -->
         <div *ngIf="currentModalPage === ModalPage.Page5">
             <h2>Question 4.</h2>
             <p>How do you prefer to distribute your course load?</p>
@@ -110,7 +94,6 @@
             [matTooltipDisabled]="selectedCourseLoad">Next</button>
         </div>
         
-        <!-- !  PAGE 6 -->
         <div *ngIf="currentModalPage === ModalPage.Page6">
             <h2>Question 5.</h2>
             <p>What is your preferred class size?</p>
@@ -130,7 +113,6 @@
             [matTooltipDisabled]="selectedCourseSize">Next</button>
         </div>
         
-        <!-- !  PAGE 7 -->
         <div *ngIf="currentModalPage === ModalPage.Page7">
             <h2>Question 6.</h2>
             <p>Extracurricular interests</p>
@@ -156,4 +138,168 @@
         
     </div>
     
-</body>
+</body> -->
+
+
+
+<div class="container w-75 d-flex align-items-center justify-content-center position-relative">
+    <mat-stepper orientation="vertical" linear="isLinear" #stepper>
+      <mat-step [stepControl]="bioFormGroup">
+        <form [formGroup]="bioFormGroup">
+          <ng-template matStepLabel>Set your bio!</ng-template>
+          <mat-form-field>
+            <mat-label>Enter bio here</mat-label>
+            <input matInput placeholder="Enter bio" formControlName="firstCtrl" required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="smokingFormGroup">
+        <form [formGroup]="smokingFormGroup">
+          <ng-template matStepLabel>Do you smoke?</ng-template>
+          <mat-form-field [formGroup]="smokingFormGroup">
+            <mat-label>Do you smoke?</mat-label>
+            <mat-select formControlName="secondCtrl">
+              <mat-option value="True"> Yes </mat-option>
+              <mat-option value="False"> No </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="ageFormGroup">
+        <form [formGroup]="ageFormGroup">
+          <ng-template matStepLabel>Enter your age</ng-template>
+          <mat-form-field>
+            <mat-label>Age</mat-label>
+            <input matInput formControlName="thirdCtrl" placeholder="20"
+            required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="ageFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="veganFormGroup">
+        <form [formGroup]="veganFormGroup">
+          <ng-template matStepLabel>Are you vegan?</ng-template>
+          <mat-form-field [formGroup]="veganFormGroup">
+            <mat-label>Are you vegan?</mat-label>
+            <mat-select formControlName="fourthCtrl">
+              <mat-option value="True"> Yes </mat-option>
+              <mat-option value="False"> No </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="locationFormGroup">
+        <form [formGroup]="locationFormGroup">
+          <ng-template matStepLabel>Location</ng-template>
+          <mat-form-field>
+            <mat-label>Where are you located?</mat-label>
+            <input matInput formControlName="fifthCtrl" placeholder="Limerick"
+            required>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext [disabled]="locationFormGroup.invalid">Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="genderFormGroup">
+        <form [formGroup]="genderFormGroup">
+          <ng-template matStepLabel>Gender</ng-template>
+          <mat-form-field [formGroup]="genderFormGroup">
+            <mat-label>What gender are you?</mat-label>
+            <mat-select formControlName="sixthCtrl">
+              <mat-option value= '1'> Male </mat-option>
+              <mat-option value= '2'> Female </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="drinkingFormGroup">
+        <form [formGroup]="drinkingFormGroup">
+          <ng-template matStepLabel>Do you drink?</ng-template>
+          <mat-form-field [formGroup]="drinkingFormGroup">
+            <mat-label>Do you drink?</mat-label>
+            <mat-select formControlName="seventhCtrl">
+              <mat-option value="True"> Yes </mat-option>
+              <mat-option value="False"> No </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      
+      <mat-step [stepControl]="universityFormGroup">
+        <form [formGroup]="universityFormGroup">
+          <ng-template matStepLabel>University</ng-template>
+          <mat-form-field [formGroup]="universityFormGroup">
+            <mat-label>Which university do you attend?</mat-label>
+            <mat-select formControlName="eighthCtrl">
+              <mat-option value="True"> Yes </mat-option>
+              <mat-option value="False"> No </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      
+      <mat-step [stepControl]="courseFormGroup">
+        <form [formGroup]="courseFormGroup">
+          <ng-template matStepLabel>Course</ng-template>
+          <mat-form-field [formGroup]="courseFormGroup">
+            <mat-label>Which course do you attend?</mat-label>
+            <mat-select formControlName="ninthCtrl">
+              <mat-option value="True"> Yes </mat-option>
+              <mat-option value="False"> No </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+
+      
+
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>Registration details complete</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="onFormSubmit()"> Register </button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+    
+  </div>

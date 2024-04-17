@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class PersonalInfoService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/personalInfo/';
-  private url = 'http://localhost/CourseMates/CS4116-DatingApp/DBConnection/personalInfo/';
+  private url = 'http://localhost/CS4116-DatingApp/DBConnection/personalInfo/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -52,5 +52,30 @@ export class PersonalInfoService {
   public updateDrinking(id : any, drinking : any) {
     let headers : HttpHeaders = new HttpHeaders().set("id" , id.toString()).set("drinking" , drinking.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "updateDrinking" ,{'headers' : headers});
+  }
+
+  public insert(
+    bio: any,
+    smoking: any,
+    age: any,
+    vegan: any,
+    location: any,
+    Gender: any,
+    drinking: any
+  ) {
+    let headers : HttpHeaders = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "updateVegan" ,
+      {
+        'headers' : headers,
+        'body' : {
+          "bio" : bio.toString(),
+          "smoking" : smoking.toString(),
+          "age" : age.toString(),
+          "vegan" : vegan.toString(),
+          "location" : location.toString(),
+          "gender" : Gender.toString(),
+          "drinking": drinking.toString()
+        }
+      });
   }
 }

@@ -1,12 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../DBConnection/user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CommonModule } from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileService } from '../DBConnection/profile.service';
 import { User } from '../navbar/navbar.component';
+import { Router } from '@angular/router';
 
 
 
@@ -61,7 +62,7 @@ export class ProfileComponent implements OnInit {
   userCourse: UserCourse | null = null;
   Gender : string = '';
 
-  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar, private profileService: ProfileService) {
+  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar, private profileService: ProfileService, private router : Router) {
     this.userId = '';
     this.username = '';
   }
@@ -117,7 +118,6 @@ export class ProfileComponent implements OnInit {
     });
   }
   editBio() {
-
     this.snackBar.open('Edit Bio Placeholder', 'Close', {
       duration: 2000,
       verticalPosition: 'bottom'
@@ -139,5 +139,7 @@ export class ProfileComponent implements OnInit {
     }
     return icons;
   }
+
+
 
 }

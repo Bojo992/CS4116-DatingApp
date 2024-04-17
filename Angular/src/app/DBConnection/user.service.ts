@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class UserService {
-  private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
-  // private url = 'http://localhost/CourseMates/DBConnection/user/';
+  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
+  private url = 'http://localhost/CS4116-DatingApp/DBConnection/user/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -30,7 +30,33 @@ export class UserService {
         'body': {
           'isAdmin': isAdmin,
           'username': userName.toString(),
-          'userEmail': userEmail
+          'userEmail': userEmail.toString()
+        }
+      });
+  }
+
+  updateCourse(userId: any, courseId: any) {
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "updateCourse",
+      {
+        'headers': headers,
+        'body': {
+          'id': userId.toString(),
+          'courseId': courseId.toString(),
+        }
+      });
+  }
+
+  updatePersonalInfo(userId: any, personalInterestId : any) {
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "updatePersonalInfo",
+      {
+        'headers': headers,
+        'body': {
+          'id': userId.toString(),
+          'personalInterestId': personalInterestId.toString(),
         }
       });
   }
