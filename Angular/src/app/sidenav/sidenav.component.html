@@ -1,32 +1,20 @@
-<!--<mat-drawer-container class="full-height">
-  <body>
-  <mat-drawer #sidenav mode="side" class="full-height">
-    <h1>Side bar</h1>
-  </mat-drawer>
-  </body>
-  <div class="content-container">
-    <div>
-      <button mat-icon-button (click)="sidenav.toggle()">
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <p>
+      <button mat-icon-button (click)="sidenav.toggle()" >
         <mat-icon>menu</mat-icon>
       </button>
-    </div>
-
-    &lt;!&ndash; Your main content goes here &ndash;&gt;
-    <main>
-      &lt;!&ndash; Your main content goes here &ndash;&gt;
-    </main>
-  </div>
-</mat-drawer-container>-->
-<mat-drawer-container class="example-container" hasBackdrop="true">
-  <mat-drawer #drawer mode="push">Sidenav Content here</mat-drawer>
-  <mat-drawer-content>
-    <!--<mat-form-field>
-      <mat-label>Sidenav mode</mat-label>
-      <mat-select disabled value="push">
-        <mat-option value="push">Push</mat-option>
-      </mat-select>
-    </mat-form-field>-->
-    <button mat-raised-button (click)="drawer.toggle()">Toggle drawer</button>
-  </mat-drawer-content>
-</mat-drawer-container>
-
+    </p>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenav">
+  <button mat-button (click)="sidenav.toggle()" class="sidenav-btn">toggle</button>
+  Sidenav content
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+  <h1 class="sidenav-text">qwerty</h1>
+</mat-sidenav>

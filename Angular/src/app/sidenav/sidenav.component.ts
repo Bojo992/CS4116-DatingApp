@@ -1,13 +1,16 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {MatToolbar} from "@angular/material/toolbar";
 import {MatIcon} from "@angular/material/icon";
 import {MatDrawer, MatDrawerMode, MatSidenav, MatSidenavContainer, MatSidenavModule} from "@angular/material/sidenav";
 import {MatListItem, MatNavList} from "@angular/material/list";
-import {NgForOf} from "@angular/common";
+import {NgClass, NgForOf, NgIf} from "@angular/common";
 import {MatButton, MatIconButton} from "@angular/material/button";
-import {RouterLink, RouterLinkActive} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatOption, MatSelect} from "@angular/material/select";
+import {UserService} from "../DBConnection/user.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
+import {CookieService} from "ngx-cookie-service";
 
 @Component({
   selector: 'app-sidenav',
@@ -28,17 +31,21 @@ import {MatOption, MatSelect} from "@angular/material/select";
     MatFormField,
     MatSelect,
     MatOption,
-    MatLabel
+    MatLabel,
+    NgClass,
+    NgIf
   ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.css'
 })
 export class SidenavComponent{
-  @ViewChild(MatDrawer) drawer: MatDrawer | undefined;
+  @Input() isVisible: boolean = false;
+  opened = false;
 
-  toggleSidebar() {
-    if (this.drawer) {
-      this.drawer.toggle();
-    }
+  constructor(private cookieService: CookieService) {
+  }
+
+  isLoggedIn(): boolean {
+    return this.cookieService.check('UID');
   }
 }

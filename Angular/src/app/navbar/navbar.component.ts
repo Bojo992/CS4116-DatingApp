@@ -13,11 +13,12 @@ import {AppComponent} from "../app.component";
 // import {MatSidenav, MatSidenavContainer} from "@angular/material/sidenav";
 // import {SidenavComponent} from "../sidenav/sidenav.component";
 import {MatIcon} from "@angular/material/icon";
-import {MatIconButton} from "@angular/material/button";
+import {MatButton, MatIconButton} from "@angular/material/button";
 import {UserService} from "../DBConnection/user.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import { CookieService } from 'ngx-cookie-service';
 import { Router, RouterModule } from '@angular/router';
+import {SidenavComponent} from "../sidenav/sidenav.component";
 
 export interface User {
   userId: number,
@@ -41,8 +42,8 @@ export interface User {
     AsyncPipe,
     NgForOf,
     NgIf,
-    RouterModule
-  //  MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent
+    RouterModule, MatButton, SidenavComponent,
+    //  MatSidenavContainer, MatSidenav, SidenavComponent, MatIcon, MatIconButton, SidenavComponent
   ],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css'
