@@ -87,7 +87,7 @@ class Personal_InfoController
         $vegan = boolval(getRequestBody()["vegan"]);
         $location = cleanInput(getRequestBody()["location"]);
         $gender = intval(getRequestBody()["gender"]);
-        $drinking = intval(getRequestBody()["drinking"]);
+        $drinking = boolval(getRequestBody()["drinking"]);
 
         $data = $this->personal_info->insertPersonalInfo(
             $bio,

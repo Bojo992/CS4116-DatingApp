@@ -113,35 +113,39 @@ export class RegistrationquizComponent {
       // const email = this.emailFormGroup.get('secondCtrl')?.value;
       let university = this.universityFormGroup.get('eighthCtrl')?.value;
       let course = this.courseFormGroup.get('ninthCtrl')?.value;
-
-      let dinking = this.drinkingFormGroup.get("seventhCtrl")?.value;
-      let gender = this.genderFormGroup.get("sixthCtrl")?.value;
+      let drinking = (this.drinkingFormGroup.get("seventhCtrl")?.value) == "True";
+      let Gender = +this.genderFormGroup.get("sixthCtrl")?.value;
       let location = this.locationFormGroup.get("fifthCtrl")?.value;
-      let vegan = this.veganFormGroup.get("fourthCtrl")?.value;
+      let vegan = (this.veganFormGroup.get("fourthCtrl")?.value) == "True";
       let age = this.ageFormGroup.get("thirdCtrl")?.value;
-      let smoking = this.smokingFormGroup.get("secondCtrl")?.value;
-      let boi = this.bioFormGroup.get("firstCtrl")?.value;
+      let smoking = (this.smokingFormGroup.get("secondCtrl")?.value)  == "True";
+      let bio = this.bioFormGroup.get("firstCtrl")?.value;
 
       let userId = this.cookieService.get("UID");
 
 
-      this.userCourseService.insertUserCourse(university, course).subscribe(
-        (response: any) => {
-          this.userService.updateCourse(userId, response["data"][0].userCourseId);
-        }
-      );
+      // this.userCourseService.insertUserCourse(university, course).subscribe(
+      //   (response: any) => {
+      //     this.userService.updateCourse(userId, response["data"][0].userCourseId);
+      //     console.log('this is the response from the user course service: ', response)
+      //   }
+      // );
 
       this.personalInfoService.insert(
-        boi,
+        bio,
         smoking,
         age,
         vegan,
         location,
-        gender,
-        dinking
+        Gender,
+        drinking
       ).subscribe(
         (response: any) => {
-          this.userService.updatePersonalInfo(userId, response["data"][0].personalInfoId);
+          let personalInfoId = response["data"][0].personalInfoId.toString();
+          console.log(userId, personalInfoId);
+          this.userService.updatePersonalInfo(userId, personalInfoId).subscribe(
+            (response:any) => {console.log("response");}
+          );
         }
       );
     }

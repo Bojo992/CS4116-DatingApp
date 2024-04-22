@@ -97,7 +97,7 @@ class DatabasePersonal_Info extends Config
                            $drinking) {
         try {
             $sql = '
-                    INSERT INTO personalinof (
+                    INSERT INTO personalinfo (
                                           bio,
                                           smoking,
                                           age,

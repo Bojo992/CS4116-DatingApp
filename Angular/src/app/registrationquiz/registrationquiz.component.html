@@ -229,6 +229,7 @@
             <mat-select formControlName="sixthCtrl">
               <mat-option value= '1'> Male </mat-option>
               <mat-option value= '2'> Female </mat-option>
+              <mat-option value= '3'> Other </mat-option>
             </mat-select>
           </mat-form-field>
           <div>
@@ -259,12 +260,10 @@
       <mat-step [stepControl]="universityFormGroup">
         <form [formGroup]="universityFormGroup">
           <ng-template matStepLabel>University</ng-template>
-          <mat-form-field [formGroup]="universityFormGroup">
-            <mat-label>Which university do you attend?</mat-label>
-            <mat-select formControlName="eighthCtrl">
-              <mat-option value="True"> Yes </mat-option>
-              <mat-option value="False"> No </mat-option>
-            </mat-select>
+          <mat-form-field>
+            <mat-label>What university do you attend?</mat-label>
+            <input matInput formControlName="eighthCtrl" placeholder="Limerick"
+            required>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Back</button>
@@ -276,12 +275,10 @@
       <mat-step [stepControl]="courseFormGroup">
         <form [formGroup]="courseFormGroup">
           <ng-template matStepLabel>Course</ng-template>
-          <mat-form-field [formGroup]="courseFormGroup">
+          <mat-form-field>
             <mat-label>Which course do you attend?</mat-label>
-            <mat-select formControlName="ninthCtrl">
-              <mat-option value="True"> Yes </mat-option>
-              <mat-option value="False"> No </mat-option>
-            </mat-select>
+            <input matInput formControlName="ninthCtrl" placeholder="LM051"
+            required>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Back</button>
