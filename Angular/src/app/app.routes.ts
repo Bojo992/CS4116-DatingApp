@@ -20,7 +20,7 @@ export const routes: Routes = [
   { path: 'admin', component: AdminpageComponent },
   { path: 'register', component: RegistrationquizComponent},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
-  {path: 'about', component: AboutComponent},
+  { path: 'about', component: AboutComponent },
   { path: 'search-page', component: SearchPageComponent, canActivate: [AuthGuard]},
-  {path : '**', component: Error404Component}
+  { path : '**', component: Error404Component }
 ];
