@@ -260,10 +260,11 @@
       <mat-step [stepControl]="universityFormGroup">
         <form [formGroup]="universityFormGroup">
           <ng-template matStepLabel>University</ng-template>
-          <mat-form-field>
-            <mat-label>What university do you attend?</mat-label>
-            <input matInput formControlName="eighthCtrl" placeholder="Limerick"
-            required>
+          <mat-form-field class="w-100" id="selectUniversity" >
+            <mat-label>Choose university</mat-label>
+            <mat-select [(value)]="universitySelected" formControlName="eighthCtrl"> 
+              <mat-option *ngFor="let university of universities" value="{{university.id}}" (click)="getCoursesFormUniversity(university.id)">{{university.name}}</mat-option>
+            </mat-select>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Back</button>
@@ -275,10 +276,11 @@
       <mat-step [stepControl]="courseFormGroup">
         <form [formGroup]="courseFormGroup">
           <ng-template matStepLabel>Course</ng-template>
-          <mat-form-field>
-            <mat-label>Which course do you attend?</mat-label>
-            <input matInput formControlName="ninthCtrl" placeholder="LM051"
-            required>
+          <mat-form-field class="w-100" id="selectCourse"> 
+            <mat-label>Choose your course</mat-label>
+            <mat-select [(value)] = "courseSelected" formControlName="ninthCtrl">
+              <mat-option *ngFor="let course of coursesFiltered" value="{{course.id}}">{{course.name}}</mat-option>
+            </mat-select>
           </mat-form-field>
           <div>
             <button mat-button matStepperPrevious>Back</button>
