@@ -162,8 +162,9 @@ export class RegistrationquizComponent implements OnInit {
     
     onFormSubmit() {
       // const email = this.emailFormGroup.get('secondCtrl')?.value;
-      let university = this.universityFormGroup.get('eighthCtrl')?.value;
-      let course = this.courseFormGroup.get('ninthCtrl')?.value;
+      let university = +this.universityFormGroup.get('eighthCtrl')?.value;
+      let course = +this.courseFormGroup.get('ninthCtrl')?.value;
+      console.log('UNIVERSITY ', university,'COURSE ',  course);
       let drinking = (this.drinkingFormGroup.get("seventhCtrl")?.value) == "True";
       let Gender = +this.genderFormGroup.get("sixthCtrl")?.value;
       let location = this.locationFormGroup.get("fifthCtrl")?.value;
@@ -175,12 +176,14 @@ export class RegistrationquizComponent implements OnInit {
       let userId = this.cookieService.get("UID");
       
       
-      // this.userCourseService.insertUserCourse(university, course).subscribe(
-      //   (response: any) => {
-      //     this.userService.updateCourse(userId, response["data"][0].userCourseId);
-      //     console.log('this is the response from the user course service: ', response)
-      //   }
-      // );
+       this.userCourseService.insertUserCourse(university, course).subscribe(
+         (response: any) => {
+           console.log('this is the response from the user course service: ',  response);
+            let userCourseId = +response["data"][0].userCourseId.toString();
+           console.log('this is the response from the user course service: ',  userCourseId);
+           this.userService.updateCourse(+userId, userCourseId).subscribe();
+         }
+       );
       
       this.personalInfoService.insert(
         bio,

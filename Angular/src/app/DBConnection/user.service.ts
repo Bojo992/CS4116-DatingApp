@@ -35,15 +35,15 @@ export class UserService {
       });
   }
 
-  updateCourse(userId: any, courseId: any) {
+  updateCourse(userId: number, courseId: number) {
     let headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.post(this.url + "updateCourse",
       {
         'headers': headers,
         'body': {
-          'id': userId.toString(),
-          'courseId': courseId.toString(),
+          'id': userId,
+          'courseId': courseId
         }
       });
   }

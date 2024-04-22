@@ -27,12 +27,12 @@ class DatabaseUser extends Config
     {
         $sql = '
         UPDATE user
-        SET cource = :courseId
+        SET course = :courseId
             WHERE userId = :id;
         ';
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute(['id' => $id, 'courseId' => $courseId]);
+        $stmt->execute(['courseId' => $courseId, 'id' => $id]);
 
         return true;
     }
