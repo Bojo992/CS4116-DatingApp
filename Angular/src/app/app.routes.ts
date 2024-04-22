@@ -11,7 +11,6 @@ import { ProfileComponent } from './profile/profile.component';
 import {Error404Component} from "./error404/error404.component";
 import { RegisterStepperComponent } from './register-stepper/register-stepper.component';
 import {SearchPageComponent} from "./search-page/search-page.component";
-import { RegisterStepperComponent } from './register-stepper/register-stepper.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -21,7 +20,6 @@ export const routes: Routes = [
   { path: 'admin', component: AdminpageComponent },
   { path: 'register', component: RegistrationquizComponent},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
-  { path: 'register-stepper', component: RegisterStepperComponent},
   { path: 'register-stepper', component: RegisterStepperComponent},
   { path: 'search-page', component: SearchPageComponent, canActivate: [AuthGuard]},
   {path : '**', component: Error404Component}
