@@ -37,17 +37,13 @@
     <img id="textbanner" src="assets\banner.png">
   </div>
 
-  <div *ngIf="isLoggedIn()" class="profile-picture-wrapper d-none d-sm-block">
-    <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">  <!-- Will need a check here to see if the user has a profile picture, hides on smaller screens-->
-</div>
-
   <div class="search-container">
     <form class="form">
       <input type="search"
              placeholder="Search for a User"
              [formControl]="searchControl"
              [matAutocomplete]="auto"
-             class="input">
+             class="form-control col-md-5 col-0 search-input">
       <mat-autocomplete #auto="matAutocomplete">
         <mat-option *ngFor="let user of filteredUsers | async" [value]="user.userName" (click)="whoWasClicked(user)">
           <span>{{ user.userName }}</span>
@@ -55,6 +51,11 @@
       </mat-autocomplete>
     </form>
   </div>
+
+  <div *ngIf="isLoggedIn()" class="profile-picture-wrapper d-none d-sm-block">
+    <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">  <!-- Will need a check here to see if the user has a profile picture, hides on smaller screens-->
+</div>
+
 
   <div class="spacer"></div>
 </div>

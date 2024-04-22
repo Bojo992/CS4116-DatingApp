@@ -56,12 +56,19 @@ export class HomepageComponent implements OnInit {
     // Fetch all users
     this.userService.getAll().subscribe((users: any) => {
       for (let i of users) {
-        this.users.push(i);
+        if ((i.userId !== +this.cookieService.get("UID"))) {
+          this.users.push(i);
+        }
       }
     });
+
+    const profileComponent = document.querySelector('app-profile') as any;
+    if (profileComponent) {
+      profileComponent.loadProfileData(this.users[0].userId);
+    }
   }
 
-  shuffleUsers(): void{
+  shuffleUsers(): void {
     let counter = this.users.length;
 
     while (counter > 0) {
@@ -72,15 +79,16 @@ export class HomepageComponent implements OnInit {
   }
 
   clickLike(): void {
-    if (this.users.length === 0){
+    if (this.users.length === 0) {
       console.log('No profile found');
-      this.snackBar.open('No more profiles to load','Close',{
+      this.snackBar.open('No more profiles to load', 'Close', {
         duration: 2000,
         verticalPosition: 'bottom'
       })
-    }else {
+    } else {
       // Move to the next profile
       if (this.index < this.users.length - 1) {
+
         this.index++;
         const nextUserId = this.users[this.index].userId;
         // Call the loadProfileData method of ProfileComponent
@@ -89,7 +97,7 @@ export class HomepageComponent implements OnInit {
           profileComponent.loadProfileData(nextUserId);
         }
       } else {
-        this.snackBar.open('No more profiles to load','Close',{
+        this.snackBar.open('No more profiles to load', 'Close', {
           duration: 2000,
           verticalPosition: 'bottom'
         })
@@ -99,10 +107,7 @@ export class HomepageComponent implements OnInit {
     //this.shuffleUsers();
   }
 
-
-
   protected readonly ProfileComponent = ProfileComponent;
-
 
 
 }

@@ -52,6 +52,8 @@ export class ProfileComponent implements OnInit {
   isLoading: boolean = false;
   myprofile: boolean = false;
 
+  public userIdFromHomePage : number = 0;
+
   @Input() userProfile: User | null = null;
   personalInfo: PersonalInfo | null = null;
   university: University | null = null;
@@ -66,7 +68,8 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      this.userId = params.get('id') || this.cookieService.get('UID');
+      this.userId = (this.userProfile != null) ? this.userProfile.userId.toString() : (params.get('id') || this.cookieService.get('UID'));
+
       this.isLoading = true;
 
       if (this.userId === this.cookieService.get('UID')) {
