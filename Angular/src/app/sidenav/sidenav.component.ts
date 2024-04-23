@@ -48,4 +48,9 @@ export class SidenavComponent{
   isLoggedIn(): boolean {
     return this.cookieService.check('UID');
   }
+
+  logout(): void {
+    this.cookieService.deleteAll();
+    window.location.reload();
+  }
 }
