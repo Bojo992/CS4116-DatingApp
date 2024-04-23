@@ -42,6 +42,9 @@ class UserRouter
             case 'updateProfilePicture' :
                 return $this->controller->updateProfilePicture();
                 break;
+            case 'changeAdminStatus' :
+                return $this->controller->changeAdminStatus();
+                break;
             default :
                 return $this->controller->response404();
                 break;

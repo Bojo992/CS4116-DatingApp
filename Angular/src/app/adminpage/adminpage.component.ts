@@ -23,10 +23,10 @@ export class AdminpageComponent implements OnInit {
   data: UserDetails[] = [];
 
   constructor(private userService: UserService, credentialService:CredentialsService, private snackBar: MatSnackBar) {}
-  
+
   ngOnInit(): void {
     this.userService.getAll().subscribe ({
-      next: (response: Object) => {  
+      next: (response: Object) => {
         this.data = response as UserDetails[];
         console.log(this.data);
       },
@@ -54,15 +54,8 @@ export class AdminpageComponent implements OnInit {
     this.snackBar.open(`Unban user with ID: ${userId}`);
   }
 
-  promoteUser(userId: number) {
+  changeAdminStatus(user: any) {
     // PLACEHOLDER
-    console.log(`Promoting user with ID: ${userId}`);
-    this.snackBar.open(`Promoting user with ID: ${userId}`);
-  }
-  
-  demoteUser(userId: number) {
-    // PLACEHOLDER
-    console.log(`Demoting user with ID: ${userId}`);
-    this.snackBar.open(`Demoting user with ID: ${userId}`);
+    this.userService.changeAdminStatus(user.userId).subscribe((res: any) => {user.isAdmin = !user.isAdmin;});
   }
 }
