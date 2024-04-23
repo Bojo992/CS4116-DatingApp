@@ -52,7 +52,7 @@ class Personal_InfoController
     public function updateVegan()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $vegan = boolval($_SERVER["HTTP_BIO"] ?? '');
+        $vegan = boolval($_SERVER["HTTP_VEGAN"] ?? '');
         $data = $this->personal_info->updateVegan($id, $vegan);
         return json_encode($data);
     }

@@ -91,3 +91,35 @@
   </div>
 </div>
 
+
+
+<div *ngIf="isEditLifestyleMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Change Lifestyle</h5>
+        <button type="button" class="close" (click)="toggleEditLifestyleMode()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <mat-slide-toggle style="display: block; padding: 20px" 
+          [checked]="this.personalInfo?.smoking === 1" 
+          (change)="updateLifestyle('smoking', $event.checked)"> Do you smoke? </mat-slide-toggle>
+          <mat-slide-toggle style="display: block; padding: 20px" 
+          [checked]="this.personalInfo?.drinking === 1" 
+          (change)="updateLifestyle('drinking', $event.checked)"> Do you drink? </mat-slide-toggle>
+          <mat-slide-toggle style="display: block; padding: 20px" 
+          [checked]="this.personalInfo?.vegan === 1" 
+          (change)="updateLifestyle('vegan', $event.checked)"> Are you vegan? </mat-slide-toggle>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="toggleEditLifestyleMode()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+

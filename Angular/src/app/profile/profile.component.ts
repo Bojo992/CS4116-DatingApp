@@ -13,7 +13,7 @@ import { PersonalInfoService } from '../DBConnection/personal-info.service';
 import { MatSelect, MatOption } from '@angular/material/select';
 import { CourseService } from '../DBConnection/course.service';
 import { UserCourseService } from '../DBConnection/user-course.service';
-
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 interface PersonalInfo {
   id: number;
@@ -48,7 +48,7 @@ interface UserCourse {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, FormsModule, MatSelect, MatOption],
+  imports: [CommonModule, MatProgressSpinnerModule, FormsModule, MatSelect, MatOption, MatSlideToggleModule],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -147,9 +147,7 @@ export class ProfileComponent implements OnInit {
             verticalPosition: 'bottom'
           });
         }
-        
-        
-        
+          
         editAge() {
           this.toggleEditAgeMode();
           this.snackBar.open('Editing your age', 'Close', {
@@ -157,7 +155,6 @@ export class ProfileComponent implements OnInit {
             verticalPosition: 'bottom'
           });
         }
-        
         
         toggleEditBioModal() {
           this.isEditBioModalOpen = !this.isEditBioModalOpen;
@@ -168,11 +165,50 @@ export class ProfileComponent implements OnInit {
         }
 
         toggleEditLifestyleMode() {
-          this.snackBar.open('Editing your profile', 'Close', {
-            duration: 2000,
-            verticalPosition: 'bottom'
-          });
-          // Add your logic here
+          this.isEditLifestyleMode = !this.isEditLifestyleMode;
+        }
+
+
+        updateLifestyle(lifestyle: string, value: boolean) {
+          console.log(`The new value for ${lifestyle} is ${value}`);
+          if (lifestyle === 'smoking') {
+            this.personalInfoService.updateSmoking(this.personalInfo!.id, value ? 1 : 0).subscribe({
+              next: () => {
+                this.snackBar.open('Smoking status updated successfully', 'Close', { duration: 2000 });
+                this.toggleEditLifestyleMode();
+                this.loadProfileData(this.userId);
+              },
+              error: (error) => {
+                console.error('Failed to update smoking status', error);
+                this.toggleEditLifestyleMode();
+              }
+            });
+          } else if (lifestyle === 'vegan') {
+            this.personalInfoService.updateVegan(this.personalInfo!.id, value ? 1 : 0).subscribe({
+              next: () => {
+                this.snackBar.open('Vegan status updated successfully', 'Close', { duration: 2000 });
+                this.toggleEditLifestyleMode();
+                this.loadProfileData(this.userId);
+
+              },
+              error: (error) => {
+                console.error('Failed to update vegan status', error);
+                this.toggleEditLifestyleMode();
+              }
+            });
+          } else if (lifestyle === 'drinking') {
+            this.personalInfoService.updateDrinking(this.personalInfo!.id, value ? 1 : 0).subscribe({
+              next: () => {
+                this.snackBar.open('Drinking status updated successfully', 'Close', { duration: 2000 });
+                this.loadProfileData(this.userId);
+                this.toggleEditLifestyleMode();
+              },
+              error: (error) => {
+                console.error('Failed to update drinking status', error);
+                this.toggleEditLifestyleMode();
+              }
+            });
+          }
         }
         
         saveBio() {
@@ -209,6 +245,7 @@ export class ProfileComponent implements OnInit {
             this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
           }
         }
+
         
         
         
