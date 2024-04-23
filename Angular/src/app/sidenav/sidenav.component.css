@@ -1,20 +1,24 @@
+.mat-drawer {
+  height: 100vh; /* Set width to full viewport width */
+  max-height: 100vh; /* Ensure it doesn't exceed viewport width */
+}
+
 .sidenav-container {
   position: relative;
   background-color: #3498db;
+  color: #f2f2f2;
 
 }
 
 .mat-sidenav {
   width: 300px; /* Adjust as needed */
+  color: #f2f2f2;
 }
 
 .mat-sidenav-content {
-  padding: 20px; /* Adjust as needed */
-}
+  color: #f2f2f2;
 
-.mat-drawer {
-  height: 100vh; /* Set width to full viewport width */
-  max-height: 100vh; /* Ensure it doesn't exceed viewport width */
+  position: relative;
 }
 
 /* Sidenav */

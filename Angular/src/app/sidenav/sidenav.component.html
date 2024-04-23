@@ -1,20 +1,26 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav-content>
-    <p>
-      <button mat-icon-button (click)="sidenav.toggle()" >
-        <mat-icon>menu</mat-icon>
-      </button>
-    </p>
+
+    <button mat-icon-button (click)="sidenav.toggle()" class="btn btn-primary" style="height: 50px">
+      <mat-icon>menu</mat-icon>
+    </button>
+
   </mat-sidenav-content>
 </mat-sidenav-container>
-<mat-sidenav #sidenav mode="side" [(opened)]="opened" class="sidenav">
-  <button mat-button (click)="sidenav.toggle()" class="sidenav-btn">toggle</button>
-  Sidenav content
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
-  <h1 class="sidenav-text">qwerty</h1>
+<mat-sidenav #sidenav mode="push" [(opened)]="opened" class="sidenav">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <button mat-icon-button (click)="sidenav.toggle()" class="btn btn-primary" style="height: 50px">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="col">
+        <div class="nav-brand align-content-md-start">
+          <img id="textbanner" src="assets\banner.png">
+        </div>
+      </div>
+    </div>
+  </div>
+
 </mat-sidenav>
