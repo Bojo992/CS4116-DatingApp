@@ -39,6 +39,9 @@ class UserRouter
             case 'updateCourse' :
                 return $this->controller->updateCourse();
                 break;
+            case 'updateProfilePicture' :
+                return $this->controller->updateProfilePicture();
+                break;
             default :
                 return $this->controller->response404();
                 break;

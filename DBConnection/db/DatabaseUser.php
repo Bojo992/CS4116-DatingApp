@@ -37,6 +37,20 @@ class DatabaseUser extends Config
         return true;
     }
 
+    public function updateProfilePicture($id, $profilePicture)
+    {
+        $sql = '
+        UPDATE user
+        SET profilePicture = :profilePicture
+            WHERE userId = :id;
+        ';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['profilePicture' => $profilePicture, 'id' => $id]);
+
+        return true;
+    }
+
     public function updatePersonalInfo($id, $personalInterestId)
     {
         $sql = '
@@ -59,14 +73,16 @@ class DatabaseUser extends Config
                                           course,
                                           isAdmin,
                                           userName,
-                                          userEmail
+                                          userEmail,
+                                          profilePicture
                                       ) 
                     VALUES (
                                 1,
                                 1,
                                 :isAdmin,
                                 :userName,
-                                :userEmail
+                                :userEmail,
+                                NULL
                             );
             ';
             $stmt = $this->conn->prepare($sql);

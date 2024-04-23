@@ -7,6 +7,7 @@ export class Profile {
   public drinking : boolean;
   public course : number;
   public userId : number;
+  public profilePicture : string;
   public dateCreated : Date;
   public isAdmin : boolean;
   public userName : string;
@@ -28,6 +29,7 @@ export class Profile {
     this.dateCreated = new Date();
     this.isAdmin = false;
     this.userName = '';
+    this.profilePicture = '';
     this.userEmail = '';
     this.universityId = 0;
     this.universityName = '';
@@ -46,6 +48,7 @@ export class Profile {
     result.drinking = input.drinking;
     result.course = input.course;
     result.userId = input.userId;
+    result.profilePicture = input.profilePicture;
     result.dateCreated = input.dateCreated;
     result.isAdmin = input.isAdmin;
     result.userName = input.userName;
