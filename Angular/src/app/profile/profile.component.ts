@@ -70,8 +70,9 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => { 
       
-      const routeUserId = params.get('id');       // Getting the user id from the route parameter
-      this.userId = routeUserId ? routeUserId : this.cookieService.get('UID'); // fallback to cookie if no route parameter
+      const routeUserId = params.get('id');
+      console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
+      this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString()); 
       
       this.isLoading = true;
       this.myprofile = this.userId === this.cookieService.get('UID');
