@@ -25,17 +25,6 @@
   font-size: 35px;
   font-weight: bold;
 }
-
-/* The Close Button (x) */
-.close {
-  position: absolute;
-  right: 25px;
-  top: 0;
-  color: #000;
-  font-size: 35px;
-  font-weight: bold;
-}
-
 .close:hover,
 .close:focus {
   color: red;
@@ -62,14 +51,14 @@
 }
 
 .container {
-  background-color: #fff; 
+  background-color: #fff;
   border-radius: 5px;
   width: 300px;
   font-family: Arial, sans-serif;
 }
 
 .form-group {
-  margin: 20px; 
+  margin: 20px;
 }
 
 /*
@@ -148,8 +137,8 @@ input[type=text], input[type=email] {
 }
 
 .login-container {
-  background-color: #fff; 
-  padding: 40px; 
+  background-color: #fff;
+  padding: 40px;
   border-radius: 5px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   width: 300px;
@@ -160,12 +149,12 @@ input[type=text], input[type=email] {
 
 .intro-content {
   position: absolute;
-  top: 20px; 
+  top: 20px;
   left: 0;
   width: 100%;
-  padding: 0 20px; 
-  text-align: center; 
-  color: #ffffff; 
+  padding: 0 20px;
+  text-align: center;
+  color: #ffffff;
   font-family: Arial, sans-serif;
 }
 
@@ -184,7 +173,7 @@ input[type=text], input[type=email] {
 
 
 .header {
-  background-color: #3498db; 
+  background-color: #3498db;
   color: white;
   padding: 10px;
   text-align: center;
@@ -194,7 +183,7 @@ input[type=text], input[type=email] {
   padding: 15px;
 }
 .form-group {
-  margin-bottom: 20px; 
+  margin-bottom: 20px;
 }
 
 .button-container {
@@ -204,22 +193,22 @@ input[type=text], input[type=email] {
 }
 
 button {
-  width: 100px; 
+  width: 100px;
   padding: 10px;
   border: none;
-  border-radius: 20px; 
+  border-radius: 20px;
   cursor: pointer;
   outline: none;
 }
 .btn-register {
-  background-color: #ecf0f1; 
+  background-color: #ecf0f1;
   color: #333;
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 .btn-login {
   background-color: #3498db;
   color: white;
-  margin-left: 10px; 
+  margin-left: 10px;
 }
 
 .animate {
