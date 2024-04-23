@@ -54,7 +54,7 @@ export class NavbarComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar, private cookieService: CookieService, private router: Router) {
+  constructor(private userService: UserService, private snackBar: MatSnackBar, private cookieService: CookieService, protected router: Router) {
   }
 
   ngOnInit(): void {

@@ -45,11 +45,7 @@ class UserCourseController
         $universityId = cleanInput(getRequestBody()["universityId"]);
         $result = $this->userCourse->insert($courseId, $universityId);
 
-        if ($result["status"]) {
-            return message('University added successfully!',false);
-        } else {
-            return message($result["error"], 404);
-        }
+        return json_encode($result);
     }
 
     public function deleteUserCourse()

@@ -9,13 +9,15 @@ include_once(__DIR__ . '/routers/MessagesRouter.php');
 include_once(__DIR__ . '/routers/Personal_InfoRouter.php');
 include_once(__DIR__ . '/routers/ProfileRouter.php');
 include_once(__DIR__ . '/Util/UtilConfig.php');
+include_once(__DIR__ . '/routers/InterestRouter.php');
+include_once(__DIR__ . '/routers/Personal_InterestRouter.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: *');
 header('Content-Type: application/json');
 
-if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
+if ($_SERVER["REQUEST_METHOD"] != "OPTIONS") {
     $uri = parse_url($_SERVER['REQUEST_URI'])['path'];
 
     switch (explode('/', $uri)[URI_TABLE_OFFSET] ?? '') {
@@ -80,6 +82,19 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS"){
                 $personal_info = new ProfileRouter();
                 echo $personal_info->profileRouter();
             }
+            break;
+
+        case "interest" :
+        {
+            $interest = new InterestRouter();
+            echo $interest->interestRouter();
+        }
+            break;
+        case "personal_interest" :
+        {
+            $personal_info = new Personal_InterestRouter();
+            echo $personal_info->personal_InterestRouter();
+        }
             break;
 
         default:

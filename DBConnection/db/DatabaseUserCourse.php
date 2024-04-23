@@ -54,11 +54,20 @@ class DatabaseUserCourse extends Config
     public function insert($universityId, $courseId) {
         try {
             $sql = '
-                    INSERT INTO user_course (universityId, couceId)
+                    INSERT INTO user_course (universityId, courseId)
                         VALUES (:universityId, :courseId)';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['universityId' => $universityId, 'courseId' => $courseId]);
+
+            $sql = 'SELECT LAST_INSERT_ID() as userCourseId';
+
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            $data = $stmt->fetchAll();
             $result = [
+                "data" => $data,
+                "message" => "User added successfully",
                 "status" => true,
                 "error" => null,
             ];
