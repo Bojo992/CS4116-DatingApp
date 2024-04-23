@@ -2,6 +2,7 @@
   <div class="row">
     <div class="col-md-4 col-sm-12 bg-white border-1 rounded-2 shadow p-3">
       <div class="container ">
+<!--        Username filter        -->
         <div class="row p-2 border-bottom">
           <div class="col-12">
             <label for="usernameSearchbar">Enter Username</label>
@@ -11,6 +12,8 @@
             </mat-form-field>
           </div>
         </div>
+
+<!--        University filter        -->
         <div class="row p-2 border-bottom">
           <div class="col-12">
             <label for="selectUniversity">Select university</label>
@@ -22,6 +25,8 @@
             </mat-form-field>
           </div>
         </div>
+
+<!--        Course filter        -->
         @if (coursesFiltered.length != 0) {
           <div class="row p-2 border-bottom">
             <div class="col-12">
@@ -35,6 +40,65 @@
             </div>
           </div>
         }
+
+<!--        Gender filter-->
+        <div class="row p-2 border-bottom">
+          <div class="col-12">
+            <label for="selectGender">Select university</label>
+            <mat-form-field class="w-100" id="selectGender" >
+              <mat-label>Choose Gender</mat-label>
+              <mat-select [(value)]="genderSelected">
+                <mat-option value=0>Female</mat-option>
+                <mat-option value=1>Male</mat-option>
+                <mat-option value=2>Other</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+<!--        Drinking filter -->
+        <div class="row p-2 border-bottom">
+          <div class="col-12">
+            <label for="selectIsDrinking" class="w-100">Drinking</label>
+            <mat-form-field class="w-100" id="selectIsDrinking" >
+              <mat-label>Drinking</mat-label>
+              <mat-select [(value)]="isDrinking">
+                <mat-option value=1>Yes</mat-option>
+                <mat-option value=0>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+<!--        Smoking filter -->
+        <div class="row p-2 border-bottom">
+          <div class="col-12">
+            <label for="selectIsSmoking" class="w-100">Smoking</label>
+            <mat-form-field class="w-100" id="selectIsSmoking" >
+              <mat-label>Smoking</mat-label>
+              <mat-select [(value)]="isSmoking">
+                <mat-option value=1>Yes</mat-option>
+                <mat-option value=0>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+<!--        Smoking filter -->
+        <div class="row p-2 border-bottom">
+          <div class="col-12">
+            <label for="selectIsVegan" class="w-100">Vegan</label>
+            <mat-form-field class="w-100" id="selectIsVegan" >
+              <mat-label>Vegan</mat-label>
+              <mat-select [(value)]="isVegan">
+                <mat-option value=1>Yes</mat-option>
+                <mat-option value=0>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+<!--        Age filter        -->
         <div class="row p-2 border-bottom">
           <div class="col-12">
             <label for="ageRange">Select max age</label>
@@ -44,6 +108,8 @@
             </mat-slider>
           </div>
         </div>
+
+<!--        Control buttons for filter        -->
         <div class="row p-2 justify-content-evenly">
           <div class="col-3">
             <button mat-raised-button class="border-0 rounded-5" color="primary" (click)="filterUsers()">Filter</button>
@@ -54,6 +120,8 @@
         </div>
       </div>
     </div>
+
+<!--    Table with users    -->
     <div class="col-lg-8 col-sm-12 p-sm-4 pl-3">
       <table mat-table [dataSource]="profilesFiltered" class="mat-elevation-z8 w-100">
         <ng-container matColumnDef="username">

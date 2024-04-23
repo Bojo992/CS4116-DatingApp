@@ -23,6 +23,7 @@ import {
   MatTable
 } from "@angular/material/table";
 import {Router} from "@angular/router";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
 
 @Component({
   selector: 'app-search-page',
@@ -49,7 +50,9 @@ import {Router} from "@angular/router";
     MatColumnDef,
     MatRow,
     MatHeaderRow,
-    MatCell
+    MatCell,
+    MatRadioButton,
+    MatRadioGroup
   ],
   templateUrl: './search-page.component.html',
   styleUrl: './search-page.component.css'
@@ -62,6 +65,10 @@ export class SearchPageComponent implements OnInit{
   protected usernameSelected = '';
   protected universitySelected = 0;
   protected courseSelected = 0;
+  protected genderSelected: number = -1;
+  protected isDrinking: number = -1;
+  protected isSmoking: number = -1;
+  protected isVegan: number = -1;
   protected minAge = 18;
   protected maxAge = 120;
   protected coursesFiltered = new Array<Course>();
@@ -132,8 +139,12 @@ export class SearchPageComponent implements OnInit{
     this.profilesFiltered = this.profiles.filter((profile : Profile) => {
       return (
         (profile.age >= this.minAge && profile.age <= this.maxAge) &&
-        (this.universitySelected == 0 || profile.universityId === +this.universitySelected) &&
-        (this.courseSelected == 0 || profile.courseId === +this.courseSelected) &&
+        (this.universitySelected == 0 || profile.universityId == +this.universitySelected) &&
+        (this.courseSelected == 0 || profile.courseId == +this.courseSelected) &&
+        (this.genderSelected == -1 || profile.gender == this.genderSelected) &&
+        ((this.isDrinking == -1) || (profile.drinking == (1 == this.isDrinking))) &&
+        ((this.isSmoking == -1) || (profile.smoking == (1 == this.isSmoking))) &&
+        ((this.isVegan == -1) || (profile.vegan == (1 == this.isVegan))) &&
         (this.usernameSelected == '' || profile.userName.toLowerCase().includes(this.usernameSelected.toLowerCase()))
       );
     })
@@ -144,6 +155,10 @@ export class SearchPageComponent implements OnInit{
     this.usernameSelected = '';
     this.universitySelected = 0;
     this.courseSelected = 0;
+    this.genderSelected = -1;
+    this.isDrinking = -1;
+    this.isSmoking = -1;
+    this.isVegan = -1;
     this.minAge = 18;
     this.maxAge = 120;
   }
