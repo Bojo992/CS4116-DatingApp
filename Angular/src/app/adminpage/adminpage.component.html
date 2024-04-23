@@ -40,7 +40,8 @@
         <td>{{ item.personalInfo }}</td>
         <td>{{ item.course }}</td>
         <td>{{ item.dateCreated }}</td>
-        <td>{{ item.isAdmin ? 'Yes' : 'No' }}</td>
+        <td *ngIf="!item.isAdmin">No</td>
+        <td *ngIf="item.isAdmin">Yes</td>
         <td>
             <button class="btn_ban" (click)="banUser(item.userId)">Ban</button>
             <button class="btn_unban" (click)="unBanUser(item.userId)">Unban</button>
