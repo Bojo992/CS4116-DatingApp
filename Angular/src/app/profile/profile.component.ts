@@ -17,7 +17,7 @@ interface PersonalInfo {
   smoking: number;
   age: number;
   vegan: number;
-  loction: string;
+  location: string;
   Gender: number;
   drinking: number;
 }
@@ -52,34 +52,34 @@ export class ProfileComponent implements OnInit {
   dateCreated: string = '';
   isLoading: boolean = false;
   myprofile: boolean = false;
-  
+
   public userIdFromHomePage : number = 0;
-  
+
   @Input() userProfile: User | null = null;
   personalInfo: PersonalInfo | null = null;
   university: University | null = null;
   course: Course | null = null;
   userCourse: UserCourse | null = null;
   Gender : string = '';
-  
+
   constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar, private profileService: ProfileService, private router : Router) {
     this.userId = '';
     this.username = '';
   }
-  
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => { 
-      
+    this.route.paramMap.subscribe(params => {
+
       const routeUserId = params.get('id');
       console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
-      this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString()); 
-      
+      this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString());
+
       this.isLoading = true;
       this.myprofile = this.userId === this.cookieService.get('UID');
-      
+
       if (this.myprofile) {
         console.log("Viewing YOUR profile");
-        this.snackBar.open('Viewing your profile', 'Close', { 
+        this.snackBar.open('Viewing your profile', 'Close', {
           duration: 2000,
           verticalPosition:
           'bottom' });
@@ -89,11 +89,11 @@ export class ProfileComponent implements OnInit {
             verticalPosition:
             'bottom' });
           }
-          
+
           this.loadProfileData(this.userId);
         });
       }
-      
+
       loadProfileData(userId: string): void {
         console.log('loading data for userid ' + this.userId)
         this.profileService.getProfileInfo(userId).subscribe({
@@ -122,12 +122,12 @@ export class ProfileComponent implements OnInit {
           duration: 2000,
           verticalPosition: 'bottom'
         });
-        
+
       }
-      
+
       getLifestyleIcons(): string {
         let icons = '';
-        
+
         if (this.personalInfo?.smoking === 1) {
           icons += '<i class="fas fa-smoking"></i> ';
         }
@@ -139,8 +139,7 @@ export class ProfileComponent implements OnInit {
         }
         return icons;
       }
-      
-      
-      
+
+
+
     }
-    
