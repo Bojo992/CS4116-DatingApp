@@ -1,0 +1,48 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+
+    <button mat-icon-button (click)="sidenav.toggle()" class="btn" style="height: 50px">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<mat-sidenav #sidenav mode="push" [(opened)]="opened" class="sidenav">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <button mat-icon-button (click)="sidenav.toggle()" class="btn" style="height: 50px">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div class="col">
+        <div class="nav-brand align-content-md-start">
+          <img id="textbanner" src="assets\banner.png">
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row pt-1 pb-1 "*ngIf="isLoggedIn()">
+      <div class="col">
+        <a class="btn btn-outline-primary btn-block active w-100" href="/home">Home</a>
+      </div>
+    </div>
+    <div class="row pt-1 pb-1">
+      <div class="col">
+        <a class="btn btn-outline-primary btn-block w-100" href="#about">About</a>
+      </div>
+    </div>
+    <div class="row pt-1 pb-1" *ngIf="isLoggedIn()">
+      <div class="col">
+        <a class="btn btn-outline-primary btn-block w-100" [routerLink]="['/search-page']">Search</a>
+      </div>
+    </div>
+    <div class="row pt-1 pb-1" *ngIf="isLoggedIn()">
+      <div class="col">
+        <a class="btn btn-outline-primary btn-block w-100" (click)="logout()">Logout</a>
+      </div>
+    </div>
+  </div>
+
+</mat-sidenav>

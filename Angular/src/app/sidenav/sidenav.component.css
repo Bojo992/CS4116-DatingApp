@@ -1,0 +1,42 @@
+.mat-drawer {
+  height: 100vh; /* Set width to full viewport width */
+  max-height: 100vh; /* Ensure it doesn't exceed viewport width */
+}
+
+.sidenav-container {
+  position: relative;
+  background-color: #3498db;
+  color: #f2f2f2;
+
+}
+
+.mat-sidenav {
+  width: 300px; /* Adjust as needed */
+  color: #f2f2f2;
+}
+
+.mat-sidenav-content {
+  color: #f2f2f2;
+
+  position: relative;
+}
+
+/* Sidenav */
+.sidenav {
+  background-color: #3498db; /* Background color for sidenav */
+}
+
+/* Button inside sidenav */
+.sidenav-btn {
+  color: #fff; /* Text color */
+  background-color: #3498db; /* Background color for button */
+}
+
+/* Text inside sidenav */
+.sidenav-text {
+  color: #fff; /* Text color */
+}
+
+.btn{
+  color: #fff;
+}
