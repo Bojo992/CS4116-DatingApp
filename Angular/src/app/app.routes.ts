@@ -13,8 +13,7 @@ import { RegisterStepperComponent } from './register-stepper/register-stepper.co
 import {SearchPageComponent} from "./search-page/search-page.component";
 
 export const routes: Routes = [
-  // { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: '', redirectTo: 'search-page', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'home', component: HomepageComponent, canActivate: [AuthGuard] },
   { path: 'register', component: RegistrationquizComponent},
