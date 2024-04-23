@@ -5,8 +5,8 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
   providedIn: 'root'
 })
 export class UserCourseService {
-  private url = 'http://coursemates.infinityfreeapp.com/DBConnection/UserCourse/';
-  // private url = 'http://localhost/CourseMates/DBConnection/userCourse/';
+  // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/UserCourse/';
+  private url = 'http://localhost/CS4116-datingApp/DBConnection/userCourse/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -36,14 +36,13 @@ export class UserCourseService {
   }
 
   public insertUserCourse(universityId: number , courseId: number){
-    let headers = new HttpHeaders()
-      .set('Access-Control-Allow-Origin', '*');
+    let headers : HttpHeaders = new HttpHeaders().set('Access-Control-Allow-Origin', '*');
     return this.httpClient.post(this.url + "insertUserCourse",
       {
-        'headers': headers,
-        'body': {
-          'universityId': universityId,
-          'courseId': courseId
+        "headers": headers,
+        "body": {
+          "courseId": courseId,
+          "universityId": universityId
         }
       });
   }
@@ -53,7 +52,7 @@ export class UserCourseService {
       .set('Access-Control-Allow-Origin', '*');
     return this.httpClient.post(this.url + "deleteUserCourse",
       {
-        'headers': headers,
+        "headers": headers,
         'body': {'id': id}
       });
   }

@@ -53,6 +53,9 @@ class Personal_InfoRouter
             case 'updateDrinking' :
                 return $this->controller->updateDrinking();
                 break;
+            case 'insertPersonalInfo' :
+                return $this->controller->insertPersonalInfo();
+                break;
             default :
                 return $this->controller->response404();
                 break;
