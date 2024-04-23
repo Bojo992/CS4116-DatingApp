@@ -8,7 +8,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileService } from '../DBConnection/profile.service';
 import { User } from '../navbar/navbar.component';
 import { Router } from '@angular/router';
-
+import { FormsModule } from '@angular/forms';
+import { PersonalInfoService } from '../DBConnection/personal-info.service';
+import { MatSelect, MatOption } from '@angular/material/select';
+import { CourseService } from '../DBConnection/course.service';
+import { UserCourseService } from '../DBConnection/user-course.service';
 
 
 interface PersonalInfo {
@@ -17,9 +21,10 @@ interface PersonalInfo {
   smoking: number;
   age: number;
   vegan: number;
-  loction: string;
+  location: string;
   Gender: number;
   drinking: number;
+  
 }
 
 interface University {
@@ -39,10 +44,11 @@ interface UserCourse {
   courseId: number;
 }
 
+
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatProgressSpinnerModule, FormsModule, MatSelect, MatOption],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -52,6 +58,9 @@ export class ProfileComponent implements OnInit {
   dateCreated: string = '';
   isLoading: boolean = false;
   myprofile: boolean = false;
+  isEditBioModalOpen: boolean = false;
+  isEditAgeMode: boolean = false;
+  isEditLifestyleMode: boolean = false;
   
   public userIdFromHomePage : number = 0;
   
@@ -62,85 +71,165 @@ export class ProfileComponent implements OnInit {
   userCourse: UserCourse | null = null;
   Gender : string = '';
   
-  constructor(private cookieService: CookieService, private route: ActivatedRoute, private userService: UserService, private snackBar: MatSnackBar, private profileService: ProfileService, private router : Router) {
-    this.userId = '';
-    this.username = '';
-  }
-  
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => { 
-      
-      const routeUserId = params.get('id');
-      console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
-      this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString()); 
-      
-      this.isLoading = true;
-      this.myprofile = this.userId === this.cookieService.get('UID');
-      
-      if (this.myprofile) {
-        console.log("Viewing YOUR profile");
-        this.snackBar.open('Viewing your profile', 'Close', { 
-          duration: 2000,
-          verticalPosition:
-          'bottom' });
-        } else {
-          this.snackBar.open(`Viewing profile with userid: ${this.userId}`, 'Close', {
+  constructor(
+    private cookieService: CookieService,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private snackBar: MatSnackBar,
+    private profileService: ProfileService,
+    private router : Router,
+    private personalInfoService: PersonalInfoService,
+    private courseService: CourseService,
+    private userCourseService: UserCourseService
+  ) 
+    {
+      this.userId = '';
+      this.username = '';
+    }
+    
+    ngOnInit(): void {
+      this.route.paramMap.subscribe(params => {
+        
+        const routeUserId = params.get('id');
+        console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
+        this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString());
+        
+        this.isLoading = true;
+        this.myprofile = this.userId === this.cookieService.get('UID') || this.cookieService.get('isAdmin') === '1';
+        
+        if (this.myprofile) {
+          console.log("Viewing YOUR profile");
+          this.snackBar.open('Viewing your profile', 'Close', {
             duration: 2000,
             verticalPosition:
             'bottom' });
-          }
-          
-          this.loadProfileData(this.userId);
-        });
-      }
-      
-      loadProfileData(userId: string): void {
-        console.log('loading data for userid ' + this.userId)
-        this.profileService.getProfileInfo(userId).subscribe({
-          next: (response: any) => {
-            if (response.user && response.user.length) {
-              this.userProfile = response.user[0];
-              console.log('loading data for userid ' + this.userId)
-              this.personalInfo = response.personalInfo[0];
-              console.log(this.personalInfo);
-              this.university = response.university[0];
-              this.course = response.course[0];
-              this.userCourse = response.userCourse[0];
-              this.isLoading = false;
+          } else {
+            this.snackBar.open(`Viewing profile with userid: ${this.userId}`, 'Close', {
+              duration: 2000,
+              verticalPosition:
+              'bottom' });
             }
-          },
-          error: (error) => {
-            this.snackBar.open('Failed to load data', 'Close', {
-              duration: 3000,
+            
+            this.loadProfileData(this.userId);
+          });
+        }
+
+
+        
+        loadProfileData(userId: string): void {
+          console.log('loading data for userid ' + this.userId)
+          this.profileService.getProfileInfo(userId).subscribe({
+            next: (response: any) => {
+              if (response.user && response.user.length) {
+                this.userProfile = response.user[0];
+                console.log('loading data for userid ' + this.userId)
+                this.personalInfo = response.personalInfo[0];
+                console.log(this.personalInfo);
+                this.university = response.university[0];
+                this.course = response.course[0];
+                this.userCourse = response.userCourse[0];
+                this.isLoading = false;
+              }
+            },
+            error: (error) => {
+              this.snackBar.open('Failed to load data', 'Close', {
+                duration: 3000,
+              });
+              console.error('There was an error!', error);
+            }
+          });
+        }
+        
+        editBio() {
+          this.toggleEditBioModal();
+          this.snackBar.open('Editing your bio', 'Close', {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        }
+        
+        
+        
+        editAge() {
+          this.toggleEditAgeMode();
+          this.snackBar.open('Editing your age', 'Close', {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        }
+        
+        
+        toggleEditBioModal() {
+          this.isEditBioModalOpen = !this.isEditBioModalOpen;
+        }
+        
+        toggleEditAgeMode() {
+          this.isEditAgeMode = !this.isEditAgeMode;
+        }
+
+        toggleEditLifestyleMode() {
+          this.snackBar.open('Editing your profile', 'Close', {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+          // Add your logic here
+        }
+        
+        saveBio() {
+          if (this.personalInfo && this.personalInfo.bio) {
+            this.personalInfoService.updateBio(this.personalInfo.id, this.personalInfo.bio).subscribe({
+              next: () => {
+                this.snackBar.open('Bio updated successfully', 'Close', { duration: 2000 });
+                this.toggleEditBioModal();
+                
+              },
+              error: (error) => {
+                console.error('Failed to update bio', error);
+                this.toggleEditBioModal();
+              }
             });
-            console.error('There was an error!', error);
+          } else {
+            this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
           }
-        });
-      }
-      editBio() {
-        this.snackBar.open('Edit Bio Placeholder', 'Close', {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
+        }
+        
+        saveAge() {
+          if (this.personalInfo && this.personalInfo.age) {
+            this.personalInfoService.updateAge(this.personalInfo.id, this.personalInfo.age).subscribe({
+              next: () => {
+                this.snackBar.open('Age updated successfully', 'Close', { duration: 2000 });
+                this.toggleEditAgeMode();
+              },
+              error: (error) => {
+                console.error('Failed to update age', error);
+                this.toggleEditAgeMode();
+              }
+            });
+          } else {
+            this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
+          }
+        }
+        
+        
+        
+        
+        getLifestyleIcons(): string {
+          let icons = '';
+          
+          if (this.personalInfo?.smoking === 1) {
+            icons += '<i class="fas fa-smoking"></i> ';
+          }
+          if (this.personalInfo?.drinking === 1) {
+            icons += '<i class="fas fa-beer"></i> ';
+          }
+          if (this.personalInfo?.vegan === 1) {
+            icons += '<i class="fa-solid fa-leaf"></i> ';
+          }
+             
+          return icons;
+        }
+        
+        
         
       }
       
-      getLifestyleIcons(): string {
-        let icons = '';
-        
-        if (this.personalInfo?.smoking === 1) {
-          icons += '<i class="fas fa-smoking"></i> ';
-        }
-        if (this.personalInfo?.drinking === 1) {
-          icons += '<i class="fas fa-beer"></i> ';
-        }
-        if (this.personalInfo?.vegan === 1) {
-          icons += '<i class="fa-solid fa-leaf"></i> ';
-        }
-        return icons;
-      }
-      
-      
-      
-    }
-    

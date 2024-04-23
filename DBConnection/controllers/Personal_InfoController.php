@@ -27,7 +27,8 @@ class Personal_InfoController
     public function updateBio()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $bio = intval($_SERVER["HTTP_BIO"] ?? '');
+        $bio = cleanInput($_SERVER["HTTP_BIO"] ?? '');
+        echo "id: $id, bio: $bio";
         $data = $this->personal_info->updateBio($id, $bio);
         return json_encode($data);
     }

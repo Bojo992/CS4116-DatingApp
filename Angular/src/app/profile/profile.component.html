@@ -4,36 +4,90 @@
   </div>
 </div>
 
+
 <div *ngIf="!isLoading" class="container w-75 d-flex align-items-center justify-content-center">
   <div class="profile-box">
     <div class="row h-100">
-      <div class="col-md-6 user-details" [ngClass]="{'userdetails-female': personalInfo?.Gender !== 1}">
-        <div class="img-profile-wrapper">
-          <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
-          <div *ngIf="myprofile" class="img-overlay">
-            <img src="assets\edit.png" alt="Edit">
-          </div>
+      <div class="col-md-6 user-details" 
+      [ngClass]="{
+        'userdetails': personalInfo?.Gender === 1, 
+        'userdetails-female': personalInfo?.Gender === 2, 
+        'userdetails-other': personalInfo?.Gender === 3
+      }">
+      <div class="img-profile-wrapper">
+        <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
+        <div *ngIf="myprofile" class="img-overlay">
+          <img src="assets\edit.png" alt="Edit">
         </div>
-        <div class="profile-name-wrapper">
-          <div class="profile-name">{{ userProfile?.userName }}</div>
-          <div class="profile-age">{{ personalInfo?.age }}</div>
-          <div class="profile-gender"> {{ personalInfo?.Gender === 1 ? 'Male' : 'Female' }}</div>
+      </div>
+      <div class="profile-name-wrapper">
+        <div class="profile-name">{{ userProfile?.userName }}</div>
+        <div class="profile-age">{{ personalInfo?.age }}</div>
+        <div class="profile-gender"> 
+          {{ personalInfo?.Gender === 1 ? 'He/Him' : personalInfo?.Gender === 2 ? 'She/Her' : 'They/Them' }}
         </div>
-        <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
-                                                    (click)="editBio()"></i></p>
+      </div>
+      <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
+        (click)="editBio()"></i></p>
       </div>
       <div class="col-md-6 more-details">
         <h2><strong>About {{ userProfile?.userName }} :</strong></h2>
-        <p><strong>UID of user:</strong> {{ userId }}</p>
+        
         <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
-        <p><strong>Location:</strong> {{ personalInfo?.loction }}</p>
-        <p><strong>Age:</strong> {{ personalInfo?.age }}</p>
+        <p><strong>Age: </strong> {{ personalInfo?.age }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square" style="font-size: 10px;" (click)="editAge()"></i> </p> 
         <p><strong>University:</strong> {{ university?.name }}</p>
         <p><strong>Course:</strong> {{ course?.name }} </p>
-        <p style="font-size: 30px" [innerHTML]="getLifestyleIcons()"></p>
+        <p><i class="fas fa-map-marker-alt">&nbsp;</i>{{personalInfo?.location }}</p>
+        <span style="display: flex; align-items: center;">
+          <p [innerHTML]="getLifestyleIcons()" style="font-size: 20px;"></p>
+          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile" (click)="toggleEditLifestyleMode()"></i>
+        </span>
         <br>
-        <p class="joined-date"><small> Joined Coursemates: {{ userProfile?.dateCreated | date:'mediumDate' }} </small>
-        </p></div>
+        <p class="joined-date"><small> Joined Coursemates: {{ userProfile?.dateCreated | date:'mediumDate' }} </small></p>
+        <p><small>UID of user: {{ userId }}</small></p>
+      </div>
     </div>
   </div>
 </div>
+
+
+<div *ngIf="isEditBioModalOpen" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Bio</h5>
+        <button type="button" class="close" (click)="toggleEditBioModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea [(ngModel)]="personalInfo!.bio" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveBio()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleEditBioModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isEditAgeMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Age</h5>
+        <button type="button" class="close" (click)="toggleEditAgeMode()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea [(ngModel)]="personalInfo!.age" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveAge()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleEditAgeMode()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

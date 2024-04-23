@@ -47,6 +47,10 @@ mat-progress-spinner::ng-deep circle {
 
 }
 
+.userdetails-other {
+    background: linear-gradient(to bottom, #55CDFC, #F7A8B8, #55CDFC);
+}
+
 .more-details {
     display: flex;
     flex-direction: column;
@@ -58,7 +62,18 @@ mat-progress-spinner::ng-deep circle {
     margin-top:auto;
 }
 
-
+.icon-hr {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    color:#3498db;
+    
+  }
+  
+  .icon-hr hr {
+    flex-grow: 1;
+    margin: 10px;
+  }
 
 .img-profile{
     width: 150px;
@@ -191,4 +206,30 @@ mat-progress-spinner::ng-deep circle {
 .profile-box:hover {
     transform: scale(1.05);
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.inner-text{
+    padding-left: 20px;
+
+}
+
+.break { 
+    background: #3E87BC;
+    height: 2px;
+    margin: 5px 0 10px 0;
+    width: 100%;
+}
+
+
+
+.small-icon{
+    font-size: 10em;
+}
+
+.big-icon{
+    font-size: 20px;
+}
+
+#edit-lifestyle{
+    margin-top: 0;
 }
