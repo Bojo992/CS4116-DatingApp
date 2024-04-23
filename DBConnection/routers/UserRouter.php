@@ -33,6 +33,12 @@ class UserRouter
             case 'deleteUser' :
                 return $this->controller->deleteUser();
                 break;
+            case 'updatePersonalInfo' :
+                return $this->controller->updatePersonalInfo();
+                break;
+            case 'updateCourse' :
+                return $this->controller->updateCourse();
+                break;
             default :
                 return $this->controller->response404();
                 break;

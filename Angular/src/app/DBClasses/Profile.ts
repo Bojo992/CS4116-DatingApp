@@ -3,7 +3,7 @@ export class Profile {
   public smoking : boolean;
   public age : number;
   public vegan : boolean;
-  public Gender : number;
+  public gender : number;
   public drinking : boolean;
   public course : number;
   public userId : number;
@@ -21,7 +21,7 @@ export class Profile {
     this.smoking = false;
     this.age = 0;
     this.vegan = false;
-    this.Gender = 0;
+    this.gender = 0;
     this.drinking = false;
     this.course = 0;
     this.userId = 0;
@@ -42,7 +42,7 @@ export class Profile {
     result.smoking = input.smoking;
     result.age = input.age;
     result.vegan = input.vegan;
-    result.Gender = input.Gender;
+    result.gender = input.Gender;
     result.drinking = input.drinking;
     result.course = input.course;
     result.userId = input.userId;

@@ -80,6 +80,28 @@ class Personal_InfoController
         return json_encode($data);
     }
 
+    public function insertPersonalInfo() {
+        $bio = cleanInput(getRequestBody()["bio"]);
+        $smoking = boolval(getRequestBody()["smoking"]);
+        $age = intval(getRequestBody()["age"]);
+        $vegan = boolval(getRequestBody()["vegan"]);
+        $location = cleanInput(getRequestBody()["location"]);
+        $gender = intval(getRequestBody()["gender"]);
+        $drinking = boolval(getRequestBody()["drinking"]);
+
+        $data = $this->personal_info->insertPersonalInfo(
+            $bio,
+            $smoking,
+            $age,
+            $vegan,
+            $location,
+            $gender,
+            $drinking
+        );
+
+        return json_encode($data);
+    }
+
     public function response404(){
         return message("API was not found", 404);
     }

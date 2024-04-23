@@ -51,6 +51,28 @@ class UserController
         }
     }
 
+    public function updateCourse()
+    {
+        $id = intval(getRequestBody()["id"]);
+        $courseId = intval(getRequestBody()["courseId"]);
+
+
+        $this->user->updateCourse($id, $courseId);
+
+        return json_encode(true);
+    }
+
+    public function updatePersonalInfo()
+    {
+        $id = intval(getRequestBody()["id"]);
+        $personalInterestId = intval(getRequestBody()["personalInterestId"]);
+
+
+        $this->user->updatePersonalInfo($id, $personalInterestId);
+
+        return json_encode(true);
+    }
+
     public function response404(){
         return message("API was not found", 404);
     }

@@ -7,10 +7,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
-
-
 import { CredentialsService } from "../DBConnection/credentials.service"
 import { UserService } from '../DBConnection/user.service';
+import { RegisterStepperComponent } from "../register-stepper/register-stepper.component";
 
 interface User {
   userId: number;
@@ -31,19 +30,20 @@ interface UserDetails {
 }
 
 @Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [
-    RouterOutlet,
-    RouterLink,
-    RouterLinkActive,
-    FormsModule,
-    MatSnackBarModule,
-    HttpClientModule,
-    ReactiveFormsModule
-  ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+    selector: 'app-login',
+    standalone: true,
+    templateUrl: './login.component.html',
+    styleUrl: './login.component.css',
+    imports: [
+        RouterOutlet,
+        RouterLink,
+        RouterLinkActive,
+        FormsModule,
+        MatSnackBarModule,
+        HttpClientModule,
+        ReactiveFormsModule,
+        RegisterStepperComponent
+    ]
 })
 
 export class LoginComponent {
