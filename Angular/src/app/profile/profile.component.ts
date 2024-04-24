@@ -151,6 +151,14 @@ export class ProfileComponent implements OnInit {
 
       onFileSelected(event: any): void {
         this.selectedFile = event.target.files[0];
+
+        if (this.selectedFile){
+          if (this.selectedFile.size > 1048576) {
+            this.snackBar.open('File size too large! Please select a file less than 1MB.', 'Close', { duration: 2000 });
+            this.selectedFile = null;
+          }
+
+        }
       }
       
       editBio() {
