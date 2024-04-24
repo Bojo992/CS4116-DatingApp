@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class ProfileService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/profile/';
-  private url = 'http://localhost/CS4116-DatingApp/DBConnection/profile/';
+  private url = 'http://localhost/CourseMates/DBConnection/profile/';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -17,5 +17,15 @@ export class ProfileService {
 
   public getAllUserProfileInfo() {
     return this.httpClient.get(this.url + "getAllUserProfileInfo");
+  }
+
+  public getSuggestionForUser(userId: number) {
+    return this.httpClient.post(this.url + "suggestionResult",
+      {
+        "body" : {
+          "userId" : 1
+        }
+      }
+      );
   }
 }

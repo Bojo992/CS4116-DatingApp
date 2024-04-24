@@ -32,6 +32,9 @@ class ProfileRouter
             case "getAllUserProfileInfo" :
                 return $this->controller->getAllUserProfileInfo();
                 break;
+            case "suggestionResult" :
+                return $this->controller->suggestionResult();
+                break;
             default :
                 return $this->controller->response404();
                 break;

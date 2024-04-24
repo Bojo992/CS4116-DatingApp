@@ -54,6 +54,14 @@ class ProfileController
         $profileDb = new DatabaseProfile();
         return json_encode($profileDb -> getAllUserProfileInfo());
     }
+
+    public function suggestionResult()
+    {
+        $userId = intval(getRequestBody()["userId"]);
+        $profileDb = new DatabaseProfile();
+        return json_encode($profileDb -> suggestionResult($userId));
+    }
+
     public function response404(){
         return message("API was not found", 404);
     }
