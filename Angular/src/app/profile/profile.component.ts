@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
   protected maxAge = 120;
   
   public userIdFromHomePage : number = 0;
-  
+
   @Input() userProfile: User | null = null;
   personalInfo: PersonalInfo | null = null;
   university: University | null = null;

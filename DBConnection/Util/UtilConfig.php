@@ -7,9 +7,9 @@
 //    define("URI_API_OFFSET", 3);
 //
     define("DBHOST", 'localhost');
-    define("DBNAME", 'coursemates');
+    define("DBNAME", 'coursemates_test_db');
     define("DBUSER", 'root');
     define("DBPASS", '');
-    define("URI_TABLE_OFFSET", 3);
-    define("URI_API_OFFSET", 4);
+    define("URI_TABLE_OFFSET", 4);
+    define("URI_API_OFFSET", 5);
 ?>

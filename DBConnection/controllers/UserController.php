@@ -62,6 +62,17 @@ class UserController
         return json_encode(true);
     }
 
+    public function updateProfilePicture()
+    {
+        $id = intval(getRequestBody()["id"]);
+        $courseId = cleanInput(getRequestBody()["profilePicture"]);
+
+
+        $this->user->updateProfilePicture($id, $courseId);
+
+        return json_encode(true);
+    }
+
     public function updatePersonalInfo()
     {
         $id = intval(getRequestBody()["id"]);

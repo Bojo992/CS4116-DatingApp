@@ -7,6 +7,7 @@ import {NavbarComponent} from "./navbar/navbar.component";
 import { AdminModule } from './adminpage/admin.module';
 import {SearchPageModule} from "./search-page/search-page.module";
 import {SearchPageComponent} from "./search-page/search-page.component";
+import {AboutComponent} from "./about/about.component";
 
 @Component({
   selector: 'app-root',
@@ -23,6 +24,7 @@ import {SearchPageComponent} from "./search-page/search-page.component";
     HttpClientModule,
     SearchPageModule,
     SearchPageComponent,
+    AboutComponent,
 
   ],
   templateUrl: './app.component.html',

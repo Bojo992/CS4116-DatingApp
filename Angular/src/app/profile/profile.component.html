@@ -34,6 +34,7 @@
         <h2><strong>About {{ userProfile?.userName }} :</strong></h2>
         
         <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
+        <p><strong>Location:</strong> {{ personalInfo?.location }}</p>
         <p><strong>Age: </strong> {{ personalInfo?.age }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square" style="font-size: 10px;" (click)="editAge()"></i> </p> 
         <p><strong>University:</strong> {{ university?.name }}</p>
         <p><strong>Course:</strong> {{ course?.name }} </p>

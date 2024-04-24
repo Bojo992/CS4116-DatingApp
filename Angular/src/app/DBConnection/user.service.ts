@@ -6,9 +6,9 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class UserService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
-  private url = 'http://localhost/CS4116-DatingApp/DBConnection/user/';
+  private url = 'http://localhost/CourseMates/DBConnection/user/';
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, ) { }
 
   public getAll() {
     return this.httpClient.get(this.url + "getAll");
@@ -59,6 +59,29 @@ export class UserService {
           'personalInterestId': personalInterestId.toString(),
         }
       });
+  }
+
+  updateProfilePicture(userId: number, file : File) {
+    let fileReader = new FileReader();
+
+    fileReader.onloadend = () => {
+      let resultString = fileReader.result as string;
+
+      let headers = new HttpHeaders()
+        .set('Access-Control-Allow-Origin', '*');
+      return this.httpClient.post(this.url + "updatePersonalInfo",
+        {
+          'headers': headers,
+          'body': {
+            'id': userId,
+            'profilePicture': resultString,
+          }
+        });
+    };
+
+    if (file) {
+      fileReader.readAsDataURL(file);
+    }
   }
 
   public deleteUser(id: number) {

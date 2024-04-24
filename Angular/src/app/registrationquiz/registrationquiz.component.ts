@@ -38,7 +38,7 @@ import {NgForOf} from "@angular/common";
   styleUrl: './registrationquiz.component.css'
 })
 export class RegistrationquizComponent implements OnInit {
-  
+
   bioFormGroup: FormGroup;
   smokingFormGroup: FormGroup;
   ageFormGroup: FormGroup;
@@ -48,18 +48,18 @@ export class RegistrationquizComponent implements OnInit {
   drinkingFormGroup: FormGroup;
   universityFormGroup: FormGroup;
   courseFormGroup: FormGroup;
-  
+
   isLinear = false;
   isSmoking: boolean = false;
   isVegan: boolean = false;
-  
+
   protected universities: University[];
   protected courses: Course[];
   protected coursesFiltered = new Array<Course>();
   protected universitySelected: number = 0;
   protected courseSelected = 0;
 
-  
+
   constructor(private _formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
     private credentialsService: CredentialsService,
@@ -70,7 +70,7 @@ export class RegistrationquizComponent implements OnInit {
     private router: Router,
     private universityService: UniversityService,
     private courseService: CourseService
-    
+
   )
     {
       this.universities = new Array<University>();
@@ -79,47 +79,47 @@ export class RegistrationquizComponent implements OnInit {
       this.bioFormGroup = this._formBuilder.group({
         firstCtrl: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(70)]]
       });
-      
+
       this.smokingFormGroup = this._formBuilder.group({
         secondCtrl: [false, [Validators.required]]
       });
-      
+
       this.ageFormGroup = this._formBuilder.group({
         thirdCtrl: ['', [Validators.required]]
       }),
-      
+
       this.veganFormGroup = this._formBuilder.group({
         fourthCtrl: [false, Validators.required]
       });
-      
+
       this.locationFormGroup = this._formBuilder.group({
         fifthCtrl: ['', Validators.required]
       });
-      
+
       this.genderFormGroup = this._formBuilder.group({
         sixthCtrl: ['', Validators.required]
       });
-      
+
       this.drinkingFormGroup = this._formBuilder.group({
         seventhCtrl: ['', Validators.required]
       });
-      
+
       this.universityFormGroup = this._formBuilder.group({
         eighthCtrl: ['', Validators.required]
       });
-      
+
       this.courseFormGroup = this._formBuilder.group({
         ninthCtrl: ['', Validators.required]
       });
-      
-      
+
+
     }
     ngOnInit(): void {
 
       this.universityService.getAll().subscribe(
         (response: any) => {
           this.universities = new Array()
-  
+
           for (let responseElement of response) {
             let university = University.parse(responseElement);
             this.universities.push(university);
@@ -130,7 +130,7 @@ export class RegistrationquizComponent implements OnInit {
       this.courseService.getAll().subscribe(
         (response: any) => {
           this.courses = new Array()
-  
+
           for (let responseElement of response) {
             let course = Course.parse(responseElement);
             this.courses.push(course);
@@ -139,7 +139,7 @@ export class RegistrationquizComponent implements OnInit {
       )
 
     }
-    
+
     fieldMatcher(formGroup: FormGroup, controlName: string, confirmControlName: string, errorMessage: string) {
       return (group: FormGroup): { [key: string]: any } | null => {
         const controlValue = formGroup.get(controlName)?.value;
@@ -153,13 +153,13 @@ export class RegistrationquizComponent implements OnInit {
         return null;
       };
     }
-    
+
     getCoursesFormUniversity(universityId: number) {
       this.coursesFiltered = this.courses.filter((course) => {
         return course.universityId === universityId;
       });
     }
-    
+
     onFormSubmit() {
       // const email = this.emailFormGroup.get('secondCtrl')?.value;
       let university = +this.universityFormGroup.get('eighthCtrl')?.value;
@@ -172,10 +172,10 @@ export class RegistrationquizComponent implements OnInit {
       let age = this.ageFormGroup.get("thirdCtrl")?.value;
       let smoking = (this.smokingFormGroup.get("secondCtrl")?.value)  == "True";
       let bio = this.bioFormGroup.get("firstCtrl")?.value;
-      
+
       let userId = this.cookieService.get("UID");
-      
-      
+
+
        this.userCourseService.insertUserCourse(university, course).subscribe(
          (response: any) => {
            console.log('this is the response from the user course service: ',  response);
@@ -184,7 +184,7 @@ export class RegistrationquizComponent implements OnInit {
            this.userService.updateCourse(+userId, userCourseId).subscribe();
          }
        );
-      
+
       this.personalInfoService.insert(
         bio,
         smoking,
@@ -195,6 +195,7 @@ export class RegistrationquizComponent implements OnInit {
         drinking
       ).subscribe(
         (response: any) => {
+          console.log("this is response : ", response);
           let personalInfoId = response["data"][0].personalInfoId.toString();
           console.log(userId, personalInfoId);
           this.userService.updatePersonalInfo(userId, personalInfoId).subscribe(
@@ -203,8 +204,7 @@ export class RegistrationquizComponent implements OnInit {
         }
       );
     }
-    
-    
-    
+
+
+
   }
-  

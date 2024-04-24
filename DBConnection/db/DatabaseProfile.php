@@ -23,6 +23,7 @@ class DatabaseProfile extends Config
        user.isAdmin,
        user.userName,
        user.userEmail,
+       user.profilePicture,
        userCourse.universityId,
        userCourse.universityName,
        userCourse.courseName,
