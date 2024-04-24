@@ -50,7 +50,7 @@ export class AdminpageComponent implements OnInit {
     //
     if (this.range.controls.start == null) {
       // ban indefinitely
-    } else if (this.range.controls.start >= new Date(Date.now())) {
+//    } else if (this.range.controls.start >= new Date(Date.now())) {
       // ban until this date
     } else {
       //wrong date entered
