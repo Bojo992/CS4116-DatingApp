@@ -65,6 +65,20 @@ class DatabaseUser extends Config
         return true;
     }
 
+    public function changeAdminStatus($id)
+    {
+        $sql = '
+        UPDATE user
+        SET isAdmin = !isAdmin
+            WHERE userId = :id;
+        ';
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+
+        return true;
+    }
+
     public function insert($isAdmin, $userName, $userEmail) {
         try {
             $sql = '

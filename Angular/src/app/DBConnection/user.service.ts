@@ -84,6 +84,18 @@ export class UserService {
     }
   }
 
+  changeAdminStatus(userId: number) {
+    let headers = new HttpHeaders()
+      .set('Access-Control-Allow-Origin', '*');
+    return this.httpClient.post(this.url + "changeAdminStatus",
+      {
+        'headers': headers,
+        'body': {
+          'id': userId
+        }
+      });
+  }
+
   public deleteUser(id: number) {
     let headers = new HttpHeaders()
       .set('Access-Control-Allow-Origin', '*');

@@ -84,6 +84,15 @@ class UserController
         return json_encode(true);
     }
 
+    public function changeAdminStatus()
+    {
+        $id = intval(getRequestBody()["id"]);
+
+        $this->user->changeAdminStatus($id);
+
+        return json_encode(true);
+    }
+
     public function response404(){
         return message("API was not found", 404);
     }
