@@ -27,7 +27,8 @@ class Personal_InfoController
     public function updateBio()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $bio = intval($_SERVER["HTTP_BIO"] ?? '');
+        $bio = cleanInput($_SERVER["HTTP_BIO"] ?? '');
+        echo "id: $id, bio: $bio";
         $data = $this->personal_info->updateBio($id, $bio);
         return json_encode($data);
     }
@@ -51,7 +52,7 @@ class Personal_InfoController
     public function updateVegan()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $vegan = boolval($_SERVER["HTTP_BIO"] ?? '');
+        $vegan = boolval($_SERVER["HTTP_VEGAN"] ?? '');
         $data = $this->personal_info->updateVegan($id, $vegan);
         return json_encode($data);
     }
@@ -59,7 +60,7 @@ class Personal_InfoController
     public function updateLocation()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $location = intval($_SERVER["HTTP_LOCATION"] ?? '');
+        $location = cleanInput($_SERVER["HTTP_LOCATION"] ?? '');
         $data = $this->personal_info->updateLocation($id, $location);
         return json_encode($data);
     }

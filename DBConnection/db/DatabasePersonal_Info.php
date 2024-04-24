@@ -29,8 +29,9 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET bio = :bio WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':bio' => $bio, ':id' => $id]);
+        $stmt->execute(['bio' => $bio, 'id' => $id]);
         $rows = $stmt->fetchAll();
+        print_r($rows);
         return $rows;
     }
 
@@ -38,7 +39,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET smoking = :smoking WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':smoking' => $smoking, ':id' => $id]);
+        $stmt->execute(['smoking' => $smoking, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -47,7 +48,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET age = :age WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':age' => $age, ':id' => $id]);
+        $stmt->execute(['age' => $age, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -56,7 +57,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET vegan = :vegan WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':vegan' => $vegan, ':id' => $id]);
+        $stmt->execute(['vegan' => $vegan, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -65,7 +66,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET location = :location WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':location' => $location, ':id' => $id]);
+        $stmt->execute(['location' => $location, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -74,7 +75,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET gender = :gender WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':gender' => $gender, ':id' => $id]);
+        $stmt->execute(['gender' => $gender, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
@@ -83,7 +84,7 @@ class DatabasePersonal_Info extends Config
     {
         $sql = "UPDATE personalinfo SET drinking = :drinking WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
-        $stmt->execute([':drinking' => $drinking, ':id' => $id]);
+        $stmt->execute(['drinking' => $drinking, 'id' => $id]);
         $rows = $stmt->fetchAll();
         return $rows;
     }
