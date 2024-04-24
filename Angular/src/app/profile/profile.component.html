@@ -15,9 +15,9 @@
         'userdetails-other': personalInfo?.Gender === 3
       }">
       <div class="img-profile-wrapper">
-        <img src="assets\default_icon.png" alt="Profile Picture" class="img-profile">
+        <img [src]="profilePicExists ? (userProfile?.profilePicture) : 'assets/default_icon.png'" alt="Profile Picture" class="img-profile">
         <div *ngIf="myprofile" class="img-overlay">
-          <img src="assets\edit.png" alt="Edit">
+          <img src="assets/edit.png" alt="Edit" (click)="editProfilePic()">
         </div>
       </div>
       <div class="profile-name-wrapper">
@@ -144,6 +144,23 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="toggleEditLifestyleMode()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="myprofile && isEditProfilePicMode" class="modal d-block w-60 align-content-center position-absolute" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload New Profile Picture</h5>
+        <button type="button" class="close" (click)="toggleEditProfilePicMode()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="file" (change)="onFileSelected($event)" accept="image/*">
+        <button type="button" class="btn-submit" (click)="uploadProfilePicture()">Upload</button>
       </div>
     </div>
   </div>

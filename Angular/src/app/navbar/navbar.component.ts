@@ -27,7 +27,8 @@ export interface User {
   isAdmin: boolean,
   userName: string,
   userEmail: string,
-  dateCreated: string
+  dateCreated: string,
+  profilePicture?: string
 }
 
 @Component({
