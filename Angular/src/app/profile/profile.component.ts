@@ -14,6 +14,8 @@ import { MatSelect, MatOption } from '@angular/material/select';
 import { CourseService } from '../DBConnection/course.service';
 import { UserCourseService } from '../DBConnection/user-course.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatSlider } from '@angular/material/slider';
 
 interface PersonalInfo {
   id: number;
@@ -48,7 +50,7 @@ interface UserCourse {
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatProgressSpinnerModule, FormsModule, MatSelect, MatOption, MatSlideToggleModule],
+  imports: [CommonModule, MatProgressSpinnerModule, FormsModule, MatSelect, MatOption, MatSlideToggleModule, MatSliderModule, MatSlider],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -61,6 +63,9 @@ export class ProfileComponent implements OnInit {
   isEditBioModalOpen: boolean = false;
   isEditAgeMode: boolean = false;
   isEditLifestyleMode: boolean = false;
+  isEditLocationMode: boolean = false;
+  protected minAge = 18;
+  protected maxAge = 120;
   
   public userIdFromHomePage : number = 0;
   
@@ -147,6 +152,14 @@ export class ProfileComponent implements OnInit {
             verticalPosition: 'bottom'
           });
         }
+
+        editLocation() {
+          this.toggleEditLocationMode();
+          this.snackBar.open('Editing your location', 'Close', {
+            duration: 2000,
+            verticalPosition: 'bottom'
+          });
+        }
           
         editAge() {
           this.toggleEditAgeMode();
@@ -155,19 +168,35 @@ export class ProfileComponent implements OnInit {
             verticalPosition: 'bottom'
           });
         }
+
+        updateAgeDisplay(newAge: number): void {
+          if (this.personalInfo) {
+            this.personalInfo.age = newAge;
+            console.log('age is: ' + this.personalInfo.age);
+            this.loadProfileData(this.userId);
+          }
+        }
         
         toggleEditBioModal() {
           this.isEditBioModalOpen = !this.isEditBioModalOpen;
+          this.loadProfileData(this.userId);
+
+        }
+
+        toggleEditLocationMode() {
+          this.isEditLocationMode = !this.isEditLocationMode;
+          this.loadProfileData(this.userId);
         }
         
         toggleEditAgeMode() {
           this.isEditAgeMode = !this.isEditAgeMode;
+          this.loadProfileData(this.userId);
+
         }
 
         toggleEditLifestyleMode() {
           this.isEditLifestyleMode = !this.isEditLifestyleMode;
         }
-
 
         updateLifestyle(lifestyle: string, value: boolean) {
           console.log(`The new value for ${lifestyle} is ${value}`);
@@ -175,7 +204,6 @@ export class ProfileComponent implements OnInit {
             this.personalInfoService.updateSmoking(this.personalInfo!.id, value ? 1 : 0).subscribe({
               next: () => {
                 this.snackBar.open('Smoking status updated successfully', 'Close', { duration: 2000 });
-                this.toggleEditLifestyleMode();
                 this.loadProfileData(this.userId);
               },
               error: (error) => {
@@ -187,7 +215,6 @@ export class ProfileComponent implements OnInit {
             this.personalInfoService.updateVegan(this.personalInfo!.id, value ? 1 : 0).subscribe({
               next: () => {
                 this.snackBar.open('Vegan status updated successfully', 'Close', { duration: 2000 });
-                this.toggleEditLifestyleMode();
                 this.loadProfileData(this.userId);
 
               },
@@ -201,7 +228,6 @@ export class ProfileComponent implements OnInit {
               next: () => {
                 this.snackBar.open('Drinking status updated successfully', 'Close', { duration: 2000 });
                 this.loadProfileData(this.userId);
-                this.toggleEditLifestyleMode();
               },
               error: (error) => {
                 console.error('Failed to update drinking status', error);
@@ -228,6 +254,23 @@ export class ProfileComponent implements OnInit {
             this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
           }
         }
+
+        saveLocation() {
+          if (this.personalInfo && this.personalInfo.location) {
+            this.personalInfoService.updateLocation(this.personalInfo.id, this.personalInfo.location).subscribe({
+              next: () => {
+                this.snackBar.open('Location updated successfully', 'Close', { duration: 2000 });
+                this.toggleEditLocationMode();
+              },
+              error: (error) => {
+                console.error('Failed to update location', error);
+                this.toggleEditLocationMode();
+              }
+            });
+          } else {
+            this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
+          }
+        }
         
         saveAge() {
           if (this.personalInfo && this.personalInfo.age) {
@@ -246,10 +289,12 @@ export class ProfileComponent implements OnInit {
           }
         }
 
-        
-        
-        
-        
+        validateAge(event: any) {
+          const value = event.target.value;
+          event.target.value = value.replace(/[^0-9]/g, '');
+          this.snackBar.open('Please enter a valid age', 'Close', { duration: 2000 });
+        }
+
         getLifestyleIcons(): string {
           let icons = '';
           

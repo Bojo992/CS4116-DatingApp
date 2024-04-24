@@ -60,7 +60,7 @@ class Personal_InfoController
     public function updateLocation()
     {
         $id = intval($_SERVER["HTTP_ID"] ?? '');
-        $location = intval($_SERVER["HTTP_LOCATION"] ?? '');
+        $location = cleanInput($_SERVER["HTTP_LOCATION"] ?? '');
         $data = $this->personal_info->updateLocation($id, $location);
         return json_encode($data);
     }

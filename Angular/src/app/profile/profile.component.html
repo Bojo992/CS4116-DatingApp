@@ -37,7 +37,10 @@
         <p><strong>Age: </strong> {{ personalInfo?.age }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square" style="font-size: 10px;" (click)="editAge()"></i> </p> 
         <p><strong>University:</strong> {{ university?.name }}</p>
         <p><strong>Course:</strong> {{ course?.name }} </p>
-        <p><i class="fas fa-map-marker-alt">&nbsp;</i>{{personalInfo?.location }}</p>
+        <span style="display: flex; align-items: center;">
+          <p><i class="fas fa-map-marker-alt">&nbsp;</i>{{personalInfo?.location }}</p>
+          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile" (click)="editLocation()"></i>
+        </span>
         <span style="display: flex; align-items: center;">
           <p [innerHTML]="getLifestyleIcons()" style="font-size: 20px;"></p>
           <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile" (click)="toggleEditLifestyleMode()"></i>
@@ -81,11 +84,34 @@
         </button>
       </div>
       <div class="modal-body">
-        <textarea [(ngModel)]="personalInfo!.age" class="form-control" rows="3"></textarea>
+        <div class="slider-value" style="text-align: center;"><strong>{{personalInfo!.age}} </strong></div>
+        <mat-slider class="w-100" id="ageRange" step="1" min="18" max="70">
+          <input matSliderThumb [(value)]="personalInfo!.age">
+        </mat-slider>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="saveAge()">Save changes</button>
         <button type="button" class="btn btn-secondary" (click)="toggleEditAgeMode()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="isEditLocationMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Location</h5>
+        <button type="button" class="close" (click)="toggleEditLocationMode()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <textarea [(ngModel)]="personalInfo!.location" class="form-control" rows="3"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="saveLocation()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleEditLocationMode()">Close</button>
       </div>
     </div>
   </div>
