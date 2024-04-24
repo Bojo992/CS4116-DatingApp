@@ -11,6 +11,7 @@ include_once(__DIR__ . '/routers/ProfileRouter.php');
 include_once(__DIR__ . '/Util/UtilConfig.php');
 include_once(__DIR__ . '/routers/InterestRouter.php');
 include_once(__DIR__ . '/routers/Personal_InterestRouter.php');
+include_once(__DIR__ . '/routers/BanRouter.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -85,16 +86,23 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS") {
             break;
 
         case "interest" :
-        {
-            $interest = new InterestRouter();
-            echo $interest->interestRouter();
-        }
+            {
+                $interest = new InterestRouter();
+                echo $interest->interestRouter();
+            }
             break;
         case "personal_interest" :
-        {
-            $personal_info = new Personal_InterestRouter();
-            echo $personal_info->personal_InterestRouter();
-        }
+            {
+                $personal_info = new Personal_InterestRouter();
+                echo $personal_info->personal_InterestRouter();
+            }
+            break;
+
+        case "ban":
+            {
+                $ban = new BanRouter();
+                echo $ban->banRouter();
+            }
             break;
 
         default:
