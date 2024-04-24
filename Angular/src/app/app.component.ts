@@ -25,7 +25,6 @@ import {AboutComponent} from "./about/about.component";
     SearchPageModule,
     SearchPageComponent,
     AboutComponent,
-
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'

@@ -1,8 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminpageComponent } from './adminpage.component';
-import {CredentialsService} from "../DBConnection/credentials.service";
 import { UserService } from '../DBConnection/user.service';
+import {MatCard} from "@angular/material/card";
+import {
+  MatCalendar,
+  MatDatepickerModule,
+  MatDatepickerToggle,
+  MatDateRangeInput,
+  MatDateRangePicker
+} from "@angular/material/datepicker";
+import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatNativeDateModule} from "@angular/material/core";
+import {MatInput} from "@angular/material/input";
 
 
 
@@ -10,10 +21,25 @@ import { UserService } from '../DBConnection/user.service';
 
   declarations: [AdminpageComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    MatCard,
+    MatCalendar,
+    MatFormField,
+    MatError,
+    MatHint,
+    MatLabel,
+    MatDateRangeInput,
+    MatDatepickerToggle,
+    MatDateRangePicker,
+    ReactiveFormsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSuffix,
+    MatInput
   ],
   providers: [
-    UserService
+    UserService,
+    MatDatepickerModule
   ],
   exports: [
     AdminpageComponent
