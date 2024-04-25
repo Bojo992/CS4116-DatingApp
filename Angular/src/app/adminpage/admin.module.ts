@@ -12,7 +12,7 @@ import {
 } from "@angular/material/datepicker";
 import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {ReactiveFormsModule} from "@angular/forms";
-import {MatNativeDateModule} from "@angular/material/core";
+import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatInput} from "@angular/material/input";
 
 
@@ -39,7 +39,8 @@ import {MatInput} from "@angular/material/input";
   ],
   providers: [
     UserService,
-    MatDatepickerModule
+    MatDatepickerModule,
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ],
   exports: [
     AdminpageComponent

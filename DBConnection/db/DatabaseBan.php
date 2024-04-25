@@ -48,27 +48,7 @@ class DatabaseBan extends Config
     }
 
     public function checkIfbanned($userId)
-    {
-//        $userId = intval($_SERVER["HTTP_USERID"] ?? '');
-//        $banTime = $this->ban->checkIfbanned($userId);
-//        try {
-//            $sql = 'SELECT banTime FROM bans WHERE userId = :userId';
-//
-//            $stmt = $this->conn->prepare($sql);
-//            $stmt->execute(['userId' => $userId]);
-//
-//            $banTime = $stmt->fetchColumn();
-//
-//            return $banTime;
-//        } catch (PDOException $exception) {
-//            return false;
-//        }
-//
-//        if ($banTime > date('Y-m-d H:i:s')) {
-//            return json_encode(['message' => 'User is still banned.']);
-//        } else {
-//            return json_encode(['message' => 'User is not banned.']);
-//        }
+   {
 
         try {
             $sql = 'SELECT * FROM ban_list WHERE userId = :userId';
