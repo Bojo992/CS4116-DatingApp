@@ -23,6 +23,15 @@ mat-progress-spinner::ng-deep circle {
     border-radius: 5px;
 }
 
+.close{
+    border: 0px;
+    margin-left: 20px;
+    background-color: #3498db;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 20px;
+}
+
 .profile-box {
     background-color: white;
     border-radius: 10px;
@@ -224,6 +233,22 @@ mat-progress-spinner::ng-deep circle {
 
 .small-icon{
     font-size: 10em;
+}
+
+.btn-submit{
+    background-color: #3498db;
+    border: 0px;
+    color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btn-upload{
+    background-color: #fff;
+    border: 0px;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 .big-icon{

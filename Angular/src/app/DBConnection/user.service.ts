@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class UserService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/user/';
-  private url = 'http://localhost/CourseMates/DBConnection/user/';
+  private url = 'http://localhost/CS4116-DatingApp/DBConnection/user/';
 
   constructor(private httpClient: HttpClient, ) { }
 
@@ -64,19 +64,19 @@ export class UserService {
   updateProfilePicture(userId: number, file : File) {
     let fileReader = new FileReader();
 
-    fileReader.onloadend = () => {
+    fileReader.onloadend = (result : any) => {
       let resultString = fileReader.result as string;
-
-      let headers = new HttpHeaders()
-        .set('Access-Control-Allow-Origin', '*');
-      return this.httpClient.post(this.url + "updatePersonalInfo",
+      console.log("Bojo picture upload", resultString);
+        this.httpClient.post(this.url + "updateProfilePicture",
         {
-          'headers': headers,
           'body': {
             'id': userId,
             'profilePicture': resultString,
           }
-        });
+        }).subscribe((response : any) => {
+      console.log("Bojo picture upload subscribe");
+
+          });
     };
 
     if (file) {
