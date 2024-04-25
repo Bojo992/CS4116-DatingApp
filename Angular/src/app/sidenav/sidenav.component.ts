@@ -42,7 +42,7 @@ export class SidenavComponent{
   @Input() isVisible: boolean = false;
   opened = false;
 
-  constructor(private cookieService: CookieService) {
+  constructor(private cookieService: CookieService, private router: Router) {
   }
 
   isLoggedIn(): boolean {
@@ -51,6 +51,6 @@ export class SidenavComponent{
 
   logout(): void {
     this.cookieService.deleteAll();
-    window.location.reload();
+    this.router.navigate(["login"]);
   }
 }
