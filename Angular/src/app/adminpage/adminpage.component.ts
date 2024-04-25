@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../DBConnection/user.service';
-import { CredentialsService } from '../DBConnection/credentials.service';
+import {Component, OnInit} from '@angular/core';
+import {MatSnackBar} from '@angular/material/snack-bar';
+import {UserService} from '../DBConnection/user.service';
+import {CredentialsService} from '../DBConnection/credentials.service';
 import {FormControl, FormGroup} from "@angular/forms";
 import moment from "moment";
+import {BanService} from "../DBConnection/ban.service";
+import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/ngtsc/typecheck/diagnostics";
 
 interface UserDetails {
   userId: number;
@@ -26,12 +28,13 @@ export class AdminpageComponent implements OnInit {
     start: new FormControl<Date | null>(null),
   });
 
-  constructor(private userService: UserService, credentialService:CredentialsService, private snackBar: MatSnackBar) {}
+  constructor(private userService: UserService, credentialService: CredentialsService, private banService: BanService, private snackBar: MatSnackBar) {
+  }
+
   ngOnInit(): void {
-    this.userService.getAll().subscribe ({
+    this.userService.getAll().subscribe({
       next: (response: Object) => {
         this.data = response as UserDetails[];
-        console.log(this.data);
       },
       error: (error) => {
         this.snackBar.open('Failed to load data', 'Close', {
@@ -43,33 +46,52 @@ export class AdminpageComponent implements OnInit {
   }
 
 
-
-
   banUser(userId: number) {
-    // PLACEHOLDER
-    //
-    if (this.range.controls.start == null) {
-      // ban indefinitely
-//    } else if (this.range.controls.start >= new Date(Date.now())) {
-      // ban until this date
-    } else {
-      //wrong date entered
-    }
-
-    console.log(`Banning user with ID: ${userId}`);
-    this.snackBar.open(`Banning user with ID: ${userId}`);
+    let startDate = this.range.controls.start.value;
+    let stringDate = startDate?.getDate() + "/" + ((startDate?.getUTCMonth() == undefined) ? undefined : startDate!.getMonth() + 1) + "/" + startDate?.getFullYear();
+    this.banService.banUser(userId, '', stringDate).subscribe(() => {
+      console.log(`Banning user with ID: ${userId}`);
+      this.snackBar.open(`Banning user with ID: ${userId}`);
+    });
   }
 
-  unBanUser(userId:number){
-    // PLACEHOLDER
-    console.log(`Banning user with ID: ${userId}`)
-    this.snackBar.open(`Unban user with ID: ${userId}`);
+  unBanUser(userId: number) {
+    this.banService.unbanUser(userId).subscribe({
+      next: (response: any) => {
+        console.log(`Unbanning user with ID: ${userId}`);
+        this.snackBar.open(`Unbanning user with ID: ${userId}`);
+      },
+      error: (error) => {
+        this.snackBar.open('Failed to unban user', 'Close', {duration: 3000});
+        console.error('There was an error!', error);
+      }
+    });
+  }
+
+  checkIfBanned(userId: number) {
+    this.banService.checkIfBanned(userId).subscribe({
+      next: (response: any) => {
+        if (response.isBanned) {
+          console.log(`User with ID: ${userId} is banned`);
+          this.snackBar.open(`User with ID: ${userId} is banned`);
+        } else {
+          console.log(`User with ID: ${userId} is not banned`);
+          this.snackBar.open(`User with ID: ${userId} is not banned`);
+        }
+      },
+      error: (error) => {
+        this.snackBar.open('Failed to check ban status', 'Close', {duration: 3000});
+        console.error('There was an error!', error);
+      }
+    });
   }
 
   changeAdminStatus(user: any) {
-    // PLACEHOLDER
-    this.userService.changeAdminStatus(user.userId).subscribe((res: any) => {user.isAdmin = !user.isAdmin;});
+    this.userService.changeAdminStatus(user.userId).subscribe((res: any) => {
+      user.isAdmin = !user.isAdmin;
+    });
   }
+
 
   protected readonly Date = Date;
 }
