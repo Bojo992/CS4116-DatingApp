@@ -53,12 +53,6 @@ export class AdminpageComponent implements OnInit {
       console.log(`Banning user with ID: ${userId}`);
       this.snackBar.open(`Banning user with ID: ${userId}`);
     });
-    // let startDate = this.range.controls.start.value?.toString();
-    // if (startDate) {
-    //   let formattedDate = moment(startDate, 'DD/MM/YYYY').format('DD-MM-YYYY');
-    //   console.log(`Formatted date: ${formattedDate}`); // DEBUG
-    //
-    // }
   }
 
   unBanUser(userId: number) {

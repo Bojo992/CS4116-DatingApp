@@ -9,7 +9,7 @@ import {
 import {AsyncPipe, NgForOf, NgIf} from "@angular/common";
 import {ProfileComponent} from "../profile/profile.component";
 import {map, Observable, startWith, Subscription} from "rxjs";
-import {UserService} from "../DBConnection/user.service";
+import {ProfileService} from "../DBConnection/profile.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {CookieService} from "ngx-cookie-service";
 import {Router} from "@angular/router";
@@ -49,16 +49,18 @@ export class HomepageComponent implements OnInit {
   @Input()
   test!: User | null;
 
-  constructor(private userService: UserService, private snackBar: MatSnackBar, private cookieService: CookieService, private router: Router) {
+  constructor(private profileService: ProfileService, private snackBar: MatSnackBar, private cookieService: CookieService, private router: Router) {
   }
 
   ngOnInit(): void {
     // Fetch all users
-    this.userService.getAll().subscribe((users: any) => {
+    console.log(Number(this.cookieService.get('UID')));
+    // let userId = Number(this.cookieService.get('UID'))
+    let userId = +this.cookieService.get('UID')
+    this.profileService.getSuggestionForUser(userId).subscribe((users: any) => {
       for (let i of users) {
-        if ((i.userId !== +this.cookieService.get("UID"))) {
           this.users.push(i);
-        }
+          console.log(i);
       }
     });
 
@@ -95,6 +97,8 @@ export class HomepageComponent implements OnInit {
         const profileComponent = document.querySelector('app-profile') as any;
         if (profileComponent) {
           profileComponent.loadProfileData(nextUserId);
+          /*this.shuffleUsers();
+          this.users.splice(this.index, 1);*/
         }
       } else {
         this.snackBar.open('No more profiles to load', 'Close', {
@@ -104,7 +108,6 @@ export class HomepageComponent implements OnInit {
         console.log('No more profiles to load');
       }
     }
-    //this.shuffleUsers();
   }
 
   protected readonly ProfileComponent = ProfileComponent;
