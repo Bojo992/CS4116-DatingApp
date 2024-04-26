@@ -76,9 +76,9 @@ mat-progress-spinner::ng-deep circle {
     align-items: center;
     margin-bottom: 5px;
     color:#3498db;
-    
+
   }
-  
+
   .icon-hr hr {
     flex-grow: 1;
     margin: 10px;
@@ -222,7 +222,7 @@ mat-progress-spinner::ng-deep circle {
 
 }
 
-.break { 
+.break {
     background: #3E87BC;
     height: 2px;
     margin: 5px 0 10px 0;
@@ -257,4 +257,12 @@ mat-progress-spinner::ng-deep circle {
 
 #edit-lifestyle{
     margin-top: 0;
+}
+
+.report-button:hover {
+  color: red !important; /* Change to red when hovered over */
+}
+
+.hover-effect:hover {
+  color: red !important;
 }
