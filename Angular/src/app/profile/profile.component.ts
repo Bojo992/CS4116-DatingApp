@@ -1,9 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { UserService } from '../DBConnection/user.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DOCUMENT} from '@angular/common';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ProfileService } from '../DBConnection/profile.service';
 import { User } from '../navbar/navbar.component';
@@ -69,16 +69,17 @@ export class ProfileComponent implements OnInit {
   protected maxAge = 120;
   selectedFile: File | null = null;
 
-  
+
   public userIdFromHomePage : number = 0;
-  
+
   @Input() userProfile: User | null = null;
   personalInfo: PersonalInfo | null = null;
   university: University | null = null;
   course: Course | null = null;
   userCourse: UserCourse | null = null;
   Gender : string = '';
-  
+  urlBool: boolean = true;
+
   constructor(
     private cookieService: CookieService,
     private route: ActivatedRoute,
@@ -88,295 +89,312 @@ export class ProfileComponent implements OnInit {
     private router : Router,
     private personalInfoService: PersonalInfoService,
     private courseService: CourseService,
-    private userCourseService: UserCourseService
-  ) 
+    private userCourseService: UserCourseService,
+    @Inject(DOCUMENT) private document: Document
+  )
   {
     this.userId = '';
     this.username = '';
   }
-  
+
+
+  //TODO: Matching api connection
+  onClickLike(): void {
+
+  }
+
+  onClickDislike(): void {
+
+  }
+
+  checkUrl(id: number): boolean {
+    // return (this.router.url.toString() !== this.document.location.pathname);
+    return (this.document.location.pathname == "/profile" || id != +this.cookieService.get('UID'));
+  }
+
+
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      
+
       const routeUserId = params.get('id');
       console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
       this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString());
-      
+      this.urlBool = this.checkUrl(+this.userId);
       this.isLoading = true;
       this.myprofile = this.userId === this.cookieService.get('UID') || this.cookieService.get('isAdmin') === '1';
-      
+
       if (this.myprofile) {
         console.log("Viewing YOUR profile");
         this.snackBar.open('Viewing your profile', 'Close', {
           duration: 2000,
           verticalPosition:
-          'bottom' });
-        } else {
-          this.snackBar.open(`Viewing profile with userid: ${this.userId}`, 'Close', {
-            duration: 2000,
-            verticalPosition:
             'bottom' });
-          }
-          
-          this.loadProfileData(this.userId);
-        });
-      }
-      
-      
-      
-      loadProfileData(userId: string): void {
-        console.log('loading data for userid ' + this.userId)
-        this.profileService.getProfileInfo(userId).subscribe({
-          next: (response: any) => {
-            if (response.user && response.user.length) {
-              this.checkProfilePicExists()
-              this.userProfile = response.user[0];
-              console.log('loading data for userid ' + this.userId)
-              this.personalInfo = response.personalInfo[0];
-              console.log(this.personalInfo);
-              this.university = response.university[0];
-              this.course = response.course[0];
-              this.userCourse = response.userCourse[0];
-              this.isLoading = false;
-            }
-          },
-          error: (error) => {
-            this.snackBar.open('Failed to load data', 'Close', {
-              duration: 3000,
-            });
-            console.error('There was an error!', error);
-          }
-        });
-      }
-
-      onFileSelected(event: any): void {
-        this.selectedFile = event.target.files[0];
-
-        if (this.selectedFile){
-          if (this.selectedFile.size > 1048576) {
-            this.snackBar.open('File size too large! Please select a file less than 1MB.', 'Close', { duration: 2000 });
-            this.selectedFile = null;
-          }
-
-        }
-      }
-      
-      editBio() {
-        this.toggleEditBioModal();
-        this.snackBar.open('Editing your bio', 'Close', {
+      } else {
+        this.snackBar.open(`Viewing profile with userid: ${this.userId}`, 'Close', {
           duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      }
-      
-      editLocation() {
-        this.toggleEditLocationMode();
-        this.snackBar.open('Editing your location', 'Close', {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
-      }
-      
-      editAge() {
-        this.toggleEditAgeMode();
-        this.snackBar.open('Editing your age', 'Close', {
-          duration: 2000,
-          verticalPosition: 'bottom'
-        });
+          verticalPosition:
+            'bottom' });
       }
 
-      editProfilePic() {
-        this.isEditProfilePicMode = !this.isEditProfilePicMode;
-        this.snackBar.open('Editing your profile picture', 'Close', {
-          duration: 2000,
-          verticalPosition: 'bottom'
+      this.loadProfileData(this.userId);
+    });
+  }
+
+
+
+  loadProfileData(userId: string): void {
+    console.log('loading data for userid ' + this.userId)
+    this.profileService.getProfileInfo(userId).subscribe({
+      next: (response: any) => {
+        if (response.user && response.user.length) {
+          this.checkProfilePicExists()
+          this.userProfile = response.user[0];
+          console.log('loading data for userid ' + this.userId)
+          this.personalInfo = response.personalInfo[0];
+          console.log(this.personalInfo);
+          this.university = response.university[0];
+          this.course = response.course[0];
+          this.userCourse = response.userCourse[0];
+          this.isLoading = false;
+        }
+      },
+      error: (error) => {
+        this.snackBar.open('Failed to load data', 'Close', {
+          duration: 3000,
         });
+        console.error('There was an error!', error);
       }
-      
-      updateAgeDisplay(newAge: number): void {
-        if (this.personalInfo) {
-          this.personalInfo.age = newAge;
-          console.log('age is: ' + this.personalInfo.age);
-          this.loadProfileData(this.userId);
-        }
-      }
-      
-      toggleEditBioModal() {
-        this.isEditBioModalOpen = !this.isEditBioModalOpen;
-        this.loadProfileData(this.userId);
+    });
+  }
+
+  onFileSelected(event: any): void {
+    this.selectedFile = event.target.files[0];
+
+    if (this.selectedFile){
+      if (this.selectedFile.size > 1048576) {
+        this.snackBar.open('File size too large! Please select a file less than 1MB.', 'Close', { duration: 2000 });
+        this.selectedFile = null;
       }
 
-      toggleEditProfilePicMode(): void {
-        this.isEditProfilePicMode = !this.isEditProfilePicMode;
-      }
-      
-      toggleEditLocationMode() {
-        this.isEditLocationMode = !this.isEditLocationMode;
-        this.loadProfileData(this.userId);
-      }
-      
-      toggleEditAgeMode() {
-        this.isEditAgeMode = !this.isEditAgeMode;
-        this.loadProfileData(this.userId);
-        
-      }
-      
-      toggleEditLifestyleMode() {
-        this.isEditLifestyleMode = !this.isEditLifestyleMode;
-      }
-      
-      updateLifestyle(lifestyle: string, value: boolean) {
-        console.log(`The new value for ${lifestyle} is ${value}`);
-        if (lifestyle === 'smoking') {
-          this.personalInfoService.updateSmoking(this.personalInfo!.id, value ? 1 : 0).subscribe({
-            next: () => {
-              this.snackBar.open('Smoking status updated successfully', 'Close', { duration: 2000 });
-              this.loadProfileData(this.userId);
-            },
-            error: (error) => {
-              console.error('Failed to update smoking status', error);
-              this.toggleEditLifestyleMode();
-            }
-          });
-        } else if (lifestyle === 'vegan') {
-          this.personalInfoService.updateVegan(this.personalInfo!.id, value ? 1 : 0).subscribe({
-            next: () => {
-              this.snackBar.open('Vegan status updated successfully', 'Close', { duration: 2000 });
-              this.loadProfileData(this.userId);
-              
-            },
-            error: (error) => {
-              console.error('Failed to update vegan status', error);
-              this.toggleEditLifestyleMode();
-            }
-          });
-        } else if (lifestyle === 'drinking') {
-          this.personalInfoService.updateDrinking(this.personalInfo!.id, value ? 1 : 0).subscribe({
-            next: () => {
-              this.snackBar.open('Drinking status updated successfully', 'Close', { duration: 2000 });
-              this.loadProfileData(this.userId);
-            },
-            error: (error) => {
-              console.error('Failed to update drinking status', error);
-              this.toggleEditLifestyleMode();
-            }
-          });
-        }
-      }
-
-      uploadProfilePicture(): void {
-        if (!this.selectedFile) {
-          this.snackBar.open('No file selected!', 'Close', { duration: 2000 });
-          return;
-        }
-        
-        const formData = new FormData();
-        formData.append('file', this.selectedFile, this.selectedFile.name);
-        const file = formData.get('file') as File; 
-    
-        console.log(file);
-        this.userService.updateProfilePicture(+this.userId, file);
-
-        setTimeout(() => {
-          this.snackBar.open('Profile picture updated successfully', 'Close', { duration: 2000 });
-          this.loadProfileData(this.userId);
-          this.toggleEditProfilePicMode();
-        }, 1000); // 1000 milliseconds = 1 second
-      }
-      
-      checkProfilePicExists() {
-        this.userService.getById(this.userId).subscribe({
-          next: (response: any) => {
-            if (response && response.length > 0 && response[0].profilePicture) {
-              response[0].profilePicture = response[0].profilePicture;
-              this.profilePicExists = true;
-              console.log('Profile picture is set.');
-            } else {
-              this.profilePicExists = false;
-              console.log('No profile picture found, using default.');
-            }
-          },
-          error: (error) => {
-            console.error('Failed to check if profile pic exists', error);
-          }
-        });
-      }
-      
-      saveBio() {
-        if (this.personalInfo && this.personalInfo.bio) {
-          this.personalInfoService.updateBio(this.personalInfo.id, this.personalInfo.bio).subscribe({
-            next: () => {
-              this.snackBar.open('Bio updated successfully', 'Close', { duration: 2000 });
-              this.toggleEditBioModal();
-              
-            },
-            error: (error) => {
-              console.error('Failed to update bio', error);
-              this.toggleEditBioModal();
-            }
-          });
-        } else {
-          this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
-        }
-      }
-      
-      saveLocation() {
-        if (this.personalInfo && this.personalInfo.location) {
-          this.personalInfoService.updateLocation(this.personalInfo.id, this.personalInfo.location).subscribe({
-            next: () => {
-              this.snackBar.open('Location updated successfully', 'Close', { duration: 2000 });
-              this.toggleEditLocationMode();
-            },
-            error: (error) => {
-              console.error('Failed to update location', error);
-              this.toggleEditLocationMode();
-            }
-          });
-        } else {
-          this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
-        }
-      }
-      
-      saveAge() {
-        if (this.personalInfo && this.personalInfo.age) {
-          this.personalInfoService.updateAge(this.personalInfo.id, this.personalInfo.age).subscribe({
-            next: () => {
-              this.snackBar.open('Age updated successfully', 'Close', { duration: 2000 });
-              this.toggleEditAgeMode();
-            },
-            error: (error) => {
-              console.error('Failed to update age', error);
-              this.toggleEditAgeMode();
-            }
-          });
-        } else {
-          this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
-        }
-      }
-      
-      validateAge(event: any) {
-        const value = event.target.value;
-        event.target.value = value.replace(/[^0-9]/g, '');
-        this.snackBar.open('Please enter a valid age', 'Close', { duration: 2000 });
-      }
-      
-      getLifestyleIcons(): string {
-        let icons = '';
-        
-        if (this.personalInfo?.smoking === 1) {
-          icons += '<i class="fas fa-smoking"></i> ';
-        }
-        if (this.personalInfo?.drinking === 1) {
-          icons += '<i class="fas fa-beer"></i> ';
-        }
-        if (this.personalInfo?.vegan === 1) {
-          icons += '<i class="fa-solid fa-leaf"></i> ';
-        }
-        
-        return icons;
-      }
-      
-      
-      
     }
-    
+  }
+
+  editBio() {
+    this.toggleEditBioModal();
+    this.snackBar.open('Editing your bio', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  editLocation() {
+    this.toggleEditLocationMode();
+    this.snackBar.open('Editing your location', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  editAge() {
+    this.toggleEditAgeMode();
+    this.snackBar.open('Editing your age', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  editProfilePic() {
+    this.isEditProfilePicMode = !this.isEditProfilePicMode;
+    this.snackBar.open('Editing your profile picture', 'Close', {
+      duration: 2000,
+      verticalPosition: 'bottom'
+    });
+  }
+
+  updateAgeDisplay(newAge: number): void {
+    if (this.personalInfo) {
+      this.personalInfo.age = newAge;
+      console.log('age is: ' + this.personalInfo.age);
+      this.loadProfileData(this.userId);
+    }
+  }
+
+  toggleEditBioModal() {
+    this.isEditBioModalOpen = !this.isEditBioModalOpen;
+    this.loadProfileData(this.userId);
+  }
+
+  toggleEditProfilePicMode(): void {
+    this.isEditProfilePicMode = !this.isEditProfilePicMode;
+  }
+
+  toggleEditLocationMode() {
+    this.isEditLocationMode = !this.isEditLocationMode;
+    this.loadProfileData(this.userId);
+  }
+
+  toggleEditAgeMode() {
+    this.isEditAgeMode = !this.isEditAgeMode;
+    this.loadProfileData(this.userId);
+
+  }
+
+  toggleEditLifestyleMode() {
+    this.isEditLifestyleMode = !this.isEditLifestyleMode;
+  }
+
+  updateLifestyle(lifestyle: string, value: boolean) {
+    console.log(`The new value for ${lifestyle} is ${value}`);
+    if (lifestyle === 'smoking') {
+      this.personalInfoService.updateSmoking(this.personalInfo!.id, value ? 1 : 0).subscribe({
+        next: () => {
+          this.snackBar.open('Smoking status updated successfully', 'Close', { duration: 2000 });
+          this.loadProfileData(this.userId);
+        },
+        error: (error) => {
+          console.error('Failed to update smoking status', error);
+          this.toggleEditLifestyleMode();
+        }
+      });
+    } else if (lifestyle === 'vegan') {
+      this.personalInfoService.updateVegan(this.personalInfo!.id, value ? 1 : 0).subscribe({
+        next: () => {
+          this.snackBar.open('Vegan status updated successfully', 'Close', { duration: 2000 });
+          this.loadProfileData(this.userId);
+
+        },
+        error: (error) => {
+          console.error('Failed to update vegan status', error);
+          this.toggleEditLifestyleMode();
+        }
+      });
+    } else if (lifestyle === 'drinking') {
+      this.personalInfoService.updateDrinking(this.personalInfo!.id, value ? 1 : 0).subscribe({
+        next: () => {
+          this.snackBar.open('Drinking status updated successfully', 'Close', { duration: 2000 });
+          this.loadProfileData(this.userId);
+        },
+        error: (error) => {
+          console.error('Failed to update drinking status', error);
+          this.toggleEditLifestyleMode();
+        }
+      });
+    }
+  }
+
+  uploadProfilePicture(): void {
+    if (!this.selectedFile) {
+      this.snackBar.open('No file selected!', 'Close', { duration: 2000 });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    const file = formData.get('file') as File;
+
+    console.log(file);
+    this.userService.updateProfilePicture(+this.userId, file);
+
+    setTimeout(() => {
+      this.snackBar.open('Profile picture updated successfully', 'Close', { duration: 2000 });
+      this.loadProfileData(this.userId);
+      this.toggleEditProfilePicMode();
+    }, 1000); // 1000 milliseconds = 1 second
+  }
+
+  checkProfilePicExists() {
+    this.userService.getById(this.userId).subscribe({
+      next: (response: any) => {
+        if (response && response.length > 0 && response[0].profilePicture) {
+          response[0].profilePicture = response[0].profilePicture;
+          this.profilePicExists = true;
+          console.log('Profile picture is set.');
+        } else {
+          this.profilePicExists = false;
+          console.log('No profile picture found, using default.');
+        }
+      },
+      error: (error) => {
+        console.error('Failed to check if profile pic exists', error);
+      }
+    });
+  }
+
+  saveBio() {
+    if (this.personalInfo && this.personalInfo.bio) {
+      this.personalInfoService.updateBio(this.personalInfo.id, this.personalInfo.bio).subscribe({
+        next: () => {
+          this.snackBar.open('Bio updated successfully', 'Close', { duration: 2000 });
+          this.toggleEditBioModal();
+
+        },
+        error: (error) => {
+          console.error('Failed to update bio', error);
+          this.toggleEditBioModal();
+        }
+      });
+    } else {
+      this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
+    }
+  }
+
+  saveLocation() {
+    if (this.personalInfo && this.personalInfo.location) {
+      this.personalInfoService.updateLocation(this.personalInfo.id, this.personalInfo.location).subscribe({
+        next: () => {
+          this.snackBar.open('Location updated successfully', 'Close', { duration: 2000 });
+          this.toggleEditLocationMode();
+        },
+        error: (error) => {
+          console.error('Failed to update location', error);
+          this.toggleEditLocationMode();
+        }
+      });
+    } else {
+      this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
+    }
+  }
+
+  saveAge() {
+    if (this.personalInfo && this.personalInfo.age) {
+      this.personalInfoService.updateAge(this.personalInfo.id, this.personalInfo.age).subscribe({
+        next: () => {
+          this.snackBar.open('Age updated successfully', 'Close', { duration: 2000 });
+          this.toggleEditAgeMode();
+        },
+        error: (error) => {
+          console.error('Failed to update age', error);
+          this.toggleEditAgeMode();
+        }
+      });
+    } else {
+      this.snackBar.open('No changes to save', 'Close', { duration: 2000 });
+    }
+  }
+
+  validateAge(event: any) {
+    const value = event.target.value;
+    event.target.value = value.replace(/[^0-9]/g, '');
+    this.snackBar.open('Please enter a valid age', 'Close', { duration: 2000 });
+  }
+
+  getLifestyleIcons(): string {
+    let icons = '';
+
+    if (this.personalInfo?.smoking === 1) {
+      icons += '<i class="fas fa-smoking"></i> ';
+    }
+    if (this.personalInfo?.drinking === 1) {
+      icons += '<i class="fas fa-beer"></i> ';
+    }
+    if (this.personalInfo?.vegan === 1) {
+      icons += '<i class="fa-solid fa-leaf"></i> ';
+    }
+
+    return icons;
+  }
+
+
+
+}
+
