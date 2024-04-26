@@ -79,6 +79,7 @@ export class ProfileComponent implements OnInit {
   userCourse: UserCourse | null = null;
   Gender : string = '';
   urlBool: boolean = true;
+  isReportModalOpen: boolean = false;
 
   constructor(
     private cookieService: CookieService,
@@ -217,6 +218,14 @@ export class ProfileComponent implements OnInit {
       console.log('age is: ' + this.personalInfo.age);
       this.loadProfileData(this.userId);
     }
+  }
+
+  toggleReportModal() {
+    this.isReportModalOpen = !this.isReportModalOpen;
+  }
+
+  isLoggedInProfile(): boolean {
+    return this.userId !== this.cookieService.get('UID');
   }
 
   toggleEditBioModal() {
