@@ -85,22 +85,37 @@ FROM personalinfo userPersonalInfo
                         on user.course = userCourse.userCourseId
                     JOIN (
                         SELECT userId , count(interestId) AS interestIntersection
-                        FROM personal_interest user1PersonalInterest JOIN interest user1Interest ON
-                            user1Interest.id = user1PersonalInterest.interestId
-                            AND user1PersonalInterest.userId != :userId
-                        WHERE EXISTS (
-                            SELECT *
-                            FROM personal_interest user2PersonalInterest JOIN interest user2Interest ON
-                                        user2Interest.id = user2PersonalInterest.interestId
+                            FROM personal_interest user1PersonalInterest JOIN interest user1Interest ON
+                                user1Interest.id = user1PersonalInterest.interestId
+                                    AND user1PersonalInterest.userId != :userId
+                                    AND user1Interest.typeId < 0
+                            WHERE EXISTS (
+                                SELECT *
+                                FROM personal_interest user2PersonalInterest JOIN interest user2Interest ON
+                                    user2Interest.id = user2PersonalInterest.interestId
                                         AND user2PersonalInterest.userId = :userId
-                                        AND user1Interest.typeId = user2Interest.typeId
-                                        AND user1Interest.value = user2Interest.value
-                                )
-                                GROUP BY userId
-                            ) userInterest
-                                on user.userId = userInterest.userId
-                    WHERE user.userId != :userId
-                    ORDER BY interestIntersection desc
+                                        AND user2Interest.typeId > 0
+                                        AND (
+                                            (
+                                                user2Interest.typeId = user1Interest.typeId * -1
+                                                    AND user1Interest.value = user2Interest.value 
+                                                    OR (user2Interest.value = 0 AND user2Interest.typeId = user1Interest.typeId * -1)
+                                            ) OR (
+                                               user1Interest.typeId = -7
+                                                   AND user2Interest.typeId = 7
+                                                   AND user1Interest.value <= user2Interest.value
+                                            ) OR (
+                                               user1Interest.typeId = -8
+                                                   AND user2Interest.typeId = 8
+                                                   AND user1Interest.value >= user2Interest.value
+                                               )
+                                        )
+                            )
+                            GROUP BY userId
+                    ) userInterest
+                            on user.userId = userInterest.userId
+                WHERE user.userId != :userId
+                ORDER BY interestIntersection desc
         ";
 
         $stmt = $this->conn->prepare($sql);

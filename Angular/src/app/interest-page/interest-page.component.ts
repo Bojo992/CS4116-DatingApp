@@ -155,24 +155,34 @@ export class InterestPageComponent implements OnInit{
       {});
   }
 
-  protected updateAgeRangeInterest() {
+  async updateAgeRangeInterest() {
     this.interestService.updateInterest(this.userId, TypeInterestEnum.MAX_AGE, this.maxAge).subscribe(
       (res: any) =>
       {});
+
+    await this.sleep(750);
+
     this.interestService.updateInterest(this.userId, TypeInterestEnum.MIN_AGE, this.minAge).subscribe(
       (res: any) =>
       {});
   }
-
-  protected clearAgeRangeInterest() {
+  async clearAgeRangeInterest() {
     this.minAge = 18;
     this.maxAge = 120;
 
     this.interestService.updateInterest(this.userId, TypeInterestEnum.MAX_AGE, this.maxAge).subscribe(
       (res: any) =>
       {});
+
+    await this.sleep(750);
+
     this.interestService.updateInterest(this.userId, TypeInterestEnum.MIN_AGE, this.minAge).subscribe(
       (res: any) =>
       {});
+  }
+
+  private async sleep(ms: number): Promise<void> {
+    return new Promise(
+      (resolve) => setTimeout(resolve, ms));
   }
 }
