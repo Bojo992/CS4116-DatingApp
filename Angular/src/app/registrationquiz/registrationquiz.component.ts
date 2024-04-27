@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CredentialsService } from '../DBConnection/credentials.service';
 import { UserService } from '../DBConnection/user.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import {MatSelect, MatOption} from '@angular/material/select';
 import {UserCourseService} from "../DBConnection/user-course.service";
 import {PersonalInfoService} from "../DBConnection/personal-info.service";
@@ -17,7 +17,10 @@ import { Course } from '../DBClasses/Course';
 import { University } from '../DBClasses/University';
 import { UniversityService } from '../DBConnection/university.service';
 import { CourseService } from '../DBConnection/course.service';
-import {NgForOf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
+import {InterestService} from "../DBConnection/interest.service";
+import {UserInterest} from "../DBClasses/UserInterest";
+import {InterestPageComponent} from "../interest-page/interest-page.component";
 
 
 @Component({
@@ -32,7 +35,7 @@ import {NgForOf} from "@angular/common";
     MatInputModule,
     MatSnackBarModule,
     MatSelect, MatOption,
-    NgForOf
+    NgForOf, NgIf, InterestPageComponent, RouterLink
   ],
   templateUrl: './registrationquiz.component.html',
   styleUrl: './registrationquiz.component.css'
@@ -49,27 +52,23 @@ export class RegistrationquizComponent implements OnInit {
   universityFormGroup: FormGroup;
   courseFormGroup: FormGroup;
 
-  isLinear = false;
-  isSmoking: boolean = false;
-  isVegan: boolean = false;
-
   protected universities: University[];
   protected courses: Course[];
   protected coursesFiltered = new Array<Course>();
   protected universitySelected: number = 0;
   protected courseSelected = 0;
-
+  protected displayInterest: boolean = false;
 
   constructor(private _formBuilder: FormBuilder,
     private snackbar: MatSnackBar,
-    private credentialsService: CredentialsService,
     private userService: UserService,
     private userCourseService: UserCourseService,
     private personalInfoService: PersonalInfoService,
     private cookieService: CookieService,
-    private router: Router,
+    protected router: Router,
     private universityService: UniversityService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private interestService: InterestService
 
   )
     {
@@ -86,7 +85,7 @@ export class RegistrationquizComponent implements OnInit {
 
       this.ageFormGroup = this._formBuilder.group({
         thirdCtrl: ['', [Validators.required]]
-      }),
+      });
 
       this.veganFormGroup = this._formBuilder.group({
         fourthCtrl: [false, Validators.required]
@@ -175,6 +174,17 @@ export class RegistrationquizComponent implements OnInit {
 
       let userId = this.cookieService.get("UID");
 
+      let userInterest = new UserInterest();
+      userInterest.university = university;
+      userInterest.course = course;
+      userInterest.gender = Gender;
+      userInterest.drinking = (drinking) ? 1 : 2;
+      userInterest.smoking = (smoking) ? 1 : 2;
+      userInterest.vegan = (vegan) ? 1 : 2;
+      userInterest.max_age = age;
+      userInterest.min_age = age;
+
+      this.interestService.setUpInterest(userInterest, +userId).subscribe((res: any) => {});
 
        this.userCourseService.insertUserCourse(university, course).subscribe(
          (response: any) => {
@@ -199,7 +209,10 @@ export class RegistrationquizComponent implements OnInit {
           let personalInfoId = response["data"][0].personalInfoId.toString();
           console.log(userId, personalInfoId);
           this.userService.updatePersonalInfo(userId, personalInfoId).subscribe(
-            (response:any) => {console.log("response");}
+            (response:any) => {
+              console.log("response");
+              this.displayInterest = true;
+            }
           );
         }
       );

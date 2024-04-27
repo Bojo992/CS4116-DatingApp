@@ -10,8 +10,8 @@ import { AdminpageComponent } from './adminpage/adminpage.component';
 import { ProfileComponent } from './profile/profile.component';
 import {AboutComponent} from "./about/about.component";
 import {Error404Component} from "./error404/error404.component";
-import { RegisterStepperComponent } from './register-stepper/register-stepper.component';
 import {SearchPageComponent} from "./search-page/search-page.component";
+import {InterestPageComponent} from "./interest-page/interest-page.component";
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -22,6 +22,7 @@ export const routes: Routes = [
   { path: 'register', component: RegistrationquizComponent},
   { path: 'profile/:id', component: ProfileComponent, canActivate: [AuthGuard]},
   { path: 'about', component: AboutComponent },
+  { path: 'interest', component: InterestPageComponent, canActivate: [AuthGuard]},
   { path: 'search-page', component: SearchPageComponent, canActivate: [AuthGuard]},
   { path : '**', component: Error404Component }
 ];

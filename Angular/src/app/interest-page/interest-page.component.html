@@ -1,0 +1,153 @@
+<div class="container p-3 shadow rounded-3">
+  <div class="row">
+    <div class="col-12">
+      <div class="container">
+        <div class="row">
+          <div class="col align-content-center">
+            <mat-label class="p-3">University</mat-label>
+          </div>
+          <div class="col align-content-center">
+              <mat-form-field>
+                <mat-label >University</mat-label>
+                <mat-select [(value)]="universityId" (selectionChange)="updateUniversity()">
+                  <mat-option [value]=0>None</mat-option>
+                  <mat-option [value]=university.id *ngFor="let university of universities">{{university.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="coursesFiltered.length != 0 && universityId > 0">
+        <hr>
+
+        <div class="container">
+          <div class="row">
+            <div class="col align-content-center">
+              <mat-label class="p-3">Course</mat-label>
+            </div>
+            <div class="col">
+              <mat-form-field>
+                <mat-label>Course</mat-label>
+                <mat-select [(value)]="courseId" (selectionChange)="updateCourseInterest()">
+                  <mat-option [value]=0>None</mat-option>
+                  <mat-option [value]=course.id *ngFor="let course of coursesFiltered">{{course.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <div class="row">
+          <div class="col align-content-center">
+            <mat-label class="p-3">Gender</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Gender</mat-label>
+              <mat-select [(value)]="genderId" (selectionChange)="updateGenderInterest()">
+                <mat-option [value]=0>None</mat-option>
+                <mat-option [value]=1>Male</mat-option>
+                <mat-option [value]=2>Female</mat-option>
+                <mat-option [value]=3>Other</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <div class="row">
+          <div class="col align-content-center">
+            <mat-label class="p-3">Drinking</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Drinking</mat-label>
+              <mat-select [(value)]="drinkingId" (selectionChange)="updateDrinkingInterest()">
+                <mat-option [value]=0>None</mat-option>
+                <mat-option [value]=1>Yes</mat-option>
+                <mat-option [value]=2>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <div class="row">
+          <div class="col align-content-center">
+            <mat-label class="p-3">Smoking</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Smoking</mat-label>
+              <mat-select [(value)]="smokingId" (selectionChange)="updateSmokingInterest()">
+                <mat-option [value]=0>None</mat-option>
+                <mat-option [value]=1>Yes</mat-option>
+                <mat-option [value]=2>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container">
+        <div class="row">
+          <div class="col align-content-center">
+            <mat-label class="p-3">Vegan</mat-label>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <mat-label>Vegan</mat-label>
+              <mat-select [(value)]="veganId" (selectionChange)="updateVeganInterest()">
+                <mat-option [value]=0>None</mat-option>
+                <mat-option [value]=1>Yes</mat-option>
+                <mat-option [value]=2>No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+
+      <hr>
+
+      <div class="container shadow rounded-3">
+        <div class="row p-2 pb-3 justify-content-evenly">
+          <div class="col-sm-12 col-md-6 align-items-start">
+            <div class="container">
+              <div class="row">
+                <mat-label class="col-12 p-3">Max Age / Min Age</mat-label>
+              </div>
+              <div class="row">
+                <div class="col-auto p-3">
+                  <button mat-raised-button class="border-0 rounded-5 w-auto" color="primary" (click)="updateAgeRangeInterest()">Set age range</button>
+                </div>
+                <div class="col-auto p-3">
+                  <button mat-raised-button class="border-0 rounded-5 w-auto" color="secondary" (click)="clearAgeRangeInterest()">Clear age range</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-12 align-content-md-center">
+            <mat-slider class="w-100" id="ageRange" min="18" max="120" discrete>
+              <input matSliderStartThumb [(value)]="minAge" >
+              <input matSliderEndThumb [(value)]="maxAge">
+            </mat-slider>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
