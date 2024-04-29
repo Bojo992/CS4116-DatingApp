@@ -259,10 +259,19 @@ mat-progress-spinner::ng-deep circle {
     margin-top: 0;
 }
 
+.report-button{
+    background-color: #ff0000;
+    padding:5px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
 .report-button:hover {
-  color: red !important; /* Change to red when hovered over */
+  color: white !important; /* Change to red when hovered over */
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .hover-effect:hover {
-  color: red !important;
+  color: white !important;
 }

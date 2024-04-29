@@ -18,6 +18,8 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatSlider} from '@angular/material/slider';
 import {ChangeDetectorRef} from '@angular/core';
 import {ViewChild} from '@angular/core';
+import { ImageCropperModule } from 'ngx-image-cropper';
+
 
 interface PersonalInfo {
   id: number;
@@ -164,6 +166,7 @@ export class ProfileComponent implements OnInit, OnChanges {
           this.profileService.getProfileInfo(userId).subscribe({
             next: (response: any) => {
               if (response.user && response.user.length) {
+                this.isLoading = true;
                 this.checkProfilePicExists()
                 this.userProfile = response.user[0];
                 console.log('loading data for userid ' + this.userId)
@@ -185,15 +188,65 @@ export class ProfileComponent implements OnInit, OnChanges {
         }
 
         onFileSelected(event: any): void {
-          this.selectedFile = event.target.files[0];
+          const file = event.target.files[0];
+        
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
 
-          if (this.selectedFile){
-            if (this.selectedFile.size > 1048576) {
-              this.snackBar.open('File size too large! Please select a file less than 1MB.', 'Close', { duration: 2000 });
-              this.selectedFile = null;
-            }
+              // creating an image element
+              const image = new Image();
+              image.onload = () => {
+                const canvas = document.createElement('canvas');
+                const imagecontext = canvas.getContext('2d');
+                const MAX_WIDTH = 412;
+                const MAX_HEIGHT = 412;
+                
+                // getting original dimensions
+                let width = image.width;
+                let height = image.height;
+      
+                // if the image is wider than it is tall
+                if (width > height) {
+                    // if the width is greater than the maximum allowed width
+                  if (width > MAX_WIDTH) {
+                    // scaling the image down by the same factor width is being scaled down
+                    height *= MAX_WIDTH / width;
+                    width = MAX_WIDTH;
+                  }
+                } else {
+                  if (height > MAX_HEIGHT) {
+                    width *= MAX_HEIGHT / height;
+                    height = MAX_HEIGHT;
+                  }
+                }
+        
+                if (imagecontext) {
+                  canvas.width = width;
+                  canvas.height = height;
+                  imagecontext.drawImage(image, 0, 0, width, height);
 
+                  // converting to jpeg
+                  const dataUrl = canvas.toDataURL('image/jpeg', 0.8);
+                  const resizedImage = this.dataURItoBlob(dataUrl);
+                  this.selectedFile = new File([resizedImage], file.name, { type: 'image/jpeg' });
+                }
+              };
+              image.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
           }
+        }
+        
+        dataURItoBlob(dataURI: string) {
+          const byteString = window.atob(dataURI.split(',')[1]);
+          const arrayBuffer = new ArrayBuffer(byteString.length);
+          const int8Array = new Uint8Array(arrayBuffer);
+          for (let i = 0; i < byteString.length; i++) {
+            int8Array[i] = byteString.charCodeAt(i);
+          }
+          const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+          return blob;
         }
 
         editBio() {
