@@ -38,7 +38,7 @@ class DatabaseChat extends Config
             $sql = 'INSERT INTO chats (userId, userId2) VALUES (:id, :id2)';
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $id1, 'id' => $id2]);
+            $stmt->execute(['id' => $id1, 'id2' => $id2]);
 
             $result = [
                 "status" => true,
@@ -63,7 +63,3 @@ class DatabaseChat extends Config
         return true;
     }
 }
-
-
-
-
