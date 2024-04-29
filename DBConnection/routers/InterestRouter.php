@@ -37,6 +37,12 @@ class InterestRouter
             case "updateInterest" :
                 return $this->controller->updateInterest();
                 break;
+            case "getUsersInterest" :
+                return $this->controller->getUsersInterest();
+                break;
+            case "setUpInterest" :
+                return $this->controller->setUpInterest();
+                break;
             default :
                 return $this->controller->response404();
                 break;

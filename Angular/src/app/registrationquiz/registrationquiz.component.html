@@ -7,7 +7,7 @@
             <br>
             <button (click)="switchPage(ModalPage.Page2)" class="nextbutton">Start</button>
         </div>
-        
+
         <div *ngIf="currentModalPage === ModalPage.Page2">
             <h2>Question 1.</h2>
             <p>What subject do you prefer?</p>
@@ -24,16 +24,16 @@
                 <label for="Business"> Business </label><br>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="goToNextPage()" [disabled]="!selectedSubject" class="nextbutton" 
-            matTooltip="Please select a subject to proceed" 
+            <button (click)="goToNextPage()" [disabled]="!selectedSubject" class="nextbutton"
+            matTooltip="Please select a subject to proceed"
             [matTooltipDisabled]="selectedSubject">Next</button>
         </div>
-        
+
         <div *ngIf="currentModalPage === ModalPage.Page3">
             <h2>Question 2.</h2>
             <p>What is your preferred learning style?</p>
             <form>
-                <input type="radio" id = "Visual" name="subject" value="Visual" [(ngModel)]="selectedLearningStyle"> 
+                <input type="radio" id = "Visual" name="subject" value="Visual" [(ngModel)]="selectedLearningStyle">
                 <label for="Visual"> Visual </label>
                 <br>
                 <input type="radio" id = "Auditory" name="subject" value="Auditory" [(ngModel)]="selectedLearningStyle">
@@ -46,12 +46,12 @@
                 <label for="Reading/Writing"> Reading/Writing </label>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="goToNextPage()" [disabled]="!selectedLearningStyle" class="nextbutton" 
-            matTooltip="Please select a learning style to proceed" 
-            [matTooltipDisabled]="selectedLearningStyle">Next</button>   
-            
+            <button (click)="goToNextPage()" [disabled]="!selectedLearningStyle" class="nextbutton"
+            matTooltip="Please select a learning style to proceed"
+            [matTooltipDisabled]="selectedLearningStyle">Next</button>
+
         </div>
-        
+
         <div *ngIf="currentModalPage === ModalPage.Page4">
             <h2>Question 3.</h2>
             <p>Which one of the following best describes our career aspirations?</p>
@@ -72,12 +72,12 @@
                 <label for="Education"> Education </label>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="goToNextPage()" [disabled]="!selectedAspiration" class="nextbutton" 
-            matTooltip="Please select an aspiration to proceed" 
+            <button (click)="goToNextPage()" [disabled]="!selectedAspiration" class="nextbutton"
+            matTooltip="Please select an aspiration to proceed"
             [matTooltipDisabled]="selectedAspiration">Next</button>
         </div>
-        
-        
+
+
         <div *ngIf="currentModalPage === ModalPage.Page5">
             <h2>Question 4.</h2>
             <p>How do you prefer to distribute your course load?</p>
@@ -89,11 +89,11 @@
                 <label for="Concentrated">  Concentrated in one or two main subjects </label>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="goToNextPage()" [disabled]="!selectedCourseLoad" class="nextbutton" 
-            matTooltip="Please select a courseload preference to proceed" 
+            <button (click)="goToNextPage()" [disabled]="!selectedCourseLoad" class="nextbutton"
+            matTooltip="Please select a courseload preference to proceed"
             [matTooltipDisabled]="selectedCourseLoad">Next</button>
         </div>
-        
+
         <div *ngIf="currentModalPage === ModalPage.Page6">
             <h2>Question 5.</h2>
             <p>What is your preferred class size?</p>
@@ -108,11 +108,11 @@
                 <label for="Large"> Large </label>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="goToNextPage()" [disabled]="!selectedCourseSize" class="nextbutton" 
-            matTooltip="Please select a course size preference to proceed" 
+            <button (click)="goToNextPage()" [disabled]="!selectedCourseSize" class="nextbutton"
+            matTooltip="Please select a course size preference to proceed"
             [matTooltipDisabled]="selectedCourseSize">Next</button>
         </div>
-        
+
         <div *ngIf="currentModalPage === ModalPage.Page7">
             <h2>Question 6.</h2>
             <p>Extracurricular interests</p>
@@ -130,19 +130,19 @@
                 <label for="research"> Research opportunities </label>
             </form>
             <button (click)="goToPreviousPage()" class="backbutton">Back</button>
-            <button (click)="finishQuiz()" class="nextbutton" 
+            <button (click)="finishQuiz()" class="nextbutton"
             [disabled]="!selectedExtraCurricular"
             matTooltip="Please select an extracurricular preference to proceed"
             [matTooltipDisabled]="selectedExtraCurricular">Finish</button>
         </div>
-        
+
     </div>
-    
+
 </body> -->
 
 
 
-<div class="container w-75 d-flex align-items-center justify-content-center position-relative">
+<div class="container w-75 d-flex align-items-center justify-content-center position-relative" *ngIf="!displayInterest">
     <mat-stepper orientation="vertical" linear="isLinear" #stepper>
       <mat-step [stepControl]="bioFormGroup">
         <form [formGroup]="bioFormGroup">
@@ -256,13 +256,13 @@
         </form>
       </mat-step>
 
-      
+
       <mat-step [stepControl]="universityFormGroup">
         <form [formGroup]="universityFormGroup">
           <ng-template matStepLabel>University</ng-template>
           <mat-form-field class="w-100" id="selectUniversity" >
             <mat-label>Choose university</mat-label>
-            <mat-select [(value)]="universitySelected" formControlName="eighthCtrl"> 
+            <mat-select [(value)]="universitySelected" formControlName="eighthCtrl">
               <mat-option *ngFor="let university of universities" value="{{university.id}}" (click)="getCoursesFormUniversity(university.id)">{{university.name}}</mat-option>
             </mat-select>
           </mat-form-field>
@@ -272,11 +272,11 @@
           </div>
         </form>
       </mat-step>
-      
+
       <mat-step [stepControl]="courseFormGroup">
         <form [formGroup]="courseFormGroup">
           <ng-template matStepLabel>Course</ng-template>
-          <mat-form-field class="w-100" id="selectCourse"> 
+          <mat-form-field class="w-100" id="selectCourse">
             <mat-label>Choose your course</mat-label>
             <mat-select [(value)] = "courseSelected" formControlName="ninthCtrl">
               <mat-option *ngFor="let course of coursesFiltered" value="{{course.id}}">{{course.name}}</mat-option>
@@ -289,8 +289,6 @@
         </form>
       </mat-step>
 
-      
-
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         <p>Registration details complete</p>
@@ -300,5 +298,16 @@
         </div>
       </mat-step>
     </mat-stepper>
-    
+
+  </div>
+
+  <div class="container p-4 justify-content-evenly" *ngIf="displayInterest">
+    <div class="row">
+      <app-interest-page></app-interest-page>
+    </div>
+    <div class="row p-md-5 p-5 justify-content-center align-content-center ">
+      <div class="col-auto justify-content-center d-flex">
+        <button mat-raised-button class="rounded-5" color="primary" (click)="router.navigate(['home'])">Set Personal interest</button>
+      </div>
+    </div>
   </div>

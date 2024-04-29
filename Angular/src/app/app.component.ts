@@ -8,6 +8,7 @@ import { AdminModule } from './adminpage/admin.module';
 import {SearchPageModule} from "./search-page/search-page.module";
 import {SearchPageComponent} from "./search-page/search-page.component";
 import {AboutComponent} from "./about/about.component";
+import {InterestPageModule} from "./interest-page/interest-page.module";
 
 @Component({
   selector: 'app-root',
@@ -25,6 +26,7 @@ import {AboutComponent} from "./about/about.component";
     SearchPageModule,
     SearchPageComponent,
     AboutComponent,
+    InterestPageModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
