@@ -109,8 +109,7 @@ export class ProfileComponent implements OnInit {
   }
 
   checkUrl(id: number): boolean {
-    // return (this.router.url.toString() !== this.document.location.pathname);
-    return (this.document.location.pathname == "/profile" || id != +this.cookieService.get('UID'));
+    return (this.document.location.pathname.includes("/profile")  && id != +this.cookieService.get('UID'));
   }
 
 
@@ -120,7 +119,11 @@ export class ProfileComponent implements OnInit {
       const routeUserId = params.get('id');
       console.log('JFAhdusf',routeUserId);       // Getting the user id from the route parameter
       this.userId = routeUserId ? routeUserId : (this.userProfile!.userId.toString());
+      console.log(this.document.location.pathname);
+      console.log(this.userId);
+      console.log(this.urlBool);
       this.urlBool = this.checkUrl(+this.userId);
+      console.log(this.urlBool);
       this.isLoading = true;
       this.myprofile = this.userId === this.cookieService.get('UID') || this.cookieService.get('isAdmin') === '1';
 
