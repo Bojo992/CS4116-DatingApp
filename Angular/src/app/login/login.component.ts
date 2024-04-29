@@ -5,11 +5,12 @@ import {HomepageComponent} from "../homepage/homepage.component";
 import {FormBuilder, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { CookieOptions, CookieService } from 'ngx-cookie-service';
+import { CookieService } from 'ngx-cookie-service';
 import { HttpClientModule } from '@angular/common/http';
 import { CredentialsService } from "../DBConnection/credentials.service"
 import { UserService } from '../DBConnection/user.service';
 import { RegisterStepperComponent } from "../register-stepper/register-stepper.component";
+import {BanService} from "../DBConnection/ban.service";
 
 interface User {
   userId: number;
@@ -65,7 +66,8 @@ export class LoginComponent {
     private credentialsService: CredentialsService,
     private snackBar: MatSnackBar,
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private banService: BanService
   ) {
   }
 
@@ -76,16 +78,28 @@ export class LoginComponent {
         const credentialsResponse = response as CredentialsResponse;
         if (credentialsResponse.data.length > 0) {
           const userUid = credentialsResponse.data[0].userId;
-          this.cookieService.set('UID', userUid.toString(), 1); // cookies expire in 1 day
-          this.checkifAdmin(userUid);
-          this.goToHomepage();
+          console.log(userUid);
+          this.banService.checkIfBanned(userUid).subscribe(
+            (resp: any) => {
+              if (!resp.status) {
+                this.cookieService.set('UID', userUid.toString(), 1); // cookies expire in 1 day
+                this.checkifAdmin(userUid);
+                this.goToHomepage();
 
-          console.log('Login successful', this.username, this.password);
-          this.snackBar.open('Success! Logging in as: ', this.username, {
-            duration: 2000,
-            verticalPosition: 'bottom'
-          })
-
+                console.log('Login successful', this.username, this.password);
+                this.snackBar.open('Success! Logging in as: ', this.username, {
+                  duration: 2000,
+                  verticalPosition: 'bottom'
+                })
+              } else {
+                console.log("test ban");
+                this.snackBar.open('You are banned.', '', {
+                  duration: 2000,
+                  verticalPosition: 'bottom'
+                });
+              }
+            }
+          )
         } else {
 
           console.error('Login failed: No data returned', this.username, this.password);
@@ -161,9 +175,7 @@ export class LoginComponent {
           console.log('IM AN ADMIN' , userDetails.isAdmin);
           this.goToAdminPage();
           this.cookieService.set('isAdmin', userDetails.isAdmin.toString(), 1);
-          
         }else{
-
           console.log('im not an admin', userDetails.isAdmin);
         }
       }
