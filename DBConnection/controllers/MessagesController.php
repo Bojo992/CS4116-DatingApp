@@ -23,6 +23,14 @@ class MessagesController
         return json_encode($data);
     }
 
+    public function getMessageUpdate()
+    {
+        $chatId = intval(getRequestBody()["chatId"] ?? '');
+        $messageId = intval(getRequestBody()["messageId"] ?? '');
+        $data = $this->messages->getMessageUpdate($chatId, $messageId);
+        return json_encode($data);
+    }
+
     public function insertMessage()
     {
 

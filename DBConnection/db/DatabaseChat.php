@@ -33,12 +33,12 @@ class DatabaseChat extends Config
         return $rows;
     }
 
-    public function insertChat($id) {
+    public function insertChat($id1, $id2) {
         try {
-            $sql = 'INSERT INTO chats (userId) VALUES (:id)';
+            $sql = 'INSERT INTO chats (userId, userId2) VALUES (:id, :id2)';
 
             $stmt = $this->conn->prepare($sql);
-            $stmt->execute(['id' => $id]);
+            $stmt->execute(['id' => $id1, 'id' => $id2]);
 
             $result = [
                 "status" => true,
