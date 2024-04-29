@@ -79,8 +79,8 @@ FROM personalinfo userPersonalInfo
                             course.name as courseName,
                             university.name as universityName
                         FROM user_course
-                            JOIN coursemates.course course on user_course.courseId = course.id
-                            JOIN coursemates.university university on user_course.universityId = university.id
+                            JOIN course course on user_course.courseId = course.id
+                            JOIN university university on user_course.universityId = university.id
                     ) userCourse
                         on user.course = userCourse.userCourseId
                     JOIN (
