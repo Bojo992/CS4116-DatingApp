@@ -31,11 +31,11 @@ class BanController
         $userId = intval($_SERVER["HTTP_USERID"] ?? '');
         $description = $this->ban->checkIfbanned($userId);
 
-        if ($description['banTime'] > date('Y-m-d H:i:s')) {
-            return json_encode(['message' => 'User is still banned.', 'description' => $description['description']]);
+        if ($description['banTime'] > date('Y-m-d H:i:s') || $description['banTime'] == null) {
+            return json_encode(['message' => 'User is still banned.', 'description' => $description['description'] , 'status' => true]);
         } else {
             $this->unbanUser();
-            return json_encode(['message' => 'User is not banned.', 'description' => $description['description']]);
+            return json_encode(['message' => 'User is not banned.', 'description' => $description['description'], 'status' => false]);
         }
     }
 

@@ -48,10 +48,10 @@ class DatabaseBan extends Config
     }
 
     public function checkIfbanned($userId)
-   {
+    {
 
         try {
-            $sql = 'SELECT * FROM ban_list WHERE userId = :userId';
+            $sql = 'SELECT * FROM ban_list WHERE userId = :userId order by banTime asc';
 
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['userId' => $userId]);
@@ -66,4 +66,3 @@ class DatabaseBan extends Config
 
 
 }
-
