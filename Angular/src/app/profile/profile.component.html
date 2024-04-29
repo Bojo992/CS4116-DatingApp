@@ -9,45 +9,57 @@
   <div class="profile-box">
     <div class="row h-100">
       <div class="col-md-6 user-details"
-      [ngClass]="{
+           [ngClass]="{
         'userdetails': personalInfo?.Gender === 1,
         'userdetails-female': personalInfo?.Gender === 2,
         'userdetails-other': personalInfo?.Gender === 3
       }">
-      <div class="img-profile-wrapper">
-        <img [src]="profilePicExists ? (userProfile?.profilePicture) : 'assets/default_icon.png'" alt="Profile Picture" class="img-profile">
-        <div *ngIf="myprofile" class="img-overlay">
-          <img src="assets/edit.png" alt="Edit" (click)="editProfilePic()">
+        <div class="img-profile-wrapper">
+          <img [src]="profilePicExists ? (userProfile?.profilePicture) : 'assets/default_icon.png'"
+               alt="Profile Picture" class="img-profile">
+          <div *ngIf="myprofile" class="img-overlay">
+            <img src="assets/edit.png" alt="Edit" (click)="editProfilePic()">
+          </div>
         </div>
-      </div>
-      <div class="profile-name-wrapper">
-        <div class="profile-name">{{ userProfile?.userName }}</div>
-        <div class="profile-age">{{ personalInfo?.age }}</div>
-        <div class="profile-gender">
-          {{ personalInfo?.Gender === 1 ? 'He/Him' : personalInfo?.Gender === 2 ? 'She/Her' : 'They/Them' }}
+        <div class="profile-name-wrapper">
+          <div class="profile-name">{{ userProfile?.userName }}</div>
+          <div class="profile-age">{{ personalInfo?.age }}</div>
+          <div class="profile-gender">
+            {{ personalInfo?.Gender === 1 ? 'He/Him' : personalInfo?.Gender === 2 ? 'She/Her' : 'They/Them' }}
+          </div>
         </div>
+        <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
+                                                    (click)="editBio()"></i></p>
       </div>
-      <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
-        (click)="editBio()"></i></p>
+      <div class="position-absolute bottom-0 start-0" *ngIf="isLoggedInProfile()">
+        <i class="report-button fa-solid fa-flag"
+           style="color: #2f2f2f; font-size: 0.75rem;"
+           [ngClass]="{'hover-effect': true}"
+           (click)="toggleReportModal()"> Report this user</i>
       </div>
+
       <div class="col-md-6 more-details">
         <h2><strong>About {{ userProfile?.userName }} :</strong></h2>
 
         <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
         <p><strong>Location:</strong> {{ personalInfo?.location }}</p>
-        <p><strong>Age: </strong> {{ personalInfo?.age }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square" style="font-size: 10px;" (click)="editAge()"></i> </p>
+        <p><strong>Age: </strong> {{ personalInfo?.age }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
+                                                             style="font-size: 10px;" (click)="editAge()"></i></p>
         <p><strong>University:</strong> {{ university?.name }}</p>
         <p><strong>Course:</strong> {{ course?.name }} </p>
         <span style="display: flex; align-items: center;">
-          <p><i class="fas fa-map-marker-alt">&nbsp;</i>{{personalInfo?.location }}</p>
-          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile" (click)="editLocation()"></i>
+          <p><i class="fas fa-map-marker-alt">&nbsp;</i>{{ personalInfo?.location }}</p>
+          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile"
+             (click)="editLocation()"></i>
         </span>
         <span style="display: flex; align-items: center;">
           <p [innerHTML]="getLifestyleIcons()" style="font-size: 20px;"></p>
-          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile" (click)="toggleEditLifestyleMode()"></i>
+          <i class="fas fa-edit" style="font-size: 10px; padding-left: 5px;" *ngIf="myprofile"
+             (click)="toggleEditLifestyleMode()"></i>
         </span>
         <br>
-        <p class="joined-date"><small> Joined Coursemates: {{ userProfile?.dateCreated | date:'mediumDate' }} </small></p>
+        <p class="joined-date"><small> Joined Coursemates: {{ userProfile?.dateCreated | date:'mediumDate' }} </small>
+        </p>
         <p><small>UID of user: {{ userId }}</small></p>
       </div>
     </div>
@@ -55,7 +67,8 @@
 </div>
 
 
-<div *ngIf="isEditBioModalOpen" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+<div *ngIf="isEditBioModalOpen" class="modal d-block" tabindex="-1" role="dialog"
+     style="background-color: rgba(0,0,0,0.5)">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -75,6 +88,27 @@
   </div>
 </div>
 
+<div *ngIf="isReportModalOpen" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Report User</h5>
+        <button type="button" class="close" (click)="toggleReportModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Add your report form or content here -->
+        <textarea class="form-control" rows="3" placeholder="Enter your report"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Submit Report</button>
+        <button type="button" class="btn btn-secondary" (click)="toggleReportModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div *ngIf="isEditAgeMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -85,7 +119,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <div class="slider-value" style="text-align: center;"><strong>{{personalInfo!.age}} </strong></div>
+        <div class="slider-value" style="text-align: center;"><strong>{{ personalInfo!.age }} </strong></div>
         <mat-slider class="w-100" id="ageRange" step="1" min="18" max="70">
           <input matSliderThumb [(value)]="personalInfo!.age">
         </mat-slider>
@@ -98,7 +132,8 @@
   </div>
 </div>
 
-<div *ngIf="isEditLocationMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+<div *ngIf="isEditLocationMode" class="modal d-block" tabindex="-1" role="dialog"
+     style="background-color: rgba(0,0,0,0.5)">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -119,8 +154,8 @@
 </div>
 
 
-
-<div *ngIf="isEditLifestyleMode" class="modal d-block" tabindex="-1" role="dialog" style="background-color: rgba(0,0,0,0.5)">
+<div *ngIf="isEditLifestyleMode" class="modal d-block" tabindex="-1" role="dialog"
+     style="background-color: rgba(0,0,0,0.5)">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -132,14 +167,17 @@
       <div class="modal-body">
         <form>
           <mat-slide-toggle style="display: block; padding: 20px"
-          [checked]="this.personalInfo?.smoking === 1"
-          (change)="updateLifestyle('smoking', $event.checked)"> Do you smoke? </mat-slide-toggle>
+                            [checked]="this.personalInfo?.smoking === 1"
+                            (change)="updateLifestyle('smoking', $event.checked)"> Do you smoke?
+          </mat-slide-toggle>
           <mat-slide-toggle style="display: block; padding: 20px"
-          [checked]="this.personalInfo?.drinking === 1"
-          (change)="updateLifestyle('drinking', $event.checked)"> Do you drink? </mat-slide-toggle>
+                            [checked]="this.personalInfo?.drinking === 1"
+                            (change)="updateLifestyle('drinking', $event.checked)"> Do you drink?
+          </mat-slide-toggle>
           <mat-slide-toggle style="display: block; padding: 20px"
-          [checked]="this.personalInfo?.vegan === 1"
-          (change)="updateLifestyle('vegan', $event.checked)"> Are you vegan? </mat-slide-toggle>
+                            [checked]="this.personalInfo?.vegan === 1"
+                            (change)="updateLifestyle('vegan', $event.checked)"> Are you vegan?
+          </mat-slide-toggle>
         </form>
       </div>
       <div class="modal-footer">
@@ -150,12 +188,13 @@
 </div>
 <div class="btn-container align-content-center justify-content-center" *ngIf="urlBool">
   <div class="row justify-content-evenly">
-    <a type="button" class="col-1" ><img src="assets/heart-solid.svg"></a>
-    <a type="button" class="col-1" ><img src="assets/x-solid.svg"></a>
+    <a type="button" class="col-1"><img src="assets/heart-solid.svg"></a>
+    <a type="button" class="col-1"><img src="assets/x-solid.svg"></a>
   </div>
 </div>
 
-<div *ngIf="myprofile && isEditProfilePicMode" class="modal d-block w-60 align-content-center position-absolute" tabindex="-1" role="dialog">
+<div *ngIf="myprofile && isEditProfilePicMode" class="modal d-block w-60 align-content-center position-absolute"
+     tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
