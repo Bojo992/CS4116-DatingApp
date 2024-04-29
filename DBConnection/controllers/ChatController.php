@@ -26,8 +26,9 @@ class ChatController
 
     public function insertChat()
     {
-        $id = $this->chat->test_input($_SERVER ["HTTP_USERID"]);
-        $result = $this->chat->insertChat($id);
+        $id1 = $this->chat->test_input($_SERVER ["HTTP_USERID1"]);
+        $id2 = $this->chat->test_input($_SERVER ["HTTP_USERID2"]);
+        $result = $this->chat->insertChat($id1, $id2);
 
         if ($result["status"]) {
             return $this->chat->message("chat was created", 200);

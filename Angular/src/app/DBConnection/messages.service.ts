@@ -24,6 +24,10 @@ export class MessagesService {
     return this.httpClient.get(this.url + "insertMessage" , {'headers' : headers});
   }
 
+  public getMessageUpdate(chatId : number, messageId : number) {
+    return this.httpClient.post(this.url + "getMessageUpdate" , {'body' : { "chatId": chatId, "messageId" : messageId}});
+  }
+
   public deleteMessage(messageId : any) {
     let headers : HttpHeaders = new HttpHeaders().set("messageId" , messageId.toString()).set('Access-Control-Allow-Origin', '*');
     return this.httpClient.get(this.url + "deleteMessage" , {'headers' : headers});

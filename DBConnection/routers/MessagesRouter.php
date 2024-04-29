@@ -36,6 +36,9 @@ class MessagesRouter
             case 'deleteMessage' :
                 return $this->controller->deleteMessage();
                 break;
+            case 'getMessageUpdate' :
+                return $this->controller->getMessageUpdate();
+                break;
             default :
                 return $this->controller->response404();
                 break;
