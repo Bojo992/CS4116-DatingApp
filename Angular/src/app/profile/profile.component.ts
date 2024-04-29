@@ -18,7 +18,8 @@ import {MatSliderModule} from '@angular/material/slider';
 import {MatSlider} from '@angular/material/slider';
 import {ChangeDetectorRef} from '@angular/core';
 import {ViewChild} from '@angular/core';
-import { ImageCropperModule } from 'ngx-image-cropper';
+import {MatchingService} from "../DBConnection/matching.service";
+
 
 
 interface PersonalInfo {
@@ -91,6 +92,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   Gender: string = '';
   urlBool: boolean = true;
   isReportModalOpen: boolean = false;
+  recommendedUserId: string = '';
 
   constructor(
     private cookieService: CookieService,
@@ -102,6 +104,7 @@ export class ProfileComponent implements OnInit, OnChanges {
     private personalInfoService: PersonalInfoService,
     private courseService: CourseService,
     private userCourseService: UserCourseService,
+    private matchingService: MatchingService,
     @Inject(DOCUMENT) private document: Document
   ) {
     this.userId = '';
@@ -114,13 +117,44 @@ export class ProfileComponent implements OnInit, OnChanges {
   }
 
 
-  //TODO: Matching api connection
   onClickLike(): void {
+    this.matchingService.like(this.cookieService.get('UID'), this.userId).subscribe((result : any) => {
+      console.log("like response",result);
 
+      if (result) {
+        this.snackBar.open('Like successful','Close',{
+          duration: 3000,
+          verticalPosition: 'bottom'
+        })
+        console.log("Like was successful");
+      } else {
+        this.snackBar.open('Match was found','Close',{
+          duration: 3000,
+          verticalPosition: 'bottom'
+        })
+        console.log("Like was not successful");
+      }
+    });
   }
 
     onClickDislike(): void {
+      this.matchingService.dislike(this.cookieService.get('UID'), this.userId).subscribe((result : any) => {
+        console.log(result);
 
+        if (result) {
+          this.snackBar.open('Dislike successful','Close',{
+            duration: 3000,
+            verticalPosition: 'bottom'
+          })
+          console.log("Dislike was successful");
+        } else {
+          this.snackBar.open('Dislike unsuccessful','Close',{
+            duration: 3000,
+            verticalPosition: 'bottom'
+          })
+          console.log("Dislike was not successful");
+        }
+      });
     }
 
     checkUrl(id: number): boolean {
@@ -163,6 +197,7 @@ export class ProfileComponent implements OnInit, OnChanges {
 
         loadProfileData(userId: string): void {
           console.log('loading data for userid ' + this.userId)
+          console.log('loading data for cookies ' + this.cookieService.get('UID'));
           this.profileService.getProfileInfo(userId).subscribe({
             next: (response: any) => {
               if (response.user && response.user.length) {
@@ -189,7 +224,7 @@ export class ProfileComponent implements OnInit, OnChanges {
 
         onFileSelected(event: any): void {
           const file = event.target.files[0];
-        
+
           if (file) {
             const reader = new FileReader();
             reader.onload = (e: any) => {
@@ -201,11 +236,11 @@ export class ProfileComponent implements OnInit, OnChanges {
                 const imagecontext = canvas.getContext('2d');
                 const MAX_WIDTH = 412;
                 const MAX_HEIGHT = 412;
-                
+
                 // getting original dimensions
                 let width = image.width;
                 let height = image.height;
-      
+
                 // if the image is wider than it is tall
                 if (width > height) {
                     // if the width is greater than the maximum allowed width
@@ -220,7 +255,7 @@ export class ProfileComponent implements OnInit, OnChanges {
                     height = MAX_HEIGHT;
                   }
                 }
-        
+
                 if (imagecontext) {
                   canvas.width = width;
                   canvas.height = height;
@@ -237,7 +272,7 @@ export class ProfileComponent implements OnInit, OnChanges {
             reader.readAsDataURL(file);
           }
         }
-        
+
         dataURItoBlob(dataURI: string) {
           const byteString = window.atob(dataURI.split(',')[1]);
           const arrayBuffer = new ArrayBuffer(byteString.length);
@@ -245,7 +280,7 @@ export class ProfileComponent implements OnInit, OnChanges {
           for (let i = 0; i < byteString.length; i++) {
             int8Array[i] = byteString.charCodeAt(i);
           }
-          const blob = new Blob([int8Array], { type: 'image/jpeg' });    
+          const blob = new Blob([int8Array], { type: 'image/jpeg' });
           return blob;
         }
 
