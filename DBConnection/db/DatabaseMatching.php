@@ -35,11 +35,12 @@ class DatabaseMatching extends Config
     public function checkIfMatch(int $userId, int $recommendedUserId)
     {
         $sql = 'SELECT IF(
-    (SELECT COUNT(*)
+    (SELECT COUNT(distinct recommendedUserId)
      FROM likes
      WHERE (userId = :userId AND recommendedUserId = :recommendedUserId) OR
          (userId = :recommendedUserId AND recommendedUserId = :userId)
-    ) > 1, true, false
+    ) > 1 AND NOT EXISTS(SELECT * FROM chats WHERE (userId = :userId AND userId2 = :recommendedUserId) OR
+         (userId = :recommendedUserId AND userId2 = :userId)), true, false
     ) as isMatch;';
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['userId' => $userId, 'recommendedUserId' => $recommendedUserId]);

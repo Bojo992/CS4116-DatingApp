@@ -13,8 +13,8 @@ class MatchingController
 
     public function like()
     {
-        $userId = intval(getRequestBody()['userId'] ?? '');
-        $recommendedUserId = intval(getRequestBody()["recommendedUserId"] ?? '');
+        $userId = intval($_SERVER['HTTP_USERID'] ?? '');
+        $recommendedUserId = intval($_SERVER['HTTP_RECOMMENDEDUSERID'] ?? '');
         $this->matching->like($userId, $recommendedUserId);
         $wasMatchSuccessful = $this->checkIfMatch($userId, $recommendedUserId);
         return json_encode($wasMatchSuccessful);
@@ -22,8 +22,8 @@ class MatchingController
 
     public function dislike()
     {
-        $userId = intval(getRequestBody()['userId'] ?? '');
-        $recommendedUserId = intval(getRequestBody()["recommendedUserId"] ?? '');
+        $userId = intval($_SERVER['HTTP_USERID'] ?? '');
+        $recommendedUserId = intval($_SERVER['HTTP_RECOMMENDEDUSERID'] ?? '');
         $this->matching->dislike($userId, $recommendedUserId);
 
 
@@ -32,7 +32,6 @@ class MatchingController
     private function checkIfMatch(int $userId, int $recommendedUserId)
     {
         $matchValue = $this->matching->checkIfMatch($userId, $recommendedUserId);
-
         if ($matchValue['isMatch'] == 1) {
             $chatDB = new DatabaseChat();
             $chatDB->insertChat($userId, $recommendedUserId);
@@ -42,11 +41,11 @@ class MatchingController
         }
     }
 
-public
-function response404()
-{
-    return message("API was not found", 404);
-}
+    public
+    function response404()
+    {
+        return message("API was not found", 404);
+    }
 
 
 }
