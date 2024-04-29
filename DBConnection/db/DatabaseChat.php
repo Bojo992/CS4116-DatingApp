@@ -10,7 +10,7 @@ class DatabaseChat extends Config
     public function fetch($id = 0) {
         $sql = 'SELECT * FROM chats';
         if ($id != 0) {
-            $sql = 'SELECT * FROM chats WHERE userId = :id';
+            $sql = 'SELECT * FROM chats WHERE userId = :id OR userId2 = :id';
             $stmt = $this->conn->prepare($sql);
             $stmt->execute(['id' => $id]);
         } else {
