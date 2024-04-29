@@ -12,6 +12,7 @@ include_once(__DIR__ . '/Util/UtilConfig.php');
 include_once(__DIR__ . '/routers/InterestRouter.php');
 include_once(__DIR__ . '/routers/Personal_InterestRouter.php');
 include_once(__DIR__ . '/routers/BanRouter.php');
+include_once (__DIR__ . '/routers/MatchingRouter.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -102,6 +103,12 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS") {
             {
                 $ban = new BanRouter();
                 echo $ban->banRouter();
+            }
+            break;
+        case "matching":
+            {
+                $matching = new MatchingRouter();
+                echo $matching->matchingRouter();
             }
             break;
 
