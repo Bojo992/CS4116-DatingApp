@@ -43,7 +43,7 @@ export class SidenavComponent implements OnInit{
   @Input() isVisible: boolean = false;
   opened = false;
 
-  constructor(private cookieService: CookieService, private router: Router) {
+  constructor(private cookieService: CookieService, protected router: Router) {
   }
 
   isLoggedIn(): boolean {
@@ -68,5 +68,9 @@ export class SidenavComponent implements OnInit{
 
   isLoggedOut() {
     return this.cookieService.get('UID') == '';
+  }
+
+  isAdmin() {
+    return this.cookieService.get('isAdmin') != '' && this.cookieService.get('UID') != '';
   }
 }

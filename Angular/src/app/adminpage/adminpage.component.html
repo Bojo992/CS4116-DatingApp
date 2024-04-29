@@ -1,3 +1,40 @@
+<form [formGroup]="listFilter" (ngSubmit)="filterUsers()" class="p-2">
+  <div class="container p-3 shadow  d-flex align-items-center justify-content-evenly">
+    <div class="row">
+      <div class="col-auto align-self-center">
+        <mat-form-field>
+          <mat-label>User Name</mat-label>
+          <input matInput formControlName="userName">
+        </mat-form-field>
+      </div>
+      <div class="col-auto align-self-center">
+        <mat-form-field>
+          <mat-label>User Id</mat-label>
+          <input oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');" matInput formControlName="userId">
+        </mat-form-field>
+      </div>
+      <div class="col-auto d-flex align-items-center">
+        <mat-label for="isBannedRadio">Is Banned: </mat-label>
+        <mat-radio-group
+          aria-labelledby="example-radio-group-label"
+          class="example-radio-group"
+          formControlName="isBanned"
+          id="isBannedRadio"
+        >
+            <mat-radio-button class="example-radio-button" [value]="true">Yes</mat-radio-button>
+            <mat-radio-button class="example-radio-button" [value]="false">No</mat-radio-button>
+            <mat-radio-button class="example-radio-button" [value]="null">None</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div class="col-auto align-self-center">
+        <button mat-raised-button class="border-0 rounded-5 w-auto" color="primary" type="submit">Filter</button>
+      </div>
+      <div class="col-auto align-self-center">
+        <button mat-raised-button class="border-0 rounded-5 w-auto" color="seconday" (click)="clearFilter()">Clear</button>
+      </div>
+    </div>
+  </div>
+</form>
 <div class="p-5">
   <table class="table table-bordered table-hover">
     <thead>
@@ -12,20 +49,21 @@
         <th>Admin Status</th>
         <th>Action</th>
         <th>Admin Action</th>
+        <th>Delete User</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of this.data; let i = index">
-        <td>{{ i + 1 }}</td>
-        <td>{{ item.userId }}</td>
-        <td>{{ item.userName }}</td>
-        <td>{{ item.userEmail }}</td>
-        <td>{{ item.personalInfo }}</td>
-        <td>{{ item.course }}</td>
-        <td>{{ item.dateCreated }}</td>
-        <td *ngIf="!item.isAdmin">No</td>
-        <td *ngIf="item.isAdmin">Yes</td>
-        <td>
+      <tr *ngFor="let item of this.filteredData; let i = index">
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ i + 1 }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.userId }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.userName }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.userEmail }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.personalInfo }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.course }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.dateCreated }}</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null" *ngIf="!item.isAdmin">No</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null" *ngIf="item.isAdmin">Yes</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">
           <mat-form-field [formGroup]="range">
             <mat-label>Choose a date</mat-label>
             <input matInput formControlName="start" [matDatepicker]="picker">
@@ -38,10 +76,14 @@
           <button class="btn_ban" (click)="banUser(item.userId)">Ban</button>
           <button class="btn_unban" (click)="unBanUser(item.userId)">Unban</button>
         </td>
-        <td>
-            <button *ngIf="!item.isAdmin" class="btn btn-success" (click)="changeAdminStatus(item)">Promote</button>
-            <button *ngIf="item.isAdmin" class="btn btn-warning" (click)="changeAdminStatus(item)">Demote</button>
-          </td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">
+            <button mat-raised-button *ngIf="!item.isAdmin" class="bg-success" (click)="changeAdminStatus(item)">Promote</button>
+            <button mat-raised-button *ngIf="item.isAdmin" class="bg-warning" (click)="changeAdminStatus(item)">Demote</button>
+        </td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">
+            <button mat-raised-button *ngIf="!item.isAdmin" class="bg-danger" (click)="deleteUser(item.userId)">Delete</button>
+            <button mat-raised-button *ngIf="item.isAdmin" class="bg-opacity-25 bg-black">Delete</button>
+        </td>
       </tr>
     </tbody>
   </table>

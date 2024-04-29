@@ -7,7 +7,7 @@ import {UserInterest} from "../DBClasses/UserInterest";
 })
 export class InterestService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/interest/';
-  private url = 'http://localhost/CourseMates/CS4116-DatingApp/DBConnection/interest/';
+  private url = 'http://localhost/CourseMates/DBConnection/interest/';
 
   constructor(private httpClient: HttpClient) { }
 

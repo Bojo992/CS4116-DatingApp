@@ -6,7 +6,7 @@ import {HttpClient, HttpHeaders} from "@angular/common/http";
 })
 export class CredentialsService {
   // private url = 'http://coursemates.infinityfreeapp.com/DBConnection/credentials/';
-  private url = 'http://localhost/CS4116-DatingApp/DBConnection/credentials/';
+  private url = 'http://localhost/CourseMates/DBConnection/credentials/';
 
   constructor(private httpClient: HttpClient) { }
 

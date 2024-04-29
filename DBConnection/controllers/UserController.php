@@ -44,11 +44,7 @@ class UserController
 
         $isUserDeleted = $this->user->delete($userId);
 
-        if ($isUserDeleted) {
-            return message('University deleted successfully!',false);
-        } else {
-            return message('Failed to delete an University!',true);
-        }
+        return $isUserDeleted;
     }
 
     public function updateCourse()

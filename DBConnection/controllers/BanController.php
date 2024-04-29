@@ -39,6 +39,13 @@ class BanController
         }
     }
 
+    public function getAllBannedUserId()
+    {
+        $description = $this->ban->getAllBannedUserId();
+
+        return json_encode($description);
+    }
+
     public function response404()
     {
         return message("API was not found", 404);

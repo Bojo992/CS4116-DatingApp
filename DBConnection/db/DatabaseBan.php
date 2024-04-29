@@ -64,5 +64,18 @@ class DatabaseBan extends Config
         }
     }
 
+    public function getAllBannedUserId() {
+        try {
+            $sql = 'SELECT DISTINCT userId FROM ban_list';
 
+            $stmt = $this->conn->prepare($sql);
+            $stmt->execute();
+
+            $banInfo = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            return $banInfo;
+        } catch (PDOException $exception) {
+            return false;
+        }
+    }
 }

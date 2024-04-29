@@ -26,6 +26,9 @@ class BanRouter
             case 'checkIfBanned' :
                 return  $this->controller->checkIfBanned();
                 break;
+            case 'getAllBannedUserId' :
+                return  $this->controller->getAllBannedUserId();
+                break;
             default :
                 return $this->controller->response404();
                 break;

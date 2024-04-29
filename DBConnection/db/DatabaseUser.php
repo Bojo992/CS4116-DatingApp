@@ -126,9 +126,53 @@ class DatabaseUser extends Config
 
     public function delete($id)
     {
-        $sql = 'DELETE FROM user WHERE userId = :id';
+        try {
+        $sql = '
+    DELETE FROM interest
+       WHERE id IN (
+            SELECT interestId
+                FROM personal_interest
+                WHERE userId = :id
+       );
+    
+    DELETE FROM chats
+        WHERE userId = :id OR userId2 = :id;
+    
+    DELETE FROM personalinfo
+        WHERE id = (
+            SELECT personalInfo
+                FROM user
+                WHERE userId = :id
+        );
+    
+    DELETE FROM user_course
+    WHERE id =  (
+        SELECT course
+        FROM user
+        WHERE userId = :id
+    );
+    
+    DELETE FROM user WHERE userId = :id;
+    ';
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $id]);
-        return true;
+
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $result = [
+            "data" => $data,
+            "message" => "User deleted successfully",
+            "status" => true,
+            "error" => null,
+        ];
+
+        return $result;
+        } catch (PDOException $exception) {
+            $error = [
+            "status" => false,
+            "error" => $exception->getMessage(),
+            ];
+            return $error;
+        }
     }
 }

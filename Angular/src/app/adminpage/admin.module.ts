@@ -14,6 +14,8 @@ import {MatError, MatFormField, MatHint, MatLabel, MatSuffix} from "@angular/mat
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_DATE_LOCALE, MatNativeDateModule} from "@angular/material/core";
 import {MatInput} from "@angular/material/input";
+import {MatRadioButton, MatRadioGroup} from "@angular/material/radio";
+import {MatButton} from "@angular/material/button";
 
 
 
@@ -35,7 +37,10 @@ import {MatInput} from "@angular/material/input";
     MatDatepickerModule,
     MatNativeDateModule,
     MatSuffix,
-    MatInput
+    MatInput,
+    MatRadioGroup,
+    MatRadioButton,
+    MatButton
   ],
   providers: [
     UserService,
