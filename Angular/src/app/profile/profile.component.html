@@ -188,8 +188,8 @@
 </div>
 <div class="btn-container align-content-center justify-content-center" *ngIf="urlBool">
   <div class="row justify-content-evenly">
-    <a type="button" class="col-1"><img src="assets/heart-solid.svg"></a>
-    <a type="button" class="col-1"><img src="assets/x-solid.svg"></a>
+    <a type="button" class="col-1"><img src="assets/heart-solid.svg" (click)="onClickLike()"></a>
+    <a type="button" class="col-1"><img src="assets/x-solid.svg" (click)="onClickDislike()"></a>
   </div>
 </div>
 
