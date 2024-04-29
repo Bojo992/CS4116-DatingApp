@@ -1,5 +1,5 @@
 <div class="topnav">
-  <app-sidenav *ngIf="isLoggedIn()"></app-sidenav>
+  <app-sidenav></app-sidenav>
   <a *ngIf="isLoggedIn()" [routerLink]="['/profile', getUserIdFromCookie()]">My Profile</a>
   <div class="nav-brand">
     <img id="textbanner" src="assets\banner.png">

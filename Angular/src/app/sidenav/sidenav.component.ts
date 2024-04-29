@@ -65,4 +65,8 @@ export class SidenavComponent implements OnInit{
       }
     })
   }
+
+  isLoggedOut() {
+    return this.cookieService.get('UID') == '';
+  }
 }
