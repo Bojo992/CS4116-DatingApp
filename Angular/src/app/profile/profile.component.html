@@ -99,10 +99,13 @@
       </div>
       <div class="modal-body">
         <!-- Add your report form or content here -->
-        <textarea class="form-control" rows="3" placeholder="Enter your report"></textarea>
+        <mat-form-field class="w-100" id="usernameSearchbar">
+          <mat-label>Username</mat-label>
+          <input matInput type="text" [(ngModel)]="reportMessage">
+        </mat-form-field>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Submit Report</button>
+        <button type="button" class="btn btn-primary" (click)="sendReport()">Submit Report</button>
         <button type="button" class="btn btn-secondary" (click)="toggleReportModal()">Close</button>
       </div>
     </div>

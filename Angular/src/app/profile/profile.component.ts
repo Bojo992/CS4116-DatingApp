@@ -10,7 +10,7 @@ import {User} from '../navbar/navbar.component';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {PersonalInfoService} from '../DBConnection/personal-info.service';
-import {MatSelect, MatOption} from '@angular/material/select';
+import {MatSelect, MatOption, MatFormField, MatLabel} from '@angular/material/select';
 import {CourseService} from '../DBConnection/course.service';
 import {UserCourseService} from '../DBConnection/user-course.service';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
@@ -19,6 +19,8 @@ import {MatSlider} from '@angular/material/slider';
 import {ChangeDetectorRef} from '@angular/core';
 import {ViewChild} from '@angular/core';
 import {MatchingService} from "../DBConnection/matching.service";
+import {ReportService} from "../DBConnection/report.service";
+import {MatInput} from "@angular/material/input";
 
 
 
@@ -60,7 +62,7 @@ interface UserCourse {
     MatSelect, MatOption,
     MatSlideToggleModule,
     MatSliderModule,
-    MatSlider],
+    MatSlider, MatFormField, MatInput, MatLabel],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.css']
 })
@@ -93,6 +95,7 @@ export class ProfileComponent implements OnInit, OnChanges {
   urlBool: boolean = true;
   isReportModalOpen: boolean = false;
   recommendedUserId: string = '';
+  reportMessage: string = "";
 
   constructor(
     private cookieService: CookieService,
@@ -105,7 +108,8 @@ export class ProfileComponent implements OnInit, OnChanges {
     private courseService: CourseService,
     private userCourseService: UserCourseService,
     private matchingService: MatchingService,
-    @Inject(DOCUMENT) private document: Document
+    @Inject(DOCUMENT) private document: Document,
+    private reportService: ReportService
   ) {
     this.userId = '';
     this.username = '';
@@ -508,6 +512,9 @@ export class ProfileComponent implements OnInit, OnChanges {
         }
 
 
-
-      }
+  sendReport() {
+      this.reportService.reportUser(+this.userId, this.reportMessage).subscribe();
+      this.toggleReportModal();
+  }
+}
 

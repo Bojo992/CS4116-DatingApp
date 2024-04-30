@@ -1,0 +1,9 @@
+<cdk-virtual-scroll-viewport itemSize="50" class="container" style="width: 40rem; height: 40rem">
+  <div *cdkVirtualFor="let chat of data" class="container-flex m-3 shadow rounded-3 pe-auto">
+    <div class="row d-flex p-1 w-100" style="height: 5rem">
+      <div class="col-8 align-self-center">
+        <div>{{chat}}</div>
+      </div>
+    </div>
+  </div>
+</cdk-virtual-scroll-viewport>

@@ -12,7 +12,8 @@ include_once(__DIR__ . '/Util/UtilConfig.php');
 include_once(__DIR__ . '/routers/InterestRouter.php');
 include_once(__DIR__ . '/routers/Personal_InterestRouter.php');
 include_once(__DIR__ . '/routers/BanRouter.php');
-include_once (__DIR__ . '/routers/MatchingRouter.php');
+include_once(__DIR__ . '/routers/MatchingRouter.php');
+include_once(__DIR__ . '/routers/ReportRouter.php');
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
@@ -111,7 +112,12 @@ if ($_SERVER["REQUEST_METHOD"] != "OPTIONS") {
                 echo $matching->matchingRouter();
             }
             break;
-
+        case "report":
+            {
+                $matching = new ReportRouter();
+                echo $matching->reportRouter();
+            }
+            break;
         default:
             echo "failed";
             break;

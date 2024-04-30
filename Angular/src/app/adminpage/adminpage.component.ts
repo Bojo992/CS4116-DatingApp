@@ -6,6 +6,9 @@ import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import moment from "moment";
 import {BanService} from "../DBConnection/ban.service";
 import {resetParseTemplateAsSourceFileForTest} from "@angular/compiler-cli/src/ngtsc/typecheck/diagnostics";
+import {MatDialog} from "@angular/material/dialog";
+import {ReportDialogComponent} from "./report-dialog/report-dialog.component";
+import {ReportService} from "../DBConnection/report.service";
 
 class UserDetails {
   userId: number = 0;
@@ -16,6 +19,7 @@ class UserDetails {
   userName: string = "";
   userEmail: string = "";
   isBanned: boolean = false;
+  reports: string[] = [];
 
   public static parse(item: any) {
     let temp = new UserDetails();
@@ -46,14 +50,15 @@ export class AdminpageComponent implements OnInit {
   listFilter: FormGroup = new FormGroup({
     userName: new FormControl<string>(""),
     isBanned: new FormControl<boolean | null>(null),
+    isReported: new FormControl<boolean | null>(null),
     userId: new FormControl<number | null>(null)
   });
 
   constructor(private userService: UserService,
-              credentialService: CredentialsService,
+              private reportService: ReportService,
               private banService: BanService,
               private snackBar: MatSnackBar,
-              formBuilder: FormBuilder) {
+              private dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -68,6 +73,17 @@ export class AdminpageComponent implements OnInit {
             for(let bannedUserId of banList){
               let temp = this.data.find(i => i.userId == bannedUserId.userId);
               if (temp != undefined) {temp.isBanned = true}
+            }
+          }
+        );
+
+        this.reportService.getAllReports().subscribe(
+          (reports: any) => {
+            // console.log(reports)
+
+            for(let report of reports){
+              let temp = this.data.find(i => i.userId == +report.reportedUser);
+              if (temp != undefined) {temp.reports = report.description.split("&*&")}
             }
 
             this.filteredData = this.data;
@@ -137,6 +153,7 @@ export class AdminpageComponent implements OnInit {
   filterUsers() {
     let userName = this.listFilter.get("userName")?.value;
     let isBanned = this.listFilter.get("isBanned")?.value;
+    let isReported = this.listFilter.get("isReported")?.value;
     let userId = this.listFilter.get("userId")?.value;
 
     console.log(userId);
@@ -144,15 +161,23 @@ export class AdminpageComponent implements OnInit {
     this.filteredData = this.data.filter((item) => {
       return (userName == null || item.userName.toLowerCase().includes(userName.toLowerCase())) &&
         (userId == null || userId == "" || item.userId == userId) &&
-        (isBanned == null || item.isBanned == isBanned)
+        (isBanned == null || item.isBanned == isBanned) &&
+        (isReported == null || (isReported != null && (isReported) ? item.reports.length > 0 : item.reports.length == 0))
     });
   }
 
   clearFilter() {
     this.listFilter.get("userName")?.reset(null);
     this.listFilter.get("isBanned")?.reset(null);
+    this.listFilter.get("isReported")?.reset(null);
     this.listFilter.get("userId")?.reset(null);
 
     this.filteredData = this.data;
+  }
+
+  openReportDialog(item: UserDetails) {
+    this.dialog.open(ReportDialogComponent, {
+        data: item.reports
+    });
   }
 }

@@ -14,17 +14,50 @@
         </mat-form-field>
       </div>
       <div class="col-auto d-flex align-items-center">
-        <mat-label for="isBannedRadio">Is Banned: </mat-label>
-        <mat-radio-group
-          aria-labelledby="example-radio-group-label"
-          class="example-radio-group"
-          formControlName="isBanned"
-          id="isBannedRadio"
-        >
-            <mat-radio-button class="example-radio-button" [value]="true">Yes</mat-radio-button>
-            <mat-radio-button class="example-radio-button" [value]="false">No</mat-radio-button>
-            <mat-radio-button class="example-radio-button" [value]="null">None</mat-radio-button>
-        </mat-radio-group>
+        <div class="container">
+          <div class="row">
+            <div class="col-auto">
+              <mat-label for="isBannedRadio">Is Banned:</mat-label>
+              <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                formControlName="isBanned"
+                id="isBannedRadio"
+              >
+                <mat-radio-button class="example-radio-button" [value]="true">Yes</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="false">No</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="null">None</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-auto">
+              <mat-label for="isBannedRadio">Is Reported: </mat-label>
+              <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                formControlName="isReported"
+                id="isReportedRadio"
+              >
+                <mat-radio-button class="example-radio-button" [value]="true">Yes</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="false">No</mat-radio-button>
+                <mat-radio-button class="example-radio-button" [value]="null">None</mat-radio-button>
+              </mat-radio-group>
+            </div>
+          </div>
+        </div>
+
+<!--        <mat-label for="isBannedRadio">Is Banned: </mat-label>-->
+<!--        <mat-radio-group-->
+<!--          aria-labelledby="example-radio-group-label"-->
+<!--          class="example-radio-group"-->
+<!--          formControlName="isBanned"-->
+<!--          id="isBannedRadio"-->
+<!--        >-->
+<!--            <mat-radio-button class="example-radio-button" [value]="true">Yes</mat-radio-button>-->
+<!--            <mat-radio-button class="example-radio-button" [value]="false">No</mat-radio-button>-->
+<!--            <mat-radio-button class="example-radio-button" [value]="null">None</mat-radio-button>-->
+<!--        </mat-radio-group>-->
       </div>
       <div class="col-auto align-self-center">
         <button mat-raised-button class="border-0 rounded-5 w-auto" color="primary" type="submit">Filter</button>
@@ -47,6 +80,7 @@
         <th>Course</th>
         <th>Date Created</th>
         <th>Admin Status</th>
+        <th>Report(s)</th>
         <th>Action</th>
         <th>Admin Action</th>
         <th>Delete User</th>
@@ -63,6 +97,9 @@
         <td [style]="item.isBanned ? 'background-color: silver' : null">{{ item.dateCreated }}</td>
         <td [style]="item.isBanned ? 'background-color: silver' : null" *ngIf="!item.isAdmin">No</td>
         <td [style]="item.isBanned ? 'background-color: silver' : null" *ngIf="item.isAdmin">Yes</td>
+        <td [style]="item.isBanned ? 'background-color: silver' : null">
+          <button mat-raised-button *ngIf="item.reports.length > 0" class="bg-danger" (click)="openReportDialog(item)">Reports</button>
+        </td>
         <td [style]="item.isBanned ? 'background-color: silver' : null">
           <mat-form-field [formGroup]="range">
             <mat-label>Choose a date</mat-label>
