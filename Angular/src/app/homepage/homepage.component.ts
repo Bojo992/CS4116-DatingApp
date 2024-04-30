@@ -55,10 +55,9 @@ export class HomepageComponent implements OnInit {
 
   ngOnInit(): void {
     // Fetch all users
-    console.log(Number(this.cookieService.get('UID')));
-    // let userId = Number(this.cookieService.get('UID'))
     let userId = +this.cookieService.get('UID')
     this.profileService.getSuggestionForUser(userId).subscribe((users: any) => {
+      console.log("test bojo", userId, users);
       for (let i of users) {
         this.users.push(i);
         console.log(i);

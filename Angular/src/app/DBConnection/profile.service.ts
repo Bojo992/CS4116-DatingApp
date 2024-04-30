@@ -23,7 +23,7 @@ export class ProfileService {
     return this.httpClient.post(this.url + "suggestionResult",
       {
         "body" : {
-          "userId" : 1
+          "userId" : userId
         }
       }
       );
