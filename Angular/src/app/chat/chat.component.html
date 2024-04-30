@@ -1,12 +1,15 @@
-<div class="container p-2 h-100">
+<div class="container p-2">
+  <div class="p-2">
+    <button mat-raised-button class="bg-primary rounded-3" (click)="toggleChats()">Chats</button>
+  </div>
 <!--  List of chats-->
-  <div class="row">
-    <div class="col-3">
+  <div class="row align-content-center">
+    <div class="col-3" *ngIf="showChat" [ngClass]="(showChat) ? 'col-md-4 col-col-sm-12 col-12' : null">
       <cdk-virtual-scroll-viewport itemSize="88" class="container d-flex progress-bar-animated" style="height: 70vh" #chatsList>
         <div *cdkVirtualFor="let chat of chats" class="container-flex m-3 shadow rounded-3 pe-auto" role="button" (click)="setMessages(chat)">
           <div class="row p-1 w-100" style="height: 5rem">
             <div class="col-4 align-self-center">
-              <img [src]="'assets/default_icon.png'" style="height: 46pt" alt="Profile Picture" class="img-profile">
+              <img [src]="chat.userProfilePicture != '' ? (chat.userProfilePicture) : 'assets/default_icon.png'" alt="Profile Picture" class="img-profile rounded-5">
             </div>
             <div class="col-8 align-self-center">
               <div class="h5">{{chat.userName}}</div>
@@ -17,18 +20,18 @@
     </div>
 
 <!--    Chat window-->
-    <div class="col-9  rounded-3 shadow">
-      <cdk-virtual-scroll-viewport itemSize="90" class="messagesList container d-flex progress-bar-animated" style="height: 85vh" #messagesList>
+    <div class="rounded-3 shadow" [class]="(showChat) ? 'col-md-8 h-sm-0' : 'col-12'">
+      <cdk-virtual-scroll-viewport itemSize="90" class="messagesList container d-flex progress-bar-animated" style="height: 75vh" #messagesList>
         <div *cdkVirtualFor="let item of messages; templateCacheSize: 0" class="row p-4" [ngClass]="(item.from == userId) ? 'justify-content-end' : ''">
           <div class="col-auto rounded-3 p-1 border-4 shadow" [ngClass]="(item.from == userId) ? 'bg-primary' : ''">
               <div class="p-1 overflow-x-scroll" style="max-width: 500px">{{item.message}}</div>
           </div>
         </div>
       </cdk-virtual-scroll-viewport>
-      <div class="container align-self-end" style="height: 5vh">
+      <div class="container align-self-end" style="height: 4rem">
         <div class="row">
           <div class="col-10 align-self-center">
-            <input matInput class="w-100 rounded-3" [(ngModel)]=messageInput placeholder="Senter Message" style="height: 4vh">
+            <input matInput class="w-100 rounded-3" [(ngModel)]=messageInput placeholder="Senter Message" style="height: 3rem">
           </div>
           <div class="col-2">
             <button mat-raised-button class="border-0 rounded-5 w-100" color="primary" (click)="sendMessage()">Send</button>

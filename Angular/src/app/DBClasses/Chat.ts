@@ -5,6 +5,7 @@ export class Chat{
   userId = 0;
   userId2 = 0;
   userName = '';
+  userProfilePicture: string = "";
 
   public static parse(item : any) {
     let temp = new Chat();

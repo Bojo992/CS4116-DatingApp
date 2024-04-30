@@ -2,7 +2,7 @@ import {AfterViewInit, Component, Directive, OnDestroy, OnInit, ViewChild} from 
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
-import {isPlatformWorkerUi, NgClass, NgForOf} from "@angular/common";
+import {isPlatformWorkerUi, NgClass, NgForOf, NgIf} from "@angular/common";
 import {CdkVirtualScrollViewport, ScrollingModule, VIRTUAL_SCROLL_STRATEGY} from "@angular/cdk/scrolling";
 import {ChatService} from "../DBConnection/chat.service";
 import {UserService} from "../DBConnection/user.service";
@@ -42,7 +42,8 @@ class UpdateResponse{
     MatButton,
     NgForOf,
     ScrollingModule,
-    NgClass
+    NgClass,
+    NgIf
   ],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css'
@@ -62,9 +63,10 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy  {
   protected readonly userId ;
   protected chats: Chat[] = [];
   protected messages: Message[] = [];
-  public messageInput: string = "asdfaaaaaaaaaaaa";
+  public messageInput: string = "";
   private lastMessageIndex: number = 0;
   private sleepTimer = 5000;
+  showChat: boolean = true;
 
 
   constructor(
@@ -97,6 +99,7 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy  {
           this.userService.getById((temp.userId == this.userId) ? temp.userId2 : temp.userId).subscribe(
             (respUser : any) => {
               temp.userName = respUser[0].userName;
+              temp.userProfilePicture = respUser[0].profilePicture;
               this.chats = [...this.chats, temp];
             }
           )
@@ -181,5 +184,9 @@ export class ChatComponent implements OnInit, AfterViewInit, OnDestroy  {
   private async sleep(ms: number): Promise<void> {
     return new Promise(
       (resolve) => setTimeout(resolve, ms));
+  }
+
+  toggleChats() {
+    this.showChat = !this.showChat;
   }
 }
