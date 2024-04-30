@@ -5,7 +5,6 @@
     /*box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);*/
     width: 500px;
     box-sizing: border-box;
-    height: 80%;
   }
 
 .container h1{
@@ -58,13 +57,6 @@ mat-progress-spinner::ng-deep circle {
 
 .userdetails-other {
     background: linear-gradient(to bottom, #55CDFC, #F7A8B8, #55CDFC);
-}
-
-.more-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding:20px;
 }
 
 .joined-date{

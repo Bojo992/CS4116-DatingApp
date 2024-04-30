@@ -5,15 +5,21 @@
 </div>
 
 
-<div *ngIf="!isLoading" class="container w-75 d-flex align-items-center justify-content-center">
+<div *ngIf="!isLoading" class="container w-75 d-flex justify-content-center">
   <div class="profile-box">
-    <div class="row h-100">
+    <div class="row">
       <div class="col-md-6 user-details"
            [ngClass]="{
         'userdetails': personalInfo?.Gender === 1,
         'userdetails-female': personalInfo?.Gender === 2,
         'userdetails-other': personalInfo?.Gender === 3
       }">
+        <div class="position-absolute top-0 start-0 ps-3" *ngIf="isLoggedInProfile()">
+          <i class="report-button fa-solid fa-flag"
+             style="color: #2f2f2f; font-size: 0.75rem;"
+             [ngClass]="{'hover-effect': true}"
+             (click)="toggleReportModal()"> Report this user</i>
+        </div>
         <div class="img-profile-wrapper">
           <img [src]="profilePicExists ? (userProfile?.profilePicture) : 'assets/default_icon.png'"
                alt="Profile Picture" class="img-profile">
@@ -31,14 +37,8 @@
         <p class="lead"> {{ personalInfo?.bio }} <i *ngIf="myprofile" class="fa-solid fa-pen-to-square"
                                                     (click)="editBio()"></i></p>
       </div>
-      <div class="position-absolute bottom-0 start-0" *ngIf="isLoggedInProfile()">
-        <i class="report-button fa-solid fa-flag"
-           style="color: #2f2f2f; font-size: 0.75rem;"
-           [ngClass]="{'hover-effect': true}"
-           (click)="toggleReportModal()"> Report this user</i>
-      </div>
 
-      <div class="col-md-6 more-details">
+      <div class="col-md-6 col-sm-12 col-12 p-3 h-100" style="height: fit-content">
         <h2><strong>About {{ userProfile?.userName }} :</strong></h2>
 
         <p><strong>Username:</strong> {{ userProfile?.userName }}</p>
